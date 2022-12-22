@@ -1,4 +1,4 @@
-# ![logo](AzgathSL.png) Az'gathCore Dragonflight 10.0.2.47187 (With Content)
+# ![logo](Azgath.png) Az'gathCore Dragonflight 10.0.2.47187 (With Content)
 
 * [Requirements](#requirements)
 * [Discord](#discord)
