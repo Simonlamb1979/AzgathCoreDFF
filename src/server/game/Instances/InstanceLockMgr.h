@@ -27,31 +27,31 @@
 #include <shared_mutex>
 #include <unordered_map>
 
-/*
- * - Resetting instance difficulties with reset schedule from UI seems only possible either when its completed or in group (and only with LockID)
- * - All difficulties of all maps with ResetInterval share locks - KEY is (MapID, LockID)
- *
- * DATABASE
- * character_instance_lock
- *   `guid` bigint(20) unsigned NOT NULL,
- *   `mapId` int(10) unsigned NOT NULL,
- *   `lockId` int(10) unsigned NOT NULL,
- *   `instanceId` int(10) unsigned,                 REFERENCES instance for instanceId based locks
- *   `difficulty` tinyint(3) unsigned,
- *   `data` text,                                   ALWAYS FILLED (also might not match instance data for instanceId based locks)
- *   `completedEncountersMask` int(10) unsigned,    ALWAYS FILLED (also might not match instance data for instanceId based locks)
- *   `entranceWorldSafeLocId` int(10) unsigned,     ALWAYS FILLED (also might not match instance data for instanceId based locks)
- *   `expiryTime` bigint(20) unsigned,
- *   `extended` tinyint(1) unsigned,
- *   PRIMARY KEY (`guid`,`mapId`,`lockId`),
- *
- * instance
- *   `instanceId` int(10) unsigned NOT NULL,
- *   `data` text,                                   FILLED ONLY FOR ID BASED LOCKS
- *   `completedEncountersMask` int(10) unsigned,    FILLED ONLY FOR ID BASED LOCKS
- *   `entranceWorldSafeLocId` int(10) unsigned,     FILLED ONLY FOR ID BASED LOCKS
- *   PRIMARY KEY (`instanceId`)
- */
+ /*
+  * - Resetting instance difficulties with reset schedule from UI seems only possible either when its completed or in group (and only with LockID)
+  * - All difficulties of all maps with ResetInterval share locks - KEY is (MapID, LockID)
+  *
+  * DATABASE
+  * character_instance_lock
+  *   `guid` bigint(20) unsigned NOT NULL,
+  *   `mapId` int(10) unsigned NOT NULL,
+  *   `lockId` int(10) unsigned NOT NULL,
+  *   `instanceId` int(10) unsigned,                 REFERENCES instance for instanceId based locks
+  *   `difficulty` tinyint(3) unsigned,
+  *   `data` text,                                   ALWAYS FILLED (also might not match instance data for instanceId based locks)
+  *   `completedEncountersMask` int(10) unsigned,    ALWAYS FILLED (also might not match instance data for instanceId based locks)
+  *   `entranceWorldSafeLocId` int(10) unsigned,     ALWAYS FILLED (also might not match instance data for instanceId based locks)
+  *   `expiryTime` bigint(20) unsigned,
+  *   `extended` tinyint(1) unsigned,
+  *   PRIMARY KEY (`guid`,`mapId`,`lockId`),
+  *
+  * instance
+  *   `instanceId` int(10) unsigned NOT NULL,
+  *   `data` text,                                   FILLED ONLY FOR ID BASED LOCKS
+  *   `completedEncountersMask` int(10) unsigned,    FILLED ONLY FOR ID BASED LOCKS
+  *   `entranceWorldSafeLocId` int(10) unsigned,     FILLED ONLY FOR ID BASED LOCKS
+  *   PRIMARY KEY (`instanceId`)
+  */
 
 struct DungeonEncounterEntry;
 struct MapEntry;
@@ -96,7 +96,7 @@ public:
     Difficulty GetDifficultyId() const { return _difficultyId; }
 
     uint32 GetInstanceId() const { return _instanceId; }
-    virtual void SetInstanceId(uint32 instanceId) { _instanceId = instanceId; }
+    void SetInstanceId(uint32 instanceId) { _instanceId = instanceId; }
 
     InstanceResetTimePoint GetExpiryTime() const { return _expiryTime; }
     void SetExpiryTime(InstanceResetTimePoint expiryTime) { _expiryTime = expiryTime; }
@@ -142,12 +142,6 @@ class TC_GAME_API SharedInstanceLock : public InstanceLock
 {
 public:
     SharedInstanceLock(uint32 mapId, Difficulty difficultyId, InstanceResetTimePoint expiryTime, uint32 instanceId, std::shared_ptr<SharedInstanceLockData> sharedData);
-
-    void SetInstanceId(uint32 instanceId) override
-    {
-        InstanceLock::SetInstanceId(instanceId);
-        _sharedData->InstanceId = instanceId;
-    }
 
     InstanceLockData const* GetInstanceInitializationData() const override { return _sharedData.get(); }
 

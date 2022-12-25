@@ -94,7 +94,6 @@ public:
 class zone_exiles_reach : public ZoneScript
 {
 public:
-    //zone_exiles_reach() : ZoneScript("zone_exiles_reach") { }
 
     void OnPlayerExit(Player* player)
     {
@@ -114,8 +113,6 @@ struct npc_combat_dummy : public ScriptedAI
     {
         if (Player* player = killer->ToPlayer())
             player->KilledMonsterCredit(174954);
-
-        //me->ForcedDespawn(1000, 5s);
     }
 };
 
@@ -131,32 +128,6 @@ struct npc_private_cole : public ScriptedAI
         ScriptedAI::Reset();
     }
 
-    /*void QuestAccept(Player* player, Quest const* quest)
-    {
-        if (quest->GetQuestId() == QUEST_STAND_YOUR_GROUND)
-        {
-            if (Creature* npc = (me->GetEntry(), me->GetPosition(), TEMPSUMMON_MANUAL_DESPAWN, 0U, 0U))
-            {
-                npc->SetFaction(14);
-                npc->SetReactState(REACT_AGGRESSIVE);
-            }
-
-            me->DestroyForPlayer(player);
-        }
-    }*/
-
-    // void DamageTaken(Unit* attacker, uint32& /*damage*/)
-    //     {
-    //         if (Player* player = attacker->ToPlayer())
-    //             if (me->GetHealth() < me->CountPctFromMaxHealth(20))
-    //                 if (player->HasQuest(QUEST_STAND_YOUR_GROUND))
-    //                 {
-    //                     player->KilledMonsterCredit(155607);
-    //                     me->DespawnOrUnsummon(10ms);
-    //                      (me->GetEntry(), Position(-52.6575f, 0.689299f, 43.4511f, 4.12704f), TEMPSUMMON_MANUAL_DESPAWN, 0U, 0U);
-    //                 }
-    //     }
-
     void JustDied(Unit* killer) override
     {
         if (Player* player = killer->ToPlayer())
@@ -168,63 +139,6 @@ struct npc_private_cole : public ScriptedAI
             }
     }
 };
-
-// class item_first_aid_kit : public ItemScript
-// {
-// public:
-//     item_first_aid_kit() : ItemScript("item_first_aid_kit") { }
-// 
-//     bool OnUse(Player* player, Item* item, SpellCastTargets const& targets, ObjectGuid /*castId*/) override
-//     {
-//         std::list<Creature*> spellTargetsList;
-//         player->GetCreatureListWithEntryInGrid(spellTargetsList, 156609, 5.0f);
-//         player->GetCreatureListWithEntryInGrid(spellTargetsList, 156610, 5.0f);
-//         player->GetCreatureListWithEntryInGrid(spellTargetsList, 156612, 5.0f);
-//         for (auto& targets : spellTargetsList)
-//         {
-//             switch (targets->GetEntry())
-//             {
-//             case 156609:
-//             {
-//                 player->KilledMonsterCredit(156609);
-//                 player->KilledMonsterCredit(166796);
-//                 break;
-//             }
-//             case 156612:
-//             {
-//                 player->KilledMonsterCredit(156612);
-//                 player->KilledMonsterCredit(166786);
-//                 break;
-//             }
-//             case 156610:
-//             {
-//                 player->KilledMonsterCredit(156610);
-//                 player->KilledMonsterCredit(166791);
-//                 break;
-//             }
-//             }
-//         }
-//         return true;
-//     }
-// };
-
-// struct go_campfire_339769 : public GameObjectAI
-// {
-//     go_campfire_339769(GameObject* go) : GameObjectAI(go) { }
-// 
-//     bool GossipHello(Player* player)
-//     {
-//         if (!player->GetQuestObjectiveData(QUEST_COOKING_MEAT, 0))
-//         {
-//             if (player->HasQuest(QUEST_COOKING_MEAT))
-//                 player->ForceCompleteQuest(QUEST_COOKING_MEAT);
-// 
-//             player->AddItem(174074, 1);
-//         }
-// 
-//         return true;
-//     }
-// };
 
 struct npc_lindie_springstock_149899 : public ScriptedAI
 {
@@ -242,7 +156,6 @@ struct npc_scout_o_matic_5000 : public ScriptedAI
     npc_scout_o_matic_5000(Creature* creature) : ScriptedAI(creature)
     {
         me->CanFly();
-        //me->SetFlying(true);
     }
 
 private:
@@ -251,13 +164,11 @@ private:
     void IsSummonedBy(WorldObject* summoner)
     {
         vehicle = me->GetVehicleKit();
-        //summoner->EnterVehicle(me);
         Player* player = summoner->ToPlayer();
         me->GetMotionMaster()->MovePoint(1, 206.0f, -2289.0f, 117.0f, true);
 
         AddTimedDelayedOperation(25000, [this, player]() -> void
         {
-            //player->GetSceneMgr().PlaySceneByPackageId(SCENE_GORGROTHS_RITUAL);
             player->KilledMonsterCredit(156518);
         });
 
@@ -286,7 +197,6 @@ public:
             {
                 player->CastSpell(target, 305716, false);
                 player->KilledMonsterCredit(156722);
-                //target->ToCreature()->ForcedDespawn(1000, 15s);
             }
         return true;
     }
@@ -296,35 +206,12 @@ struct npc_giant_boar : public ScriptedAI
 {
     npc_giant_boar(Creature* creature) : ScriptedAI(creature)
     {
-        /*Vehicle* vehicle = me->GetVehicleKit();*/
     }
 
     void Reset() override
     {
         me->AddNpcFlag(UNIT_NPC_FLAG_SPELLCLICK);
     }
-
-  // void OnSpellClick(Unit* clicker, bool& result)
-//     {
-//         if (Player* player = clicker->ToPlayer())
-//         {
-//             if ((player->GetQuestStatus(QUEST_RIDE_OF_THE_SCIENTIFICALLY_ENHANCED_BOAR) == QUEST_STATUS_COMPLETE) || (player->GetQuestStatus(QUEST_RIDE_OF_THE_SCIENTIFICALLY_ENHANCED_BOAR) == QUEST_STATUS_REWARDED))
-//             {
-//                 player->RemoveUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-//                 player->ExitVehicle();
-//                 /*me->DespawnOrUnsummon(10);*/
-//             }
-//             else if (player->GetQuestStatus(QUEST_RIDE_OF_THE_SCIENTIFICALLY_ENHANCED_BOAR) == QUEST_STATUS_INCOMPLETE)
-//             {
-//                 me->AddUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-//                 me->SetWalk(false);
-// 
-//                 player->EnterVehicle(me);
-//                 player->AddUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-//                 player->KilledMonsterCredit(156595);
-//             }
-//         }
-//     }
 
     void IsSummonedBy(WorldObject* summoner)
     {
@@ -371,27 +258,8 @@ struct npc_captain_garrick_156651 : public ScriptedAI
     {
         if (quest->GetQuestId() == QUEST_ENHANCED_COMBAT_TACTICS)
         {
-//             if (Creature* npc = (me->GetEntry(), me->GetPosition(), TEMPSUMMON_MANUAL_DESPAWN, 0U, 0U))
-//             {
-//                 npc->SetFaction(14);
-//                 npc->SetReactState(REACT_AGGRESSIVE);
-//             }
-// 
-//             me->DestroyForPlayer(player);
         }
     }
-
-  // void DamageTaken(Unit* attacker, uint32& /*damage*/)
-//     {
-//         if (Player* player = attacker->ToPlayer())
-//             if (me->GetHealth() < me->CountPctFromMaxHealth(50))
-//                 if (player->HasQuest(QUEST_ENHANCED_COMBAT_TACTICS))
-//                 {
-//                     player->KilledMonsterCredit(156651);
-//                     (me->GetEntry(), me->GetPosition(), TEMPSUMMON_MANUAL_DESPAWN, 0U, 0U);
-//                     me->DespawnOrUnsummon(10ms);
-//                 }
-//     }
 
     void JustDied(Unit* killer)
     {
@@ -424,64 +292,6 @@ struct npc_captain_garrick_156280 : public ScriptedAI
     }
 };
 
-/*struct npc_alaria_175031 : public ScriptedAI
-{
-    npc_alaria_175031(Creature* creature) : ScriptedAI(creature) { }
-
-    void Reset() override
-    {
-        ScriptedAI::Reset();
-    }
-
-    void QuestAccept(Player* player, Quest const* quest)
-    {
-        if (quest->GetQuestId() == QUEST_NORTHBOUND)
-        {
-            if (Creature* npc = (156651, Position(-249.059f, -2492.52f, 18.0742f, 0.659374f), TEMPSUMMON_MANUAL_DESPAWN, 0U, 0U))
-            {
-                npc->Talk("Captain Garrick says: Let's go. Those monsters have my son.", CHAT_MSG_MONSTER_EMOTE, LANG_UNIVERSAL, 25, player);
-
-                npc->GetScheduler().Schedule(Milliseconds(2000), [npc](TaskContext context)
-                {
-                    npc->GetMotionMaster()->MovePoint(1, -181.259f, -2575.281f, 31.0f, true);
-                    npc->ForcedDespawn(10000);
-                });
-            }
-        }
-    }
-};*/
-
-/*struct npc_geolord_grekog_151091 : public ScriptedAI
-{
-    npc_geolord_grekog_151091(Creature* creature) : ScriptedAI(creature) { }
-
-    void Reset() override
-    {
-        ScriptedAI::Reset();
-    }
-
-    void JustDied(Unit* attacker) override
-    {
-        if (Player* player = attacker->ToPlayer())
-        {
-            if (player->HasQuest(QUEST_DOWN_WITH_THE_QUILBOAR))
-            {
-                if (Creature* npc = (149899, Position(16.4271f, -2511.82f, 78.8215f, 5.66398f), TEMPSUMMON_MANUAL_DESPAWN, 0U, 0U))
-                {
-                    npc->PlayDirectSound(165353, player);
-                    npc->Talk("Lindie Springstock says: We will show these ogres the power of science!", CHAT_MSG_MONSTER_EMOTE, LANG_UNIVERSAL, 25, player);
-
-                    npc->GetScheduler().Schedule(Milliseconds(1000), [npc](TaskContext context)
-                    {
-                        npc->GetMotionMaster()->MovePoint(1, 74.0192f, -2461.207764f, 88.0f, true);
-                        npc->ForcedDespawn;
-                    });
-                }
-            }
-        }
-    }
-};*/
-
 struct npc_ralia_dreamchacer_156929 : public ScriptedAI
 {
     npc_ralia_dreamchacer_156929(Creature* creature) : ScriptedAI(creature)
@@ -493,26 +303,6 @@ struct npc_ralia_dreamchacer_156929 : public ScriptedAI
     {
         me->AddNpcFlag(UNIT_NPC_FLAG_SPELLCLICK);
     }
-
-  // void OnSpellClick(Unit* clicker, bool& result)
-//     {
-//         if (Player* player = clicker->ToPlayer())
-//         {
-//             if (player->GetQuestStatus(QUEST_WHO_LURKS_IN_THE_PIT) == QUEST_STATUS_REWARDED)
-//             {
-//                 player->ExitVehicle();
-//                 /*me->DespawnOrUnsummon(10);*/
-//             }
-//             else if (player->HasQuest(QUEST_WHO_LURKS_IN_THE_PIT))
-//             {
-//                 me->AddUnitFlag(UNIT_FLAG_NON_ATTACKABLE);
-//                 me->SetWalk(false);
-// 
-//                 player->EnterVehicle(me);
-//                 player->ForceCompleteQuest(QUEST_WHO_LURKS_IN_THE_PIT);
-//             }
-//         }
-//     }
 
     void IsSummonedBy(WorldObject* summoner)
     {
@@ -531,7 +321,7 @@ struct npc_alliance_gryphon_154155 : public ScriptedAI
 {
     npc_alliance_gryphon_154155(Creature* creature) : ScriptedAI(creature)
     {
-        /*Vehicle* vehicle = me->GetVehicleKit();*/
+        
     }
 
     void Reset() override
@@ -541,51 +331,8 @@ struct npc_alliance_gryphon_154155 : public ScriptedAI
 
     void OnSpellClick(Unit*, bool)
     {
-// if (Player* player = clicker->ToPlayer())
-//         {
-//             if (player->HasQuest(QUEST_AN_END_TO_BEGINNINGS))
-//             {
-//                 player->EnterVehicle(me);
-//                 player->ForceCompleteQuest(QUEST_AN_END_TO_BEGINNINGS);
-// 
-//                 /*player->GetSceneMgr().PlaySceneByPackageId(SCENE_FLY_AWAY);*/
-//                 AddTimedDelayedOperation(66000, [this, player]() -> void
-//                 {
-//                     player->GetSceneMgr().CancelSceneByPackageId(SCENE_FLY_AWAY);
-// 
-//                     switch (player->GetTeam())
-//                     {
-//                     case ALLIANCE:
-//                         player->TeleportTo(0, -9060.474f, 438.164f, 93.055f, 0.657f);
-//                         break;
-// 
-//                     case HORDE:
-//                         player->TeleportTo(1, 1458.339f, -4420.480f, 25.453f, 0.161f);
-//                         break;
     }
 };
-
-// struct go_ogre_runestone_339865 : public GameObjectAI
-// {
-//     go_ogre_runestone_339865(GameObject* go) : GameObjectAI(go) { }
-// 
-//     bool GossipHello(Player* player)
-//     {
-//         if (player->HasQuest(QUEST_CONTROLLING_THEIR_STONES))
-//         {
-//             if (player->GetQuestObjectiveData(QUEST_CONTROLLING_THEIR_STONES, 4) == 2)
-//             {
-//                 player->ForceCompleteQuest(QUEST_CONTROLLING_THEIR_STONES);
-//             }
-//             else
-//             {
-//                 player->KillCreditGO(339865);
-//             }
-//         }
-// 
-//         return true;
-//     }
-// };
 
 struct npc_coulston_nereus : public ScriptedAI
 {
@@ -648,36 +395,6 @@ struct at_for_gutgruck_the_tough : public AreaTriggerAI
             at->SummonCreature(163031, Position(282.236420f, -2148.987793f, 103.455276f, 3.317860f), TEMPSUMMON_MANUAL_DESPAWN);
     }
 };
-
-// struct hrun_the_exiled_156900 : public ScriptedAI
-// {
-//     hrun_the_exiled_156900(Creature* creature) : ScriptedAI(creature) { }
-// 
-//     void Reset() override
-//     {
-//         ScriptedAI::Reset();
-//     }
-// 
-//     void JustDied(Unit* attacker) override
-//     {
-//         if (Player* player = attacker->ToPlayer())
-//         {
-//             if (player->HasQuest(QUEST_WHO_LURKS_IN_THE_PIT))
-//             {
-//                 if (Creature* npc = me->FindNearestCreature(156902, 100.0f, false))
-//                 {
-//                     /*npc->DestroyForPlayer(player);*/
-//                 }
-// 
-//                 if (Creature* npc2 = (156929, player->GetPosition(), TEMPSUMMON_MANUAL_DESPAWN, 60000, 0U))
-//                 {
-//                     npc2->PlayDirectSound(165353, player);
-//                     npc2->Talk("Ralia Dreamchaser says: Out of the way, little spiders!", CHAT_MSG_MONSTER_EMOTE, LANG_UNIVERSAL, 25, player);
-//                 }
-//             }
-//         }
-//     }
-// };
 
 class phasehandler_exiles_reach : public PlayerScript
 {
@@ -1202,8 +919,6 @@ void AddSC_zone_exiles_reach()
     RegisterZoneScript(zone_exiles_reach);
     RegisterCreatureAI(npc_combat_dummy);
     RegisterCreatureAI(npc_private_cole);
-    /*RegisterItemScript(item_first_aid_kit);*/
-    /*RegisterGameObjectAI(go_campfire_339769);*/
     RegisterCreatureAI(npc_lindie_springstock_149899);
     RegisterCreatureAI(npc_scout_o_matic_5000);
     RegisterItemScript(item_resizer_v901);
@@ -1212,13 +927,9 @@ void AddSC_zone_exiles_reach()
     RegisterCreatureAI(npc_henry_garrick_156799);
     RegisterCreatureAI(npc_captain_garrick_156651);
     RegisterCreatureAI(npc_captain_garrick_156280);
-    /*RegisterCreatureAI(npc_alaria_175031);*/
-    /*RegisterCreatureAI(npc_geolord_grekog_151091);*/
     RegisterCreatureAI(npc_ralia_dreamchacer_156929);
     RegisterCreatureAI(npc_alliance_gryphon_154155);
-    /*RegisterGameObjectAI(go_ogre_runestone_339865);*/
     RegisterCreatureAI(npc_coulston_nereus);
-    /*RegisterCreatureAI(hrun_the_exiled_156900);*/
     RegisterPlayerScript(phasehandler_exiles_reach);
     RegisterCreatureAI(npc_gutgruck_the_tough);
     RegisterAreaTriggerAI(at_for_gutgruck_the_tough);

@@ -487,6 +487,7 @@ insert  into `build_info`(`build`,`majorVersion`,`minorVersion`,`bugfixVersion`,
 (46924,10,0,2,NULL,NULL,'E6CE0B1A8119F069ECF1E7DBAA7BB2F8',NULL,NULL,NULL),
 (47067,10,0,2,NULL,NULL,'63862CFCDEA6BD2BD7F740EB36B65657',NULL,NULL,NULL),
 (47187,10,0,2,NULL,NULL,'711F8455C5000C237292E1E6E90631E1',NULL,NULL,NULL);
+(47213,10,0,2,NULL,NULL,'23C50D88CEAC0A8696ADDE8DD244D4A2',NULL,NULL,NULL);
 
 /*Table structure for table `ip_banned` */
 
@@ -1139,6 +1140,7 @@ insert  into `rbac_linked_permissions`(`id`,`linkedId`) values
 (197,771),
 (197,772),
 (197,774),
+(197,775),
 (197,805),
 (197,811),
 (197,813),
@@ -1874,6 +1876,7 @@ insert  into `rbac_permissions`(`id`,`name`) values
 (772,'Command: wp unload'),
 (773,'Command: wp reload'),
 (774,'Command: wp show'),
+(775,'Command: modify currency'),
 (776,'Command: debug phase'),
 (777,'Command: mailbox'),
 (778,'Command: ahbot'),
@@ -2002,7 +2005,7 @@ CREATE TABLE `realmlist` (
   `timezone` tinyint(3) unsigned NOT NULL DEFAULT 0,
   `allowedSecurityLevel` tinyint(3) unsigned NOT NULL DEFAULT 0,
   `population` float unsigned NOT NULL DEFAULT 0,
-  `gamebuild` int(10) unsigned NOT NULL DEFAULT 47187,
+  `gamebuild` int(10) unsigned NOT NULL DEFAULT 47213,
   `Region` tinyint(3) unsigned NOT NULL DEFAULT 1,
   `Battlegroup` tinyint(3) unsigned NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
@@ -2012,7 +2015,7 @@ CREATE TABLE `realmlist` (
 /*Data for the table `realmlist` */
 
 insert  into `realmlist`(`id`,`name`,`address`,`localAddress`,`localSubnetMask`,`port`,`icon`,`flag`,`timezone`,`allowedSecurityLevel`,`population`,`gamebuild`,`Region`,`Battlegroup`) values 
-(1,'Az\'gathCore','127.0.0.1','127.0.0.1','255.255.255.0',8085,0,0,10,0,0,47187,1,1);
+(1,'Az\'gathCore','127.0.0.1','127.0.0.1','255.255.255.0',8085,0,0,10,0,0,47213,1,1);
 
 /*Table structure for table `secret_digest` */
 

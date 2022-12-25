@@ -286,7 +286,7 @@ TOTPMasterSecret =
 #        Default:     0  - (All Disabled)
 #                     1  - (All Enabled)
 
-Updates.EnableDatabases = 0
+Updates.EnableDatabases = 1
 
 #
 #    Updates.AutoSetup

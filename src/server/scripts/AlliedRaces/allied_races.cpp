@@ -33,40 +33,39 @@
 enum
 {
     SPELL_ACHERUS_DEATH_CHARGER = 48778,
-    SPELL_RUNEFORGING           = 53428,
+    SPELL_RUNEFORGING = 53428,
 
-    AURA_DOMINION_OVER_ACHERUS  = 54055,
+    AURA_DOMINION_OVER_ACHERUS = 54055,
 
     AREA_EBON_HOLD_EAST_KINGD = 4281,
-    MAP_EASTERN_KINGD         = 0,
-    MAP_ALLIED_DK_ICECROWN    = 2297
+    MAP_EASTERN_KINGD = 0,
+    MAP_ALLIED_DK_ICECROWN = 2297
 };
 
 
 class AlliedRaces : public PlayerScript
 {
 public:
-	AlliedRaces() : PlayerScript("AlliedRaces") { }
+    AlliedRaces() : PlayerScript("AlliedRaces") { }
 
 
     void OnLogin(Player* player, bool firstLogin) override
     {
-		if (firstLogin)
-		{
-			if (player->GetRace() == RACE_PANDAREN_HORDE || RACE_PANDAREN_ALLIANCE && player->GetMapId() == MAP_ALLIED_DK_ICECROWN && player->GetClass() == CLASS_DEATH_KNIGHT)
+        if (firstLogin)
+        {
+            if (player->GetRace() == RACE_PANDAREN_HORDE || RACE_PANDAREN_ALLIANCE && player->GetMapId() == MAP_ALLIED_DK_ICECROWN && player->GetClass() == CLASS_DEATH_KNIGHT)
             {
-                /*player->GetSceneMgr().PlaySceneByPackageId(2780);*/
             }
 
             if ((player->GetClass() == CLASS_DEATH_KNIGHT) && (player->IsAlliedRace()))
             {
                 if (!player->HasSpell(SPELL_ACHERUS_DEATH_CHARGER))
-                    player->LearnSpell(SPELL_ACHERUS_DEATH_CHARGER, false, 0 , true);
+                    player->LearnSpell(SPELL_ACHERUS_DEATH_CHARGER, false, 0, true);
 
                 if (!player->HasSpell(SPELL_RUNEFORGING))
-                    player->LearnSpell(SPELL_RUNEFORGING, false, 0 , true);
+                    player->LearnSpell(SPELL_RUNEFORGING, false, 0, true);
             }
-		}
+        }
     }
 
     void OnUpdateArea(Player* player, uint32 newArea, uint32 /*oldArea*/)
@@ -77,7 +76,7 @@ public:
                 player->CastSpell(player, AURA_DOMINION_OVER_ACHERUS);
         }
 
-        if ((newArea != AREA_EBON_HOLD_EAST_KINGD)  && (player->IsAlliedRace()))
+        if ((newArea != AREA_EBON_HOLD_EAST_KINGD) && (player->IsAlliedRace()))
         {
             if (player->HasAura(AURA_DOMINION_OVER_ACHERUS))
                 player->RemoveAura(AURA_DOMINION_OVER_ACHERUS);
@@ -142,38 +141,38 @@ public:
 
                 switch (phase)
                 {
-                    case 0:
-                        me->SetWalk(false);
-                        me->HandleEmoteCommand(EMOTE_STATE_FLYGRABCLOSED);
-                        FlyBackTimer = 500;
-                        break;
-                    case 1:
-                        player->GetClosePoint(x, y, z, me->GetObjectSize());
-                        z += 2.5f;
-                        x -= 2.0f;
-                        y -= 1.5f;
-                        me->GetMotionMaster()->MovePoint(0, x, y, z);
-                        me->SetTarget(player->GetGUID());
-                        me->SetVisible(true);
-                        FlyBackTimer = 1;
-                        break;
-                    case 2:
-                        DoCast(player, 51918, true);
-                        me->HandleEmoteCommand(EMOTE_ONESHOT_CUSTOM_SPELL_01);
-                        Talk(0, player);
-                        player->TeleportTo(2297, 498.144653f, -2124.429932f, 840.856934f, 3.065104f);
-                        player->ResurrectPlayer(100.0f, false);
-                        FlyBackTimer = 3000;
-                        break;
-                    case 3:
-                        me->SetVisible(false);
-                        FlyBackTimer = 3000;
-                        break;
-                    case 4:
-                        me->DisappearAndDie();
-                        break;
-                    default:
-                        break;
+                case 0:
+                    me->SetWalk(false);
+                    me->HandleEmoteCommand(EMOTE_STATE_FLYGRABCLOSED);
+                    FlyBackTimer = 500;
+                    break;
+                case 1:
+                    player->GetClosePoint(x, y, z, me->GetObjectSize());
+                    z += 2.5f;
+                    x -= 2.0f;
+                    y -= 1.5f;
+                    me->GetMotionMaster()->MovePoint(0, x, y, z);
+                    me->SetTarget(player->GetGUID());
+                    me->SetVisible(true);
+                    FlyBackTimer = 1;
+                    break;
+                case 2:
+                    DoCast(player, 51918, true);
+                    me->HandleEmoteCommand(EMOTE_ONESHOT_CUSTOM_SPELL_01);
+                    Talk(0, player);
+                    player->TeleportTo(2297, 498.144653f, -2124.429932f, 840.856934f, 3.065104f);
+                    player->ResurrectPlayer(100.0f, false);
+                    FlyBackTimer = 3000;
+                    break;
+                case 3:
+                    me->SetVisible(false);
+                    FlyBackTimer = 3000;
+                    break;
+                case 4:
+                    me->DisappearAndDie();
+                    break;
+                default:
+                    break;
                 }
                 ++phase;
             }
@@ -185,15 +184,15 @@ public:
 class zone_allied_dk : public ZoneScript
 {
 public:
-    /*zone_allied_dk() : ZoneScript("zone_allied_dk") { }*/
 
     void OnPlayerDeath(Player* player)
     {
         if (player->GetMapId() == MAP_ALLIED_DK_ICECROWN)
-              (228534, player->GetPosition(), TEMPSUMMON_MANUAL_DESPAWN, 0U, 0U);
+            (228534, player->GetPosition(), TEMPSUMMON_MANUAL_DESPAWN, 0U, 0U);
     }
 
 };
+
 
 void AddSC_AlliedRaces()
 {

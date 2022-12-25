@@ -13634,3 +13634,11 @@ std::string Unit::GetDebugInfo() const
 
     return sstr.str();
 }
+
+BrawlersGuild* Unit::GetBrawlerGuild()
+{
+    if (Map* map = GetMap())
+        return map->m_brawlerGuild;
+
+    return nullptr;
+}

@@ -317,6 +317,7 @@ class TC_GAME_API Map : public GridRefManager<NGridType>
         bool IsRaid() const;
         bool IsHeroic() const;
         bool Is25ManRaid() const;
+        bool IsMythic() const;
         bool IsBattleground() const;
         bool IsBattleArena() const;
         bool IsBattlegroundOrArena() const;
@@ -490,7 +491,7 @@ class TC_GAME_API Map : public GridRefManager<NGridType>
         WeatherState GetZoneWeather(uint32 zoneId) const;
         void SetZoneWeather(uint32 zoneId, WeatherState weatherId, float intensity);
         void SetZoneOverrideLight(uint32 zoneId, uint32 areaLightId, uint32 overrideLightId, Milliseconds transitionTime);
-
+        BrawlersGuild* m_brawlerGuild;
         void UpdateAreaDependentAuras();
 
         template<HighGuid high>
@@ -693,6 +694,8 @@ class TC_GAME_API Map : public GridRefManager<NGridType>
         typedef std::function<void(Map*)> FarSpellCallback;
         void AddFarSpellCallback(FarSpellCallback&& callback);
 
+        void UpdateSpawnGroupConditions();
+
     private:
         // Type specific code for add/remove to/from grid
         template<class T>
@@ -755,7 +758,6 @@ class TC_GAME_API Map : public GridRefManager<NGridType>
         }
 
         void SetSpawnGroupActive(uint32 groupId, bool state);
-        void UpdateSpawnGroupConditions();
         std::unordered_set<uint32> _toggledSpawnGroupIds;
 
         uint32 _respawnCheckTimer;
