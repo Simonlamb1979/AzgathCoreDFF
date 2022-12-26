@@ -614,7 +614,7 @@ void Unit::resetAttackTimer(WeaponAttackType type)
 
 bool Unit::IsWithinCombatRange(Unit const* obj, float dist2compare) const
 {
-    if (!obj || !IsInMap(obj) || !IsInPhase(obj))
+    if (!obj || !IsInMap(obj) || !InSamePhase(obj))
         return false;
 
     float dx = GetPositionX() - obj->GetPositionX();
@@ -630,7 +630,7 @@ bool Unit::IsWithinCombatRange(Unit const* obj, float dist2compare) const
 
 bool Unit::IsWithinMeleeRangeAt(Position const& pos, Unit const* obj) const
 {
-    if (!obj || !IsInMap(obj) || !IsInPhase(obj))
+    if (!obj || !IsInMap(obj) || !InSamePhase(obj))
         return false;
 
     float dx = pos.GetPositionX() - obj->GetPositionX();
@@ -651,7 +651,7 @@ float Unit::GetMeleeRange(Unit const* target) const
 
 bool Unit::IsWithinBoundaryRadius(const Unit* obj) const
 {
-    if (!obj || !IsInMap(obj) || !IsInPhase(obj))
+    if (!obj || !IsInMap(obj) || !InSamePhase(obj))
         return false;
 
     float objBoundaryRadius = std::max(obj->GetBoundingRadius(), MIN_MELEE_REACH);
@@ -3893,7 +3893,7 @@ void Unit::RemoveNotOwnSingleTargetAuras(bool onPhaseChange /*= false*/)
             else
             {
                 Unit* caster = aura->GetCaster();
-                if (!caster || !caster->IsInPhase(this))
+                if (!caster || !caster->InSamePhase(this))
                     RemoveOwnedAura(iter);
                 else
                     ++iter;
@@ -3908,7 +3908,7 @@ void Unit::RemoveNotOwnSingleTargetAuras(bool onPhaseChange /*= false*/)
     for (AuraList::iterator iter = scAuras.begin(); iter != scAuras.end();)
     {
         Aura* aura = *iter;
-        if (aura->GetUnitOwner() != this && (!onPhaseChange || !aura->GetUnitOwner()->IsInPhase(this)))
+        if (aura->GetUnitOwner() != this && (!onPhaseChange || !aura->GetUnitOwner()->InSamePhase(this)))
         {
             aura->Remove();
             iter = scAuras.begin();
@@ -9050,40 +9050,6 @@ void Unit::SetLevel(uint8 lvl, bool sendUpdate/* = true*/)
     }
 }
 
-bool Unit::IsAlliedRace()
-{
-    if (Player* player = ToPlayer())
-    {
-        /* pandaren death knight (basically same thing as allied death knight) */
-        if ((player->GetRace() == RACE_PANDAREN_ALLIANCE) || (player->GetRace() == RACE_PANDAREN_HORDE) || (player->GetRace() == RACE_PANDAREN_NEUTRAL) && (player->GetClass() == CLASS_DEATH_KNIGHT))
-        {
-            return true;
-        }
-
-        /* other allied races */
-        switch (player->GetRace())
-        {
-        case RACE_NIGHTBORNE:
-        case RACE_HIGHMOUNTAIN_TAUREN:
-        case RACE_VOID_ELF:
-        case RACE_LIGHTFORGED_DRAENEI:
-        case RACE_ZANDALARI_TROLL:
-        case RACE_KUL_TIRAN:
-        case RACE_DARK_IRON_DWARF:
-        case RACE_VULPERA:
-        case RACE_MAGHAR_ORC:
-        case RACE_MECHAGNOME:
-            return true;
-            break;
-        default:
-            return false;
-            break;
-        }
-    }
-
-    return false;
-}
-
 void Unit::SetHealth(uint64 val)
 {
     if (getDeathState() == JUST_DIED || getDeathState() == CORPSE)
@@ -13633,12 +13599,4 @@ std::string Unit::GetDebugInfo() const
     }
 
     return sstr.str();
-}
-
-BrawlersGuild* Unit::GetBrawlerGuild()
-{
-    if (Map* map = GetMap())
-        return map->m_brawlerGuild;
-
-    return nullptr;
 }

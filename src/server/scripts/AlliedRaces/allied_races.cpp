@@ -29,7 +29,6 @@
 #include "TemporarySummon.h"
 #include "ZoneScript.h"
 
-
 enum
 {
     SPELL_ACHERUS_DEATH_CHARGER = 48778,
@@ -40,48 +39,6 @@ enum
     AREA_EBON_HOLD_EAST_KINGD = 4281,
     MAP_EASTERN_KINGD = 0,
     MAP_ALLIED_DK_ICECROWN = 2297
-};
-
-
-class AlliedRaces : public PlayerScript
-{
-public:
-    AlliedRaces() : PlayerScript("AlliedRaces") { }
-
-
-    void OnLogin(Player* player, bool firstLogin) override
-    {
-        if (firstLogin)
-        {
-            if (player->GetRace() == RACE_PANDAREN_HORDE || RACE_PANDAREN_ALLIANCE && player->GetMapId() == MAP_ALLIED_DK_ICECROWN && player->GetClass() == CLASS_DEATH_KNIGHT)
-            {
-            }
-
-            if ((player->GetClass() == CLASS_DEATH_KNIGHT) && (player->IsAlliedRace()))
-            {
-                if (!player->HasSpell(SPELL_ACHERUS_DEATH_CHARGER))
-                    player->LearnSpell(SPELL_ACHERUS_DEATH_CHARGER, false, 0, true);
-
-                if (!player->HasSpell(SPELL_RUNEFORGING))
-                    player->LearnSpell(SPELL_RUNEFORGING, false, 0, true);
-            }
-        }
-    }
-
-    void OnUpdateArea(Player* player, uint32 newArea, uint32 /*oldArea*/)
-    {
-        if ((player->GetAreaId() == AREA_EBON_HOLD_EAST_KINGD) && (player->GetMapId() == MAP_EASTERN_KINGD) && (player->IsAlliedRace()))
-        {
-            if (!player->HasAura(AURA_DOMINION_OVER_ACHERUS))
-                player->CastSpell(player, AURA_DOMINION_OVER_ACHERUS);
-        }
-
-        if ((newArea != AREA_EBON_HOLD_EAST_KINGD) && (player->IsAlliedRace()))
-        {
-            if (player->HasAura(AURA_DOMINION_OVER_ACHERUS))
-                player->RemoveAura(AURA_DOMINION_OVER_ACHERUS);
-        }
-    }
 };
 
 class npc_valkyr_battle_maiden_allied : public CreatureScript
@@ -147,7 +104,7 @@ public:
                     FlyBackTimer = 500;
                     break;
                 case 1:
-                    player->GetClosePoint(x, y, z, me->GetObjectSize());
+                    player->GetClosePoint(x, y, z, me->GetObjectScale());
                     z += 2.5f;
                     x -= 2.0f;
                     y -= 1.5f;
@@ -193,10 +150,8 @@ public:
 
 };
 
-
 void AddSC_AlliedRaces()
 {
-    RegisterPlayerScript(AlliedRaces);
     new npc_valkyr_battle_maiden_allied();
     new zone_allied_dk();
 }

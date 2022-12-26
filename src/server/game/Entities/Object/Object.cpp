@@ -1111,7 +1111,7 @@ bool WorldObject::IsWithinDist(WorldObject const* obj, float dist2compare, bool 
 
 bool WorldObject::IsWithinDistInMap(WorldObject const* obj, float dist2compare, bool is3D /*= true*/, bool incOwnRadius /*= true*/, bool incTargetRadius /*= true*/) const
 {
-    return obj && IsInMap(obj) && IsInPhase(obj) && _IsWithinDist(obj, dist2compare, is3D, incOwnRadius, incTargetRadius);
+    return obj && IsInMap(obj) && InSamePhase(obj) && _IsWithinDist(obj, dist2compare, is3D, incOwnRadius, incTargetRadius);
 }
 
 Position WorldObject::GetHitSpherePointFor(Position const& dest) const
@@ -1570,7 +1570,7 @@ bool WorldObject::CanSeeOrDetect(WorldObject const* obj, bool ignoreStealth, boo
 
 bool WorldObject::CanNeverSee(WorldObject const* obj) const
 {
-    return GetMap() != obj->GetMap() || !IsInPhase(obj);
+    return GetMap() != obj->GetMap() || !InSamePhase(obj);
 }
 
 bool WorldObject::CanDetect(WorldObject const* obj, bool ignoreStealth, bool checkAlert) const
@@ -2115,11 +2115,14 @@ Creature* WorldObject::FindNearestCreature(uint32 entry, float range, bool alive
     return creature;
 }
 
-Creature* WorldObject::FindNearestCreatureWithAura(uint32 entry, uint32 spellId, float range, bool alive) const
+Creature* WorldObject::FindNearestCreatureWithOptions(float range, FindCreatureOptions const& options) const
 {
     Creature* creature = nullptr;
-    Trinity::NearestCreatureEntryWithLiveStateAndAuraInObjectRangeCheck checker(*this, entry, spellId, alive, range);
-    Trinity::CreatureLastSearcher<Trinity::NearestCreatureEntryWithLiveStateAndAuraInObjectRangeCheck> searcher(this, creature, checker);
+    Trinity::NearestCreatureEntryWithOptionsInObjectRangeCheck checker(*this, range, options);
+    Trinity::CreatureLastSearcher<Trinity::NearestCreatureEntryWithOptionsInObjectRangeCheck> searcher(this, creature, checker);
+    if (options.IgnorePhases)
+        searcher.i_phaseShift = &PhasingHandler::GetAlwaysVisiblePhaseShift();
+
     Cell::VisitAllObjects(this, searcher, range);
     return creature;
 }
@@ -3383,14 +3386,6 @@ void WorldObject::GetContactPoint(WorldObject const* obj, float& x, float& y, fl
 {
     // angle to face `obj` to `this` using distance includes size of `obj`
     GetNearPoint(obj, x, y, z, distance2d, GetAbsoluteAngle(obj));
-}
-
-float WorldObject::GetObjectSize() const
-{
-    if (Unit const* thisUnit = ToUnit())
-        return thisUnit->m_unitData->CombatReach;
-
-    return DEFAULT_PLAYER_BOUNDING_RADIUS;
 }
 
 void WorldObject::MovePosition(Position &pos, float dist, float angle)
