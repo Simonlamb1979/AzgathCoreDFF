@@ -15,7 +15,7 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "TCSoap.h"
+#include "AZSoap.h"
 #include "soapH.h"
 #include "soapStub.h"
 #include "Realm.h"
@@ -23,7 +23,7 @@
 #include "AccountMgr.h"
 #include "Log.h"
 
-void TCSoapThread(const std::string& host, uint16 port)
+void AZSoapThread(const std::string& host, uint16 port)
 {
     struct soap soap;
     soap_init(&soap);

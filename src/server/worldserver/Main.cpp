@@ -47,7 +47,7 @@
 #include "ScriptMgr.h"
 #include "ScriptReloadMgr.h"
 #include "SecretMgr.h"
-#include "TCSoap.h"
+#include "AZSoap.h"
 #include "TerrainMgr.h"
 #include "ThreadPool.h"
 #include "World.h"
@@ -327,7 +327,7 @@ extern int main(int argc, char** argv)
     std::shared_ptr<std::thread> soapThread;
     if (sConfigMgr->GetBoolDefault("SOAP.Enabled", false))
     {
-        soapThread.reset(new std::thread(TCSoapThread, sConfigMgr->GetStringDefault("SOAP.IP", "127.0.0.1"), uint16(sConfigMgr->GetIntDefault("SOAP.Port", 7878))),
+        soapThread.reset(new std::thread(AZSoapThread, sConfigMgr->GetStringDefault("SOAP.IP", "127.0.0.1"), uint16(sConfigMgr->GetIntDefault("SOAP.Port", 7878))),
             [](std::thread* thr)
         {
             thr->join();

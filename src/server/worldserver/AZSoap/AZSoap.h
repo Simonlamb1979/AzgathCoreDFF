@@ -15,15 +15,15 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _TCSOAP_H
-#define _TCSOAP_H
+#ifndef _AZSOAP_H
+#define _AZSOAP_H
 
 #include "Define.h"
 #include <future>
 #include <string>
 
 void process_message(struct soap* soap_message);
-void TCSoapThread(const std::string& host, uint16 port);
+void AZSoapThread(const std::string& host, uint16 port);
 
 class SOAPCommand
 {
