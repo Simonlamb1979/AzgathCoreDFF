@@ -147,6 +147,6 @@ struct Namespace namespaces[] =
     { "SOAP-ENC", "http://schemas.xmlsoap.org/soap/encoding/", nullptr, nullptr }, // must be second
     { "xsi", "http://www.w3.org/1999/XMLSchema-instance", "http://www.w3.org/*/XMLSchema-instance", nullptr },
     { "xsd", "http://www.w3.org/1999/XMLSchema",          "http://www.w3.org/*/XMLSchema", nullptr },
-    { "ns1", "urn:TC", nullptr, nullptr },     // "ns1" namespace prefix
+    { "ns1", "urn:AZ", nullptr, nullptr },     // "ns1" namespace prefix
     { nullptr, nullptr, nullptr, nullptr }
 };
