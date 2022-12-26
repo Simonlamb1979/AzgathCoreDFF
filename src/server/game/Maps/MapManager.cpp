@@ -66,7 +66,7 @@ MapManager* MapManager::instance()
 
 Map* MapManager::FindMap_i(uint32 mapId, uint32 instanceId) const
 {
-    return Trinity::Containers::MapGetValuePtr(i_maps, { mapId, instanceId });
+    return Azgath::Containers::MapGetValuePtr(i_maps, { mapId, instanceId });
 }
 
 Map* MapManager::CreateWorldMap(uint32 mapId, uint32 instanceId)
@@ -459,5 +459,5 @@ void MapManager::AddSC_BuiltInScripts()
 {
     for (MapEntry const* mapEntry : sMapStore)
         if (mapEntry->IsWorldMap() && mapEntry->IsSplitByFaction())
-            new SplitByFactionMapScript(Trinity::StringFormat("world_map_set_faction_worldstates_%u", mapEntry->ID).c_str(), mapEntry->ID);
+            new SplitByFactionMapScript(Azgath::StringFormat("world_map_set_faction_worldstates_%u", mapEntry->ID).c_str(), mapEntry->ID);
 }

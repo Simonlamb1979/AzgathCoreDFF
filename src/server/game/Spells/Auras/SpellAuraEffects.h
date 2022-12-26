@@ -356,7 +356,7 @@ class TC_GAME_API AuraEffect
         void HandleAuraPvpTalents(AuraApplication const* auraApp, uint8 mode, bool apply) const;
 };
 
-namespace Trinity
+namespace Azgath
 {
     // Binary predicate for sorting the priority of absorption aura effects
     class AbsorbAuraOrderPred

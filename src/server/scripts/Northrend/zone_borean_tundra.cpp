@@ -1522,7 +1522,7 @@ class spell_borean_tundra_nerubar_web_random_unit_not_on_quest_dummy : public Sp
         // Do nothing if has 3 soldiers
         Aura* aura = caster->GetAura(SPELL_FREED_SOLDIER_DEBUFF);
         if (!aura || aura->GetStackAmount() < 3)
-            caster->CastSpell(caster, Trinity::Containers::SelectRandomContainerElement(CocoonSummonSpells), true);
+            caster->CastSpell(caster, Azgath::Containers::SelectRandomContainerElement(CocoonSummonSpells), true);
     }
 
     void Register() override
@@ -1548,7 +1548,7 @@ class spell_borean_tundra_nerubar_web_random_unit_on_quest_dummy : public SpellS
         // Always summon peon if has 3 soldiers
         Aura* aura = caster->GetAura(SPELL_FREED_SOLDIER_DEBUFF);
         if ((!aura || aura->GetStackAmount() < 3) && roll_chance_i(75))
-            caster->CastSpell(caster, Trinity::Containers::SelectRandomContainerElement(CocoonSummonSpells), true);
+            caster->CastSpell(caster, Azgath::Containers::SelectRandomContainerElement(CocoonSummonSpells), true);
         else
             caster->CastSpell(nullptr, SPELL_FREED_WARSONG_PEON, true);
     }

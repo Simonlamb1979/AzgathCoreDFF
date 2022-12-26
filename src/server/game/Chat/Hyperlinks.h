@@ -51,7 +51,7 @@ struct TalentEntry;
 struct TransmogSetEntry;
 struct UiMapEntry;
 
-namespace Trinity::Hyperlinks
+namespace Azgath::Hyperlinks
 {
 
     struct AchievementLinkData
@@ -229,7 +229,7 @@ namespace Trinity::Hyperlinks
             template <typename T>
             static std::enable_if_t<std::is_integral_v<T>, bool> StoreTo(T& val, std::string_view data)
             {
-                if (Optional<T> res = Trinity::StringTo<T>(data))
+                if (Optional<T> res = Azgath::StringTo<T>(data))
                 {
                     val = *res;
                     return true;

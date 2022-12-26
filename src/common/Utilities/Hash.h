@@ -21,7 +21,7 @@
 #include <functional>
 #include <utility>
 
-namespace Trinity
+namespace Azgath
 {
     template<typename T>
     inline void hash_combine(std::size_t& seed, T const& val)
@@ -39,8 +39,8 @@ public:
     size_t operator()(std::pair<K, V> const& p) const
     {
         size_t hashVal = 0;
-        Trinity::hash_combine(hashVal, p.first);
-        Trinity::hash_combine(hashVal, p.second);
+        Azgath::hash_combine(hashVal, p.first);
+        Azgath::hash_combine(hashVal, p.second);
         return hashVal;
     }
 };

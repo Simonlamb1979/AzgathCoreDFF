@@ -236,7 +236,7 @@ uint32 Battlenet::Session::HandleLogon(authentication::v1::LogonRequest const* l
 
     challenge::v1::ChallengeExternalRequest externalChallenge;
     externalChallenge.set_payload_type("web_auth_url");
-    externalChallenge.set_payload(Trinity::StringFormat("https://%s:%u/bnetserver/login/", endpoint.address().to_string().c_str(), endpoint.port()));
+    externalChallenge.set_payload(Azgath::StringFormat("https://%s:%u/bnetserver/login/", endpoint.address().to_string().c_str(), endpoint.port()));
     Service<challenge::v1::ChallengeListener>(this).OnExternalChallenge(&externalChallenge);
     return ERROR_OK;
 }
@@ -417,7 +417,7 @@ uint32 Battlenet::Session::VerifyWebCredentials(std::string const& webCredential
         if (!_ipCountry.empty())
             logonResult.set_geoip_country(_ipCountry);
 
-        std::array<uint8, 64> k = Trinity::Crypto::GetRandomBytes<64>();
+        std::array<uint8, 64> k = Azgath::Crypto::GetRandomBytes<64>();
         logonResult.set_session_key(k.data(), 64);
 
         _authed = true;

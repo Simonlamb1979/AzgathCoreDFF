@@ -1053,7 +1053,7 @@ class TC_GAME_API Unit : public WorldObject
                                      DamageInfo* damageInfo, HealInfo* healInfo);
         void TriggerAurasProcOnEvent(ProcEventInfo& eventInfo, AuraApplicationProcContainer& procAuras);
 
-        void HandleEmoteCommand(Emote emoteId, Player* target = nullptr, Trinity::IteratorPair<int32 const*> spellVisualKitIds = {}, int32 sequenceVariation = 0);
+        void HandleEmoteCommand(Emote emoteId, Player* target = nullptr, Azgath::IteratorPair<int32 const*> spellVisualKitIds = {}, int32 sequenceVariation = 0);
         void AttackerStateUpdate (Unit* victim, WeaponAttackType attType = BASE_ATTACK, bool extra = false);
 
         void CalculateMeleeDamage(Unit* victim, CalcDamageInfo* damageInfo, WeaponAttackType attackType = BASE_ATTACK);
@@ -2075,7 +2075,7 @@ class TC_GAME_API Unit : public WorldObject
         bool _isCombatDisallowed;
 };
 
-namespace Trinity
+namespace Azgath
 {
     // Binary predicate for sorting Units based on percent value of a power
     class PowerPctOrderPred

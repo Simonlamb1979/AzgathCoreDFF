@@ -90,8 +90,8 @@ void LootItemStorage::LoadStorageFromDB()
             lootItem.needs_quest = fields[9].GetBool();
             lootItem.randomBonusListId = fields[10].GetUInt32();
             lootItem.context = ItemContext(fields[11].GetUInt8());
-            for (std::string_view bonusList : Trinity::Tokenize(fields[12].GetStringView(), ' ', false))
-                if (Optional<int32> bonusListID = Trinity::StringTo<int32>(bonusList))
+            for (std::string_view bonusList : Azgath::Tokenize(fields[12].GetStringView(), ' ', false))
+                if (Optional<int32> bonusListID = Azgath::StringTo<int32>(bonusList))
                     lootItem.BonusListIDs.push_back(*bonusListID);
 
             storedContainer.AddLootItem(lootItem, trans);

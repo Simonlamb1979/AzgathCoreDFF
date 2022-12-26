@@ -41,7 +41,7 @@ static inline void PrintCliPrefix()
 }
 
 #if TRINITY_PLATFORM != TRINITY_PLATFORM_WINDOWS
-namespace Trinity::Impl::Readline
+namespace Azgath::Impl::Readline
 {
     static std::vector<std::string> vec;
     char* cli_unpack_vector(char const*, int state)
@@ -58,7 +58,7 @@ namespace Trinity::Impl::Readline
     char** cli_completion(char const* text, int /*start*/, int /*end*/)
     {
         ::rl_attempted_completion_over = 1;
-        vec = Trinity::ChatCommands::GetAutoCompletionsFor(CliHandler(nullptr,nullptr), text);
+        vec = Azgath::ChatCommands::GetAutoCompletionsFor(CliHandler(nullptr,nullptr), text);
         return ::rl_completion_matches(text, &cli_unpack_vector);
     }
 
@@ -112,12 +112,12 @@ void CliThread()
     // later it will be printed after command queue updates
     PrintCliPrefix();
 #else
-    ::rl_attempted_completion_function = &Trinity::Impl::Readline::cli_completion;
+    ::rl_attempted_completion_function = &Azgath::Impl::Readline::cli_completion;
     {
         static char BLANK = '\0';
         ::rl_completer_word_break_characters = &BLANK;
     }
-    ::rl_event_hook = &Trinity::Impl::Readline::cli_hook_func;
+    ::rl_event_hook = &Azgath::Impl::Readline::cli_hook_func;
 #endif
 
     if (sConfigMgr->GetBoolDefault("BeepAtStart", true))

@@ -861,7 +861,7 @@ struct boss_illidan_stormrage : public BossAI
                     if (triggers.empty())
                         break;
 
-                    triggers.sort(Trinity::ObjectDistanceOrderPred(me));
+                    triggers.sort(Azgath::ObjectDistanceOrderPred(me));
                     pos.Relocate(triggers.front());
                     pos.SetOrientation(0.0f);
                     me->GetMotionMaster()->MovePoint(POINT_THROW_GLAIVE, pos);
@@ -2087,7 +2087,7 @@ class spell_illidan_agonizing_flames : public SpellScript
         if (targets.empty())
             return;
 
-        WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+        WorldObject* target = Azgath::Containers::SelectRandomContainerElement(targets);
         targets.clear();
         targets.push_back(target);
     }
@@ -2197,12 +2197,12 @@ class spell_illidan_find_target : public SpellScript
 
     void FilterTargets(std::list<WorldObject*>& targets)
     {
-        targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_PARALYZE));
+        targets.remove_if(Azgath::UnitAuraCheck(true, SPELL_PARALYZE));
 
         if (targets.empty())
             return;
 
-        WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+        WorldObject* target = Azgath::Containers::SelectRandomContainerElement(targets);
         targets.clear();
         targets.push_back(target);
     }

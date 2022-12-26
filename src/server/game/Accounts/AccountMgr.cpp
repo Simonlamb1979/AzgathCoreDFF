@@ -60,7 +60,7 @@ AccountOpResult AccountMgr::CreateAccount(std::string username, std::string pass
     LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_ACCOUNT);
 
     stmt->setString(0, username);
-    std::pair<Trinity::Crypto::SRP6::Salt, Trinity::Crypto::SRP6::Verifier> registrationData = Trinity::Crypto::SRP6::MakeRegistrationData(username, password);
+    std::pair<Azgath::Crypto::SRP6::Salt, Azgath::Crypto::SRP6::Verifier> registrationData = Azgath::Crypto::SRP6::MakeRegistrationData(username, password);
     stmt->setBinary(1, registrationData.first);
     stmt->setBinary(2, registrationData.second);
     stmt->setString(3, email);
@@ -184,7 +184,7 @@ AccountOpResult AccountMgr::ChangeUsername(uint32 accountId, std::string newUser
     stmt->setUInt32(1, accountId);
     LoginDatabase.Execute(stmt);
 
-    std::pair<Trinity::Crypto::SRP6::Salt, Trinity::Crypto::SRP6::Verifier> registrationData = Trinity::Crypto::SRP6::MakeRegistrationData(newUsername, newPassword);
+    std::pair<Azgath::Crypto::SRP6::Salt, Azgath::Crypto::SRP6::Verifier> registrationData = Azgath::Crypto::SRP6::MakeRegistrationData(newUsername, newPassword);
     stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_LOGON);
     stmt->setBinary(0, registrationData.first);
     stmt->setBinary(1, registrationData.second);
@@ -212,7 +212,7 @@ AccountOpResult AccountMgr::ChangePassword(uint32 accountId, std::string newPass
 
     Utf8ToUpperOnlyLatin(username);
     Utf8ToUpperOnlyLatin(newPassword);
-    std::pair<Trinity::Crypto::SRP6::Salt, Trinity::Crypto::SRP6::Verifier> registrationData = Trinity::Crypto::SRP6::MakeRegistrationData(username, newPassword);
+    std::pair<Azgath::Crypto::SRP6::Salt, Azgath::Crypto::SRP6::Verifier> registrationData = Azgath::Crypto::SRP6::MakeRegistrationData(username, newPassword);
 
     LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_LOGON);
     stmt->setBinary(0, registrationData.first);
@@ -359,9 +359,9 @@ bool AccountMgr::CheckPassword(uint32 accountId, std::string password)
 
     if (PreparedQueryResult result = LoginDatabase.Query(stmt))
     {
-        Trinity::Crypto::SRP6::Salt salt = (*result)[0].GetBinary<Trinity::Crypto::SRP6::SALT_LENGTH>();
-        Trinity::Crypto::SRP6::Verifier verifier = (*result)[1].GetBinary<Trinity::Crypto::SRP6::VERIFIER_LENGTH>();
-        if (Trinity::Crypto::SRP6::CheckLogin(username, password, salt, verifier))
+        Azgath::Crypto::SRP6::Salt salt = (*result)[0].GetBinary<Azgath::Crypto::SRP6::SALT_LENGTH>();
+        Azgath::Crypto::SRP6::Verifier verifier = (*result)[1].GetBinary<Azgath::Crypto::SRP6::VERIFIER_LENGTH>();
+        if (Azgath::Crypto::SRP6::CheckLogin(username, password, salt, verifier))
             return true;
     }
 

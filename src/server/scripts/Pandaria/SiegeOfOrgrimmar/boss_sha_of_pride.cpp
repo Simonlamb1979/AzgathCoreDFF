@@ -424,7 +424,7 @@ Creature* GetShaOfPride(WorldObject* p_Searcher)
 // todo fix this
 bool IsPlayerInMaze(Player* /*Player*/)
 {
-    /*if (!Trinity::IsPositionInZone(*p_Player, s_MazeOuterPos))
+    /*if (!Azgath::IsPositionInZone(*p_Player, s_MazeOuterPos))
         return false;
 
     constexpr float l_CircleRange = 9.0f;
@@ -434,10 +434,10 @@ bool IsPlayerInMaze(Player* /*Player*/)
             return false;
 
     for (uint8 i = 0; i < MAX_MAZE_LINES; ++i)
-        if (Trinity::IsPositionInZone(*p_Player, s_MazeLinesPos[i]))
+        if (Azgath::IsPositionInZone(*p_Player, s_MazeLinesPos[i]))
             return false;
 
-    if (Trinity::IsPositionInZone(*p_Player, s_MazeInnerPos))
+    if (Azgath::IsPositionInZone(*p_Player, s_MazeInnerPos))
         return false;*/
 
         //return true;

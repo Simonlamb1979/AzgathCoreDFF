@@ -254,8 +254,8 @@ void EscortAI::UpdateEscortAI(uint32 /*diff*/)
 
 void EscortAI::AddWaypoint(uint32 id, float x, float y, float z, float orientation/* = 0*/, Milliseconds waitTime/* = 0s*/)
 {
-    Trinity::NormalizeMapCoord(x);
-    Trinity::NormalizeMapCoord(y);
+    Azgath::NormalizeMapCoord(x);
+    Azgath::NormalizeMapCoord(y);
 
     WaypointNode waypoint;
     waypoint.id = id;
@@ -443,8 +443,8 @@ void EscortAI::FillPointMovementListForCreature()
     for (WaypointNode const& value : path->nodes)
     {
         WaypointNode node = value;
-        Trinity::NormalizeMapCoord(node.x);
-        Trinity::NormalizeMapCoord(node.y);
+        Azgath::NormalizeMapCoord(node.x);
+        Azgath::NormalizeMapCoord(node.y);
         node.moveType = _running ? WAYPOINT_MOVE_TYPE_RUN : WAYPOINT_MOVE_TYPE_WALK;
 
         _path.nodes.push_back(std::move(node));

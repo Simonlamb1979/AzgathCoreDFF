@@ -22,7 +22,7 @@
 #include "Language.h"
 #include "RBAC.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 static std::unordered_map<AuctionQuality, uint32> const ahbotQualityLangIds =
 {

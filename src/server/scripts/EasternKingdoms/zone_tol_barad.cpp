@@ -110,7 +110,7 @@ public:
             if (targets.empty())
                 return;
 
-            WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+            WorldObject* target = Azgath::Containers::SelectRandomContainerElement(targets);
             targets.clear();
             targets.push_back(target);
         }

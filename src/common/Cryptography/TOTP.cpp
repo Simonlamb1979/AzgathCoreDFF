@@ -21,7 +21,7 @@
 
 static constexpr uint32 TOTP_INTERVAL = 30;
 static constexpr uint32 HMAC_RESULT_SIZE = 20;
-/*static*/ uint32 Trinity::Crypto::TOTP::GenerateToken(TOTP::Secret const& secret, time_t timestamp)
+/*static*/ uint32 Azgath::Crypto::TOTP::GenerateToken(TOTP::Secret const& secret, time_t timestamp)
 {
     timestamp /= TOTP_INTERVAL;
     unsigned char challenge[8];
@@ -38,7 +38,7 @@ static constexpr uint32 HMAC_RESULT_SIZE = 20;
     return (truncated % 1000000);
 }
 
-/*static*/ bool Trinity::Crypto::TOTP::ValidateToken(TOTP::Secret const& secret, uint32 token)
+/*static*/ bool Azgath::Crypto::TOTP::ValidateToken(TOTP::Secret const& secret, uint32 token)
 {
     time_t now = time(nullptr);
     return (

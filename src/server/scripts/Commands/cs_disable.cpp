@@ -40,7 +40,7 @@ EndScriptData */
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class disable_commandscript : public CommandScript
 {

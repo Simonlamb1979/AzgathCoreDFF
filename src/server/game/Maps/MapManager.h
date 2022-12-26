@@ -80,17 +80,17 @@ class TC_GAME_API MapManager
 
         static bool IsValidMapCoord(uint32 mapid, float x, float y)
         {
-            return IsValidMAP(mapid) && Trinity::IsValidMapCoord(x, y);
+            return IsValidMAP(mapid) && Azgath::IsValidMapCoord(x, y);
         }
 
         static bool IsValidMapCoord(uint32 mapid, float x, float y, float z)
         {
-            return IsValidMAP(mapid) && Trinity::IsValidMapCoord(x, y, z);
+            return IsValidMAP(mapid) && Azgath::IsValidMapCoord(x, y, z);
         }
 
         static bool IsValidMapCoord(uint32 mapid, float x, float y, float z, float o)
         {
-            return IsValidMAP(mapid) && Trinity::IsValidMapCoord(x, y, z, o);
+            return IsValidMAP(mapid) && Azgath::IsValidMapCoord(x, y, z, o);
         }
 
         static bool IsValidMapCoord(uint32 mapid, Position const& pos)
@@ -171,7 +171,7 @@ void MapManager::DoForAllMapsWithMapId(uint32 mapId, Worker&& worker)
 {
     std::shared_lock<std::shared_mutex> lock(_mapsLock);
 
-    auto range = Trinity::Containers::MakeIteratorPair(
+    auto range = Azgath::Containers::MakeIteratorPair(
         i_maps.lower_bound({ mapId, 0 }),
         i_maps.upper_bound({ mapId, std::numeric_limits<uint32>::max() })
     );

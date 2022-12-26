@@ -165,7 +165,7 @@ class spell_talon_king_ikiss_blink : public SpellScript
         if (targets.empty())
             return;
 
-        WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+        WorldObject* target = Azgath::Containers::SelectRandomContainerElement(targets);
         targets.clear();
         targets.push_back(target);
     }

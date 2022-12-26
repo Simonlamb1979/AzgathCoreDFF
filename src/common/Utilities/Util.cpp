@@ -37,7 +37,7 @@
   #include <arpa/inet.h>
 #endif
 
-std::vector<std::string_view> Trinity::Tokenize(std::string_view str, char sep, bool keepEmpty)
+std::vector<std::string_view> Azgath::Tokenize(std::string_view str, char sep, bool keepEmpty)
 {
     std::vector<std::string_view> tokens;
 
@@ -106,13 +106,13 @@ std::string secsToTimeString(uint64 timeInSecs, TimeFormat timeFormat, bool hour
     if (timeFormat == TimeFormat::Numeric)
     {
         if (days)
-            return Trinity::StringFormat("%u:%02u:%02u:%02u", days, hours, minutes, secs);
+            return Azgath::StringFormat("%u:%02u:%02u:%02u", days, hours, minutes, secs);
         else if (hours)
-            return Trinity::StringFormat("%u:%02u:%02u", hours, minutes, secs);
+            return Azgath::StringFormat("%u:%02u:%02u", hours, minutes, secs);
         else if (minutes)
-            return Trinity::StringFormat("%u:%02u", minutes, secs);
+            return Azgath::StringFormat("%u:%02u", minutes, secs);
         else
-            return Trinity::StringFormat("0:%02u", secs);
+            return Azgath::StringFormat("0:%02u", secs);
     }
 
     std::ostringstream ss;
@@ -205,7 +205,7 @@ Optional<int64> MoneyStringToMoney(std::string const& moneyString)
     bool hadS = false;
     bool hadC = false;
 
-    for (std::string_view token : Trinity::Tokenize(moneyString, ' ', false))
+    for (std::string_view token : Azgath::Tokenize(moneyString, ' ', false))
     {
         uint32 unit;
         switch (token[token.length() - 1])
@@ -229,7 +229,7 @@ Optional<int64> MoneyStringToMoney(std::string const& moneyString)
                 return std::nullopt;
         }
 
-        Optional<uint64> amount = Trinity::StringTo<uint32>(token.substr(0, token.length() - 1));
+        Optional<uint64> amount = Azgath::StringTo<uint32>(token.substr(0, token.length() - 1));
         if (amount)
             money += (unit * *amount);
         else
@@ -281,7 +281,7 @@ std::string TimeToTimestampStr(time_t t)
     //       HH     hour (2 digits 00-23)
     //       MM     minutes (2 digits 00-59)
     //       SS     seconds (2 digits 00-59)
-    return Trinity::StringFormat("%04d-%02d-%02d_%02d-%02d-%02d", aTm.tm_year + 1900, aTm.tm_mon + 1, aTm.tm_mday, aTm.tm_hour, aTm.tm_min, aTm.tm_sec);
+    return Azgath::StringFormat("%04d-%02d-%02d_%02d-%02d-%02d", aTm.tm_year + 1900, aTm.tm_mon + 1, aTm.tm_mday, aTm.tm_hour, aTm.tm_min, aTm.tm_sec);
 }
 
 std::string TimeToHumanReadable(time_t t)
@@ -300,7 +300,7 @@ bool IsIPAddress(char const* ipaddress)
         return false;
 
     boost::system::error_code error;
-    Trinity::Net::make_address(ipaddress, error);
+    Azgath::Net::make_address(ipaddress, error);
     return !error;
 }
 
@@ -368,7 +368,7 @@ bool Utf8toWStr(char const* utf8str, size_t csize, wchar_t* wstr, size_t& wsize)
 {
     try
     {
-        Trinity::CheckedBufferOutputIterator<wchar_t> out(wstr, wsize);
+        Azgath::CheckedBufferOutputIterator<wchar_t> out(wstr, wsize);
         out = utf8::utf8to16(utf8str, utf8str+csize, out);
         wsize -= out.remaining(); // remaining unused space
         wstr[wsize] = L'\0';
@@ -830,7 +830,7 @@ TC_COMMON_API Optional<std::size_t> RemoveCRLF(std::string & str)
     return nextLineIndex;
 }
 
-std::string Trinity::Impl::ByteArrayToHexStr(uint8 const* bytes, size_t arrayLen, bool reverse /* = false */)
+std::string Azgath::Impl::ByteArrayToHexStr(uint8 const* bytes, size_t arrayLen, bool reverse /* = false */)
 {
     int32 init = 0;
     int32 end = arrayLen;
@@ -854,7 +854,7 @@ std::string Trinity::Impl::ByteArrayToHexStr(uint8 const* bytes, size_t arrayLen
     return ss.str();
 }
 
-void Trinity::Impl::HexStrToByteArray(std::string_view str, uint8* out, size_t outlen, bool reverse /*= false*/)
+void Azgath::Impl::HexStrToByteArray(std::string_view str, uint8* out, size_t outlen, bool reverse /*= false*/)
 {
     ASSERT(str.size() == (2 * outlen));
 

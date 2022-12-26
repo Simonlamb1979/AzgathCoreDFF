@@ -70,7 +70,7 @@ void WorldSession::HandleHotfixRequest(WorldPackets::Hotfix::HotfixRequest& hotf
     hotfixQueryResponse.Hotfixes.reserve(hotfixQuery.Hotfixes.size());
     for (int32 hotfixId : hotfixQuery.Hotfixes)
     {
-        if (std::vector<DB2Manager::HotfixRecord> const* hotfixRecords = Trinity::Containers::MapGetValuePtr(hotfixes, hotfixId))
+        if (std::vector<DB2Manager::HotfixRecord> const* hotfixRecords = Azgath::Containers::MapGetValuePtr(hotfixes, hotfixId))
         {
             for (DB2Manager::HotfixRecord const& hotfixRecord : *hotfixRecords)
             {

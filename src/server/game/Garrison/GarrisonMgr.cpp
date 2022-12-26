@@ -209,8 +209,8 @@ std::list<GarrAbilityEntry const*> GarrisonMgr::RollFollowerAbilities(uint32 gar
         }
     }
 
-    Trinity::Containers::RandomResize(abilityList, std::max<int32>(0, slots[0] - forcedAbilities.size()));
-    Trinity::Containers::RandomResize(traitList, std::max<int32>(0, slots[1] - forcedTraits.size()));
+    Azgath::Containers::RandomResize(abilityList, std::max<int32>(0, slots[0] - forcedAbilities.size()));
+    Azgath::Containers::RandomResize(traitList, std::max<int32>(0, slots[1] - forcedTraits.size()));
 
     // Add abilities specified in GarrFollowerXAbility.db2 before generic classspec ones on follower creation
     if (initial)
@@ -242,7 +242,7 @@ std::list<GarrAbilityEntry const*> GarrisonMgr::RollFollowerAbilities(uint32 gar
         std::set_difference(classSpecAbilities.begin(), classSpecAbilities.end(), forcedAbilities.begin(), forcedAbilities.end(), std::back_inserter(classSpecAbilitiesTemp));
         std::set_union(classSpecAbilitiesTemp.begin(), classSpecAbilitiesTemp.end(), classSpecAbilitiesTemp2.begin(), classSpecAbilitiesTemp2.end(), std::back_inserter(abilityList));
 
-        Trinity::Containers::RandomResize(abilityList, std::max<int32>(0, slots[0] - forcedAbilities.size()));
+        Azgath::Containers::RandomResize(abilityList, std::max<int32>(0, slots[0] - forcedAbilities.size()));
     }
 
     if (slots[1] > forcedTraits.size() + traitList.size())

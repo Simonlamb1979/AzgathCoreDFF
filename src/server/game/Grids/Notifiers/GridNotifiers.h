@@ -32,7 +32,7 @@
 #include "UnitAI.h"
 #include "UpdateData.h"
 
-namespace Trinity
+namespace Azgath
 {
     struct TC_GAME_API VisibleNotifier
     {

@@ -39,7 +39,7 @@ public:
     static WorldSocketMgr& Instance();
 
     /// Start network, listen at address:port .
-    bool StartWorldNetwork(Trinity::Asio::IoContext& ioContext, std::string const& bindIp, uint16 port, uint16 instancePort, int networkThreads);
+    bool StartWorldNetwork(Azgath::Asio::IoContext& ioContext, std::string const& bindIp, uint16 port, uint16 instancePort, int networkThreads);
 
     /// Stops all network threads, It will wait for all running threads .
     void StopNetwork() override;
@@ -55,7 +55,7 @@ protected:
 
 private:
     // private, must not be called directly
-    bool StartNetwork(Trinity::Asio::IoContext& ioContext, std::string const& bindIp, uint16 port, int threadCount) override
+    bool StartNetwork(Azgath::Asio::IoContext& ioContext, std::string const& bindIp, uint16 port, int threadCount) override
     {
         return BaseSocketMgr::StartNetwork(ioContext, bindIp, port, threadCount);
     }

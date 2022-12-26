@@ -34,7 +34,7 @@ EndScriptData */
 #include "ReputationMgr.h"
 #include "World.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class quest_commandscript : public CommandScript
 {

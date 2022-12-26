@@ -629,17 +629,17 @@ void TransportMgr::CreateTransportsForMap(Map* map)
 
 TransportTemplate const* TransportMgr::GetTransportTemplate(uint32 entry) const
 {
-    return Trinity::Containers::MapGetValuePtr(_transportTemplates, entry);
+    return Azgath::Containers::MapGetValuePtr(_transportTemplates, entry);
 }
 
 TransportAnimation const* TransportMgr::GetTransportAnimInfo(uint32 entry) const
 {
-    return Trinity::Containers::MapGetValuePtr(_transportAnimations, entry);
+    return Azgath::Containers::MapGetValuePtr(_transportAnimations, entry);
 }
 
 TransportSpawn const* TransportMgr::GetTransportSpawn(ObjectGuid::LowType spawnId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_transportSpawns, spawnId);
+    return Azgath::Containers::MapGetValuePtr(_transportSpawns, spawnId);
 }
 
 TransportAnimationEntry const* TransportAnimation::GetPrevAnimNode(uint32 time) const

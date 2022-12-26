@@ -394,7 +394,7 @@ void World::AddSession_(WorldSession* s)
             if (RemoveQueuedPlayer(old->second))
                 decrease_session = false;
             // not remove replaced session form queue if listed
-            Trinity::Containers::MultimapErasePair(m_sessionsByBnetGuid, old->second->GetBattlenetAccountGUID(), old->second);
+            Azgath::Containers::MultimapErasePair(m_sessionsByBnetGuid, old->second->GetBattlenetAccountGUID(), old->second);
             delete old->second;
         }
     }
@@ -2381,7 +2381,7 @@ void World::SetInitialWorldSettings()
     sObjectMgr->InitializeQueriesData(QUERY_DATA_ALL);
 
     TC_LOG_INFO("server.loading", "Initialize commands...");
-    Trinity::ChatCommands::LoadCommandMap();
+    Azgath::ChatCommands::LoadCommandMap();
 
     ///- Initialize game time and timers
     TC_LOG_INFO("server.loading", "Initialize game time and timers");
@@ -2916,7 +2916,7 @@ void World::SendGlobalGMMessage(WorldPacket const* packet, WorldSession* self, u
     }
 }
 
-namespace Trinity
+namespace Azgath
 {
     class WorldWorldTextBuilder
     {
@@ -2976,7 +2976,7 @@ namespace Trinity
             uint32 i_textId;
             va_list* i_args;
     };
-}                                                           // namespace Trinity
+}                                                           // namespace Azgath
 
 /// Send a System Message to all players (except self if mentioned)
 void World::SendWorldText(uint32 string_id, ...)
@@ -2984,8 +2984,8 @@ void World::SendWorldText(uint32 string_id, ...)
     va_list ap;
     va_start(ap, string_id);
 
-    Trinity::WorldWorldTextBuilder wt_builder(string_id, &ap);
-    Trinity::LocalizedDo<Trinity::WorldWorldTextBuilder> wt_do(wt_builder);
+    Azgath::WorldWorldTextBuilder wt_builder(string_id, &ap);
+    Azgath::LocalizedDo<Azgath::WorldWorldTextBuilder> wt_do(wt_builder);
     for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
     {
         if (!itr->second || !itr->second->GetPlayer() || !itr->second->GetPlayer()->IsInWorld())
@@ -3003,8 +3003,8 @@ void World::SendGMText(uint32 string_id, ...)
     va_list ap;
     va_start(ap, string_id);
 
-    Trinity::WorldWorldTextBuilder wt_builder(string_id, &ap);
-    Trinity::LocalizedDo<Trinity::WorldWorldTextBuilder> wt_do(wt_builder);
+    Azgath::WorldWorldTextBuilder wt_builder(string_id, &ap);
+    Azgath::LocalizedDo<Azgath::WorldWorldTextBuilder> wt_do(wt_builder);
     for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
     {
         // Session should have permissions to receive global gm messages
@@ -3422,7 +3422,7 @@ void World::UpdateSessions(uint32 diff)
                 m_disconnects[itr->second->GetAccountId()] = GameTime::GetGameTime();
             RemoveQueuedPlayer(pSession);
             m_sessions.erase(itr);
-            Trinity::Containers::MultimapErasePair(m_sessionsByBnetGuid, pSession->GetBattlenetAccountGUID(), pSession);
+            Azgath::Containers::MultimapErasePair(m_sessionsByBnetGuid, pSession->GetBattlenetAccountGUID(), pSession);
             delete pSession;
         }
     }
@@ -3452,7 +3452,7 @@ void World::SendAutoBroadcast()
     if (m_Autobroadcasts.empty())
         return;
 
-    auto itr = Trinity::Containers::SelectRandomWeightedContainerElement(m_Autobroadcasts, [](AutobroadcastContainer::value_type const& pair)
+    auto itr = Azgath::Containers::SelectRandomWeightedContainerElement(m_Autobroadcasts, [](AutobroadcastContainer::value_type const& pair)
     {
         return pair.second.Weight;
     });
@@ -3825,7 +3825,7 @@ void World::UpdateAreaDependentAuras()
 
 bool World::IsBattlePetJournalLockAcquired(ObjectGuid battlenetAccountGuid)
 {
-    for (auto&& sessionForBnet : Trinity::Containers::MapEqualRange(m_sessionsByBnetGuid, battlenetAccountGuid))
+    for (auto&& sessionForBnet : Azgath::Containers::MapEqualRange(m_sessionsByBnetGuid, battlenetAccountGuid))
         if (sessionForBnet.second->GetBattlePetMgr()->HasJournalLock())
             return true;
 
@@ -3844,7 +3844,7 @@ bool World::IsFFAPvPRealm() const
 
 int32 World::GetPersistentWorldVariable(PersistentWorldVariable const& var) const
 {
-    if (int32 const* value = Trinity::Containers::MapGetValuePtr(m_worldVariables, var.Id))
+    if (int32 const* value = Azgath::Containers::MapGetValuePtr(m_worldVariables, var.Id))
         return *value;
 
     return 0;

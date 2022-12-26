@@ -196,7 +196,7 @@ class TC_GAME_API UnitAI
                 case SelectTargetMethod::MinDistance:
                     return targetList.front();
                 case SelectTargetMethod::Random:
-                    return Trinity::Containers::SelectRandomContainerElement(targetList);
+                    return Azgath::Containers::SelectRandomContainerElement(targetList);
                 default:
                     return nullptr;
             }
@@ -282,7 +282,7 @@ class TC_GAME_API UnitAI
                 return;
 
             if (targetType == SelectTargetMethod::Random)
-                Trinity::Containers::RandomResize(targetList, num);
+                Azgath::Containers::RandomResize(targetList, num);
             else
                 targetList.resize(num);
         }

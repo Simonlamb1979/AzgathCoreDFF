@@ -23,7 +23,7 @@ WorldPacketCrypt::WorldPacketCrypt() : _clientDecrypt(false), _serverEncrypt(tru
 {
 }
 
-void WorldPacketCrypt::Init(Trinity::Crypto::AES::Key const& key)
+void WorldPacketCrypt::Init(Azgath::Crypto::AES::Key const& key)
 {
     _clientDecrypt.Init(key);
     _serverEncrypt.Init(key);
@@ -53,7 +53,7 @@ bool WorldPacketCrypt::PeekDecryptRecv(uint8* data, size_t length)
     return true;
 }
 
-bool WorldPacketCrypt::DecryptRecv(uint8* data, size_t length, Trinity::Crypto::AES::Tag& tag)
+bool WorldPacketCrypt::DecryptRecv(uint8* data, size_t length, Azgath::Crypto::AES::Tag& tag)
 {
     if (_initialized)
     {
@@ -68,7 +68,7 @@ bool WorldPacketCrypt::DecryptRecv(uint8* data, size_t length, Trinity::Crypto::
     return true;
 }
 
-bool WorldPacketCrypt::EncryptSend(uint8* data, size_t length, Trinity::Crypto::AES::Tag& tag)
+bool WorldPacketCrypt::EncryptSend(uint8* data, size_t length, Azgath::Crypto::AES::Tag& tag)
 {
     if (_initialized)
     {

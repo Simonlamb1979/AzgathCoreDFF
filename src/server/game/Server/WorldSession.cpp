@@ -709,7 +709,7 @@ void WorldSession::KickPlayer(std::string const& reason)
 
 bool WorldSession::ValidateHyperlinksAndMaybeKick(std::string const& str)
 {
-    if (Trinity::Hyperlinks::CheckAllLinks(str))
+    if (Azgath::Hyperlinks::CheckAllLinks(str))
         return true;
 
     TC_LOG_ERROR("network", "Player %s%s sent a message with an invalid link:\n%s", GetPlayer()->GetName().c_str(),
@@ -803,7 +803,7 @@ void WorldSession::Handle_EarlyProccess(WorldPackets::Null& null)
 void WorldSession::SendConnectToInstance(WorldPackets::Auth::ConnectToSerial serial)
 {
     boost::system::error_code ignored_error;
-    boost::asio::ip::address instanceAddress = realm.GetAddressForClient(Trinity::Net::make_address(GetRemoteAddress(), ignored_error));
+    boost::asio::ip::address instanceAddress = realm.GetAddressForClient(Azgath::Net::make_address(GetRemoteAddress(), ignored_error));
 
     _instanceConnectKey.Fields.AccountId = GetAccountId();
     _instanceConnectKey.Fields.ConnectionType = CONNECTION_TYPE_INSTANCE;

@@ -209,7 +209,7 @@ void WorldSession::HandleActivateTaxiOpcode(WorldPackets::Taxi::ActivateTaxi& ac
                 });
 
                 if (!usableDisplays.empty())
-                    preferredMountDisplay = Trinity::Containers::SelectRandomContainerElement(usableDisplays)->CreatureDisplayInfoID;
+                    preferredMountDisplay = Azgath::Containers::SelectRandomContainerElement(usableDisplays)->CreatureDisplayInfoID;
             }
         }
     }

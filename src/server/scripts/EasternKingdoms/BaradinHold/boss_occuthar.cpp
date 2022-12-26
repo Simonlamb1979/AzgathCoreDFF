@@ -226,7 +226,7 @@ class spell_occuthar_focused_fire : public SpellScriptLoader
                 });
 
                 if (targets.size() >= 2)
-                    Trinity::Containers::RandomResize(targets, 1);
+                    Azgath::Containers::RandomResize(targets, 1);
             }
 
             void Register() override
@@ -266,7 +266,7 @@ class spell_occuthar_eyes_of_occuthar : public SpellScriptLoader
                 if (targets.empty())
                     return;
 
-                Trinity::Containers::RandomResize(targets, 1);
+                Azgath::Containers::RandomResize(targets, 1);
             }
 
             void HandleScript(SpellEffIndex /*effIndex*/)

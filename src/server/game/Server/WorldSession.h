@@ -1200,9 +1200,9 @@ class TC_GAME_API WorldSession
         void HandleUndeleteCooldownStatusCallback(PreparedQueryResult result);
         void HandleCharUndeleteOpcode(WorldPackets::Character::UndeleteCharacter& undeleteInfo);
         bool MeetsChrCustomizationReq(ChrCustomizationReqEntry const* req, Classes playerClass,
-            bool checkRequiredDependentChoices, Trinity::IteratorPair<UF::ChrCustomizationChoice const*> selectedChoices) const;
+            bool checkRequiredDependentChoices, Azgath::IteratorPair<UF::ChrCustomizationChoice const*> selectedChoices) const;
         bool ValidateAppearance(Races race, Classes playerClass, Gender gender,
-            Trinity::IteratorPair<UF::ChrCustomizationChoice const*> customizations); // customizations must be sorted
+            Azgath::IteratorPair<UF::ChrCustomizationChoice const*> customizations); // customizations must be sorted
 
         void SendCharCreate(ResponseCodes result, ObjectGuid const& guid = ObjectGuid::Empty);
         void SendCharDelete(ResponseCodes result);

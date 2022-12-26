@@ -1320,7 +1320,7 @@ void MotionMaster::ClearBaseUnitState(MovementGenerator const* movement)
     if (!movement || !movement->BaseUnitState)
         return;
 
-    Trinity::Containers::MultimapErasePair(_baseUnitStatesMap, movement->BaseUnitState, movement);
+    Azgath::Containers::MultimapErasePair(_baseUnitStatesMap, movement->BaseUnitState, movement);
     if (_baseUnitStatesMap.count(movement->BaseUnitState) == 0)
         _owner->ClearUnitState(movement->BaseUnitState);
 }

@@ -629,8 +629,8 @@ void Battleground::SendBroadcastText(uint32 id, ChatMsg msgType, WorldObject con
         return;
     }
 
-    Trinity::BroadcastTextBuilder builder(nullptr, msgType, id, GENDER_MALE, target);
-    Trinity::LocalizedDo<Trinity::BroadcastTextBuilder> localizer(builder);
+    Azgath::BroadcastTextBuilder builder(nullptr, msgType, id, GENDER_MALE, target);
+    Azgath::LocalizedDo<Azgath::BroadcastTextBuilder> localizer(builder);
     BroadcastWorker(localizer);
 }
 
@@ -858,7 +858,7 @@ uint32 Battleground::GetBonusHonorFromKill(uint32 kills) const
 {
     //variable kills means how many honorable kills you scored (so we need kills * honor_for_one_kill)
     uint32 maxLevel = std::min<uint32>(GetMaxLevel(), 80U);
-    return Trinity::Honor::hk_honor_at_level(maxLevel, float(kills));
+    return Azgath::Honor::hk_honor_at_level(maxLevel, float(kills));
 }
 
 void Battleground::BlockMovement(Player* player)
@@ -1717,8 +1717,8 @@ void Battleground::SendMessageToAll(uint32 entry, ChatMsg msgType, Player const*
     if (!entry)
         return;
 
-    Trinity::TrinityStringChatBuilder builder(nullptr, msgType, entry, source);
-    Trinity::LocalizedDo<Trinity::TrinityStringChatBuilder> localizer(builder);
+    Azgath::TrinityStringChatBuilder builder(nullptr, msgType, entry, source);
+    Azgath::LocalizedDo<Azgath::TrinityStringChatBuilder> localizer(builder);
     BroadcastWorker(localizer);
 }
 
@@ -1730,8 +1730,8 @@ void Battleground::PSendMessageToAll(uint32 entry, ChatMsg msgType, Player const
     va_list ap;
     va_start(ap, source);
 
-    Trinity::TrinityStringChatBuilder builder(nullptr, msgType, entry, source, &ap);
-    Trinity::LocalizedDo<Trinity::TrinityStringChatBuilder> localizer(builder);
+    Azgath::TrinityStringChatBuilder builder(nullptr, msgType, entry, source, &ap);
+    Azgath::LocalizedDo<Azgath::TrinityStringChatBuilder> localizer(builder);
     BroadcastWorker(localizer);
 
     va_end(ap);
@@ -1948,7 +1948,7 @@ void Battleground::RewardXPAtKill(Player* killer, Player* victim)
     if (sWorld->getBoolConfig(CONFIG_BG_XP_FOR_KILL) && killer && victim)
     {
         Player* killers[] = { killer };
-        KillRewarder(Trinity::IteratorPair(std::begin(killers), std::end(killers)), victim, true).Reward();
+        KillRewarder(Azgath::IteratorPair(std::begin(killers), std::end(killers)), victim, true).Reward();
     }
 }
 

@@ -40,8 +40,8 @@ namespace std
         std::size_t operator()(AreaTriggerId const& value) const noexcept
         {
             size_t hashVal = 0;
-            Trinity::hash_combine(hashVal, value.Id);
-            Trinity::hash_combine(hashVal, value.IsServerSide);
+            Azgath::hash_combine(hashVal, value.Id);
+            Azgath::hash_combine(hashVal, value.IsServerSide);
             return hashVal;
         }
     };
@@ -261,7 +261,7 @@ void AreaTriggerDataStore::LoadAreaTriggerTemplates()
             Field* circularMovementInfoFields = circularMovementInfos->Fetch();
             uint32 areaTriggerCreatePropertiesId = circularMovementInfoFields[0].GetUInt32();
 
-            AreaTriggerCreateProperties* createProperties = Trinity::Containers::MapGetValuePtr(_areaTriggerCreateProperties, areaTriggerCreatePropertiesId);
+            AreaTriggerCreateProperties* createProperties = Azgath::Containers::MapGetValuePtr(_areaTriggerCreateProperties, areaTriggerCreatePropertiesId);
             if (!createProperties)
             {
                 TC_LOG_ERROR("sql.sql", "Table `areatrigger_create_properties_orbit` reference invalid AreaTriggerCreatePropertiesId %u", areaTriggerCreatePropertiesId);
@@ -358,7 +358,7 @@ void AreaTriggerDataStore::LoadAreaTriggerSpawns()
             spawn.spawnGroupData = sObjectMgr->GetLegacySpawnGroup();
 
             // Add the trigger to a map::cell map, which is later used by GridLoader to query
-            CellCoord cellCoord = Trinity::ComputeCellCoord(spawn.spawnPoint.GetPositionX(), spawn.spawnPoint.GetPositionY());
+            CellCoord cellCoord = Azgath::ComputeCellCoord(spawn.spawnPoint.GetPositionX(), spawn.spawnPoint.GetPositionY());
             _areaTriggerSpawnsByLocation[{ spawn.mapId, cellCoord.GetId() }].insert(spawnId);
         } while (templates->NextRow());
     }
@@ -368,22 +368,22 @@ void AreaTriggerDataStore::LoadAreaTriggerSpawns()
 
 AreaTriggerTemplate const* AreaTriggerDataStore::GetAreaTriggerTemplate(AreaTriggerId const& areaTriggerId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_areaTriggerTemplateStore, areaTriggerId);
+    return Azgath::Containers::MapGetValuePtr(_areaTriggerTemplateStore, areaTriggerId);
 }
 
 AreaTriggerCreateProperties const* AreaTriggerDataStore::GetAreaTriggerCreateProperties(uint32 areaTriggerCreatePropertiesId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_areaTriggerCreateProperties, areaTriggerCreatePropertiesId);
+    return Azgath::Containers::MapGetValuePtr(_areaTriggerCreateProperties, areaTriggerCreatePropertiesId);
 }
 
 std::set<ObjectGuid::LowType> const* AreaTriggerDataStore::GetAreaTriggersForMapAndCell(uint32 mapId, uint32 cellId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_areaTriggerSpawnsByLocation, { mapId, cellId });
+    return Azgath::Containers::MapGetValuePtr(_areaTriggerSpawnsByLocation, { mapId, cellId });
 }
 
 AreaTriggerSpawn const* AreaTriggerDataStore::GetAreaTriggerSpawn(ObjectGuid::LowType spawnId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_areaTriggerSpawnsBySpawnId, spawnId);
+    return Azgath::Containers::MapGetValuePtr(_areaTriggerSpawnsBySpawnId, spawnId);
 }
 
 AreaTriggerDataStore* AreaTriggerDataStore::Instance()

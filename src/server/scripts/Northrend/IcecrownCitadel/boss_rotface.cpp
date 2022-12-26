@@ -428,7 +428,7 @@ class spell_rotface_ooze_flood : public SpellScript
         if (triggers.empty())
             return;
 
-        triggers.sort(Trinity::ObjectDistanceOrderPred(GetHitUnit()));
+        triggers.sort(Azgath::ObjectDistanceOrderPred(GetHitUnit()));
         GetHitUnit()->CastSpell(triggers.back(), uint32(GetEffectValue()), CastSpellExtraArgs(TRIGGERED_FULL_MASK)
             .SetOriginalCaster(GetOriginalCaster() ? GetOriginalCaster()->GetGUID() : ObjectGuid::Empty));
     }
@@ -436,7 +436,7 @@ class spell_rotface_ooze_flood : public SpellScript
     void FilterTargets(std::list<WorldObject*>& targets)
     {
         // get 2 targets except 2 nearest
-        targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+        targets.sort(Azgath::ObjectDistanceOrderPred(GetCaster()));
 
         // .resize() runs pop_back();
         if (targets.size() > 4)
@@ -462,11 +462,11 @@ class spell_rotface_mutated_infection : public SpellScript
     {
         // remove targets with this aura already
         // tank is not on this list
-        targets.remove_if(Trinity::UnitAuraCheck(true, GetSpellInfo()->Id));
+        targets.remove_if(Azgath::UnitAuraCheck(true, GetSpellInfo()->Id));
         if (targets.empty())
             return;
 
-        WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+        WorldObject* target = Azgath::Containers::SelectRandomContainerElement(targets);
         targets.clear();
         targets.push_back(target);
     }
@@ -727,7 +727,7 @@ class spell_rotface_vile_gas_trigger : public SpellScript
 
     void FilterTargets(std::list<WorldObject*>& targets)
     {
-        targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+        targets.sort(Azgath::ObjectDistanceOrderPred(GetCaster()));
         if (targets.empty())
             return;
 
@@ -751,13 +751,13 @@ class spell_rotface_vile_gas_trigger : public SpellScript
             if (melee.empty())
                 break;
 
-            WorldObject* target = Trinity::Containers::SelectRandomContainerElement(melee);
+            WorldObject* target = Azgath::Containers::SelectRandomContainerElement(melee);
             ranged.push_back(target);
             melee.remove(target);
         }
 
         if (!ranged.empty())
-            Trinity::Containers::RandomResize(ranged, GetCaster()->GetMap()->Is25ManRaid() ? 3 : 1);
+            Azgath::Containers::RandomResize(ranged, GetCaster()->GetMap()->Is25ManRaid() ? 3 : 1);
 
         targets.swap(ranged);
     }

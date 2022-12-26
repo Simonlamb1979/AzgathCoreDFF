@@ -190,12 +190,12 @@ void BattlePetMgr::AddBattlePetSpeciesBySpell(uint32 spellId, BattlePetSpeciesEn
 
 BattlePetSpeciesEntry const* BattlePetMgr::GetBattlePetSpeciesByCreature(uint32 creatureId)
 {
-    return Trinity::Containers::MapGetValuePtr(_battlePetSpeciesByCreature, creatureId);
+    return Azgath::Containers::MapGetValuePtr(_battlePetSpeciesByCreature, creatureId);
 }
 
 BattlePetSpeciesEntry const* BattlePetMgr::GetBattlePetSpeciesBySpell(uint32 spellId)
 {
-    return Trinity::Containers::MapGetValuePtr(_battlePetSpeciesBySpell, spellId);
+    return Azgath::Containers::MapGetValuePtr(_battlePetSpeciesBySpell, spellId);
 }
 
 uint16 BattlePetMgr::RollPetBreed(uint32 species)
@@ -204,7 +204,7 @@ uint16 BattlePetMgr::RollPetBreed(uint32 species)
     if (itr == _availableBreedsPerSpecies.end())
         return 3; // default B/B
 
-    return Trinity::Containers::SelectRandomContainerElement(itr->second);
+    return Azgath::Containers::SelectRandomContainerElement(itr->second);
 }
 
 BattlePetBreedQuality BattlePetMgr::GetDefaultPetQuality(uint32 species)
@@ -443,7 +443,7 @@ void BattlePetMgr::SaveToDB(LoginDatabaseTransaction trans)
 
 BattlePet* BattlePetMgr::GetPet(ObjectGuid guid)
 {
-    return Trinity::Containers::MapGetValuePtr(_pets, guid.GetCounter());
+    return Azgath::Containers::MapGetValuePtr(_pets, guid.GetCounter());
 }
 
 void BattlePetMgr::AddPet(uint32 species, uint32 display, uint16 breed, BattlePetBreedQuality quality, uint16 level /*= 1*/)

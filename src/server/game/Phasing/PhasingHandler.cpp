@@ -582,7 +582,7 @@ uint32 PhasingHandler::GetTerrainMapId(PhaseShift const& phaseShift, TerrainInfo
     if (phaseShift.VisibleMapIds.size() == 1)
         return phaseShift.VisibleMapIds.begin()->first;
 
-    GridCoord gridCoord = Trinity::ComputeGridCoord(x, y);
+    GridCoord gridCoord = Azgath::ComputeGridCoord(x, y);
     int32 gx = (MAX_NUMBER_OF_GRIDS - 1) - gridCoord.x_coord;
     int32 gy = (MAX_NUMBER_OF_GRIDS - 1) - gridCoord.y_coord;
 

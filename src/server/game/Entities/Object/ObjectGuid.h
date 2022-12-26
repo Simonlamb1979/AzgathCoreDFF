@@ -438,7 +438,7 @@ namespace std
     };
 }
 
-namespace Trinity
+namespace Azgath
 {
     namespace Legacy
     {

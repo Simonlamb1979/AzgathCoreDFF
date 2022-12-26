@@ -23,7 +23,7 @@ DB2CascFileSource::DB2CascFileSource(std::shared_ptr<CASC::Storage const> storag
 {
     _storageHandle = storage;
     _fileHandle.reset(storage->OpenFile(fileDataId, CASC_LOCALE_NONE, printErrors, true));
-    _fileName = Trinity::StringFormat("FileDataId: %u", fileDataId);
+    _fileName = Azgath::StringFormat("FileDataId: %u", fileDataId);
 }
 
 bool DB2CascFileSource::IsOpen() const

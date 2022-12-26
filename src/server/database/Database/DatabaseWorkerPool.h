@@ -75,10 +75,10 @@ class DatabaseWorkerPool
         template<typename... Args>
         void PExecute(std::string_view sql, Args&&... args)
         {
-            if (Trinity::IsFormatEmptyOrNull(sql))
+            if (Azgath::IsFormatEmptyOrNull(sql))
                 return;
 
-            Execute(Trinity::StringFormat(sql, std::forward<Args>(args)...).c_str());
+            Execute(Azgath::StringFormat(sql, std::forward<Args>(args)...).c_str());
         }
 
         //! Enqueues a one-way SQL operation in prepared statement format that will be executed asynchronously.
@@ -98,10 +98,10 @@ class DatabaseWorkerPool
         template<typename... Args>
         void DirectPExecute(std::string_view sql, Args&&... args)
         {
-            if (Trinity::IsFormatEmptyOrNull(sql))
+            if (Azgath::IsFormatEmptyOrNull(sql))
                 return;
 
-            DirectExecute(Trinity::StringFormat(sql, std::forward<Args>(args)...).c_str());
+            DirectExecute(Azgath::StringFormat(sql, std::forward<Args>(args)...).c_str());
         }
 
         //! Directly executes a one-way SQL operation in prepared statement format, that will block the calling thread until finished.
@@ -121,10 +121,10 @@ class DatabaseWorkerPool
         template<typename... Args>
         QueryResult PQuery(std::string_view sql, T* conn, Args&&... args)
         {
-            if (Trinity::IsFormatEmptyOrNull(sql))
+            if (Azgath::IsFormatEmptyOrNull(sql))
                 return QueryResult(nullptr);
 
-            return Query(Trinity::StringFormat(sql, std::forward<Args>(args)...).c_str(), conn);
+            return Query(Azgath::StringFormat(sql, std::forward<Args>(args)...).c_str(), conn);
         }
 
         //! Directly executes an SQL query in string format -with variable args- that will block the calling thread until finished.
@@ -132,10 +132,10 @@ class DatabaseWorkerPool
         template<typename... Args>
         QueryResult PQuery(std::string_view sql, Args&&... args)
         {
-            if (Trinity::IsFormatEmptyOrNull(sql))
+            if (Azgath::IsFormatEmptyOrNull(sql))
                 return QueryResult(nullptr);
 
-            return Query(Trinity::StringFormat(sql, std::forward<Args>(args)...).c_str());
+            return Query(Azgath::StringFormat(sql, std::forward<Args>(args)...).c_str());
         }
 
         //! Directly executes an SQL query in prepared format that will block the calling thread until finished.

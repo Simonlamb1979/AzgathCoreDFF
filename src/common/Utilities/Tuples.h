@@ -20,7 +20,7 @@
 
 #include <tuple>
 
-namespace Trinity
+namespace Azgath
 {
     template <typename T, typename Tuple>
     struct has_type;

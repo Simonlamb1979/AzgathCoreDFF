@@ -55,9 +55,9 @@ void WorldStateMgr::LoadFromDB()
         worldState.DefaultValue = fields[1].GetInt32();
 
         std::string_view mapIds = fields[2].GetStringView();
-        for (std::string_view mapIdToken : Trinity::Tokenize(mapIds, ',', false))
+        for (std::string_view mapIdToken : Azgath::Tokenize(mapIds, ',', false))
         {
-            Optional<int32> mapId = Trinity::StringTo<int32>(mapIdToken);
+            Optional<int32> mapId = Azgath::StringTo<int32>(mapIdToken);
             if (!mapId)
             {
                 TC_LOG_ERROR("sql.sql", "Table `world_state` contains a world state %d with non-integer MapID (" STRING_VIEW_FMT "), map ignored",
@@ -85,9 +85,9 @@ void WorldStateMgr::LoadFromDB()
         std::string_view areaIds = fields[3].GetStringView();
         if (!worldState.MapIds.empty())
         {
-            for (std::string_view areaIdToken : Trinity::Tokenize(areaIds, ',', false))
+            for (std::string_view areaIdToken : Azgath::Tokenize(areaIds, ',', false))
             {
-                Optional<uint32> areaId = Trinity::StringTo<uint32>(areaIdToken);
+                Optional<uint32> areaId = Azgath::StringTo<uint32>(areaIdToken);
                 if (!areaId)
                 {
                     TC_LOG_ERROR("sql.sql", "Table `world_state` contains a world state %u with non-integer AreaID (" STRING_VIEW_FMT "), area ignored",
@@ -150,7 +150,7 @@ void WorldStateMgr::LoadFromDB()
         {
             Field* fields = result->Fetch();
             int32 worldStateId = fields[0].GetInt32();
-            WorldStateTemplate* worldState = Trinity::Containers::MapGetValuePtr(_worldStateTemplates, worldStateId);
+            WorldStateTemplate* worldState = Azgath::Containers::MapGetValuePtr(_worldStateTemplates, worldStateId);
             if (!worldState)
             {
                 TC_LOG_ERROR("sql.sql", "Table `world_state_value` contains a value for unknown world state %d, ignored", worldStateId);
@@ -177,7 +177,7 @@ void WorldStateMgr::LoadFromDB()
 
 WorldStateTemplate const* WorldStateMgr::GetWorldStateTemplate(int32 worldStateId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_worldStateTemplates, worldStateId);
+    return Azgath::Containers::MapGetValuePtr(_worldStateTemplates, worldStateId);
 }
 
 int32 WorldStateMgr::GetValue(int32 worldStateId, Map const* map) const
@@ -185,7 +185,7 @@ int32 WorldStateMgr::GetValue(int32 worldStateId, Map const* map) const
     WorldStateTemplate const* worldStateTemplate = GetWorldStateTemplate(worldStateId);
     if (!worldStateTemplate || worldStateTemplate->MapIds.empty())
     {
-        if (int32 const* value = Trinity::Containers::MapGetValuePtr(_realmWorldStateValues, worldStateId))
+        if (int32 const* value = Azgath::Containers::MapGetValuePtr(_realmWorldStateValues, worldStateId))
             return *value;
 
         return 0;
@@ -247,10 +247,10 @@ void WorldStateMgr::SetValueAndSaveInDb(int32 worldStateId, int32 value, bool hi
 WorldStateValueContainer WorldStateMgr::GetInitialWorldStatesForMap(Map const* map) const
 {
     WorldStateValueContainer initialValues;
-    if (WorldStateValueContainer const* valuesTemplate = Trinity::Containers::MapGetValuePtr(_worldStatesByMap, map->GetId()))
+    if (WorldStateValueContainer const* valuesTemplate = Azgath::Containers::MapGetValuePtr(_worldStatesByMap, map->GetId()))
         initialValues.insert(valuesTemplate->begin(), valuesTemplate->end());
 
-    if (WorldStateValueContainer const* valuesTemplate = Trinity::Containers::MapGetValuePtr(_worldStatesByMap, WORLDSTATE_ANY_MAP))
+    if (WorldStateValueContainer const* valuesTemplate = Azgath::Containers::MapGetValuePtr(_worldStatesByMap, WORLDSTATE_ANY_MAP))
         initialValues.insert(valuesTemplate->begin(), valuesTemplate->end());
 
     return initialValues;

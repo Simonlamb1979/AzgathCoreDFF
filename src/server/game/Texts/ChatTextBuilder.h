@@ -26,7 +26,7 @@
 class Player;
 class WorldObject;
 
-namespace Trinity
+namespace Azgath
 {
     class ChatPacketSender
     {
@@ -119,6 +119,6 @@ namespace Trinity
             WorldObject const* _target;
     };
 }
-// namespace Trinity
+// namespace Azgath
 
 #endif // __CHATTEXT_BUILDER_H

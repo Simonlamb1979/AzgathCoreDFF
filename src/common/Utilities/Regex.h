@@ -23,7 +23,7 @@
 #include <boost/regex.hpp>
 #define TC_REGEX_NAMESPACE boost
 
-namespace Trinity
+namespace Azgath
 {
     using regex = TC_REGEX_NAMESPACE :: regex;
     using wregex = TC_REGEX_NAMESPACE :: wregex;

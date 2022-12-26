@@ -22,7 +22,7 @@
 #include <boost/asio/bind_executor.hpp>
 #include <boost/asio/strand.hpp>
 
-namespace Trinity
+namespace Azgath
 {
     namespace Asio
     {

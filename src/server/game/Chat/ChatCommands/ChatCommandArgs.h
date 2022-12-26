@@ -31,7 +31,7 @@
 
 struct GameTele;
 
-namespace Trinity::Impl::ChatCommands
+namespace Azgath::Impl::ChatCommands
 {
 
     /************************** ARGUMENT HANDLERS *******************************************\
@@ -47,7 +47,7 @@ namespace Trinity::Impl::ChatCommands
     |*                                                                                      *|
     \****************************************************************************************/
     template <typename T, typename = void>
-    struct ArgInfo { static_assert(Trinity::dependant_false_v<T>, "Invalid command parameter type - see ChatCommandArgs.h for possible types"); };
+    struct ArgInfo { static_assert(Azgath::dependant_false_v<T>, "Invalid command parameter type - see ChatCommandArgs.h for possible types"); };
 
     // catch-all for number types
     template <typename T>
@@ -252,13 +252,13 @@ namespace Trinity::Impl::ChatCommands
 
     // variant
     template <typename... Ts>
-    struct ArgInfo<Trinity::ChatCommands::Variant<Ts...>>
+    struct ArgInfo<Azgath::ChatCommands::Variant<Ts...>>
     {
         using V = std::variant<Ts...>;
         static constexpr size_t N = std::variant_size_v<V>;
 
         template <size_t I>
-        static ChatCommandResult TryAtIndex([[maybe_unused]] Trinity::ChatCommands::Variant<Ts...>& val, [[maybe_unused]] ChatHandler const* handler, [[maybe_unused]] std::string_view args)
+        static ChatCommandResult TryAtIndex([[maybe_unused]] Azgath::ChatCommands::Variant<Ts...>& val, [[maybe_unused]] ChatHandler const* handler, [[maybe_unused]] std::string_view args)
         {
             if constexpr (I < N)
             {
@@ -273,20 +273,20 @@ namespace Trinity::Impl::ChatCommands
                     if (!nestedResult.HasErrorMessage())
                         return thisResult;
                     if (StringStartsWith(nestedResult.GetErrorMessage(), "\""))
-                        return Trinity::StringFormat("\"%s\"\n%s %s", thisResult.GetErrorMessage().c_str(), GetAzgathString(handler, LANG_CMDPARSER_OR), nestedResult.GetErrorMessage().c_str());
+                        return Azgath::StringFormat("\"%s\"\n%s %s", thisResult.GetErrorMessage().c_str(), GetAzgathString(handler, LANG_CMDPARSER_OR), nestedResult.GetErrorMessage().c_str());
                     else
-                        return Trinity::StringFormat("\"%s\"\n%s \"%s\"", thisResult.GetErrorMessage().c_str(), GetAzgathString(handler, LANG_CMDPARSER_OR), nestedResult.GetErrorMessage().c_str());
+                        return Azgath::StringFormat("\"%s\"\n%s \"%s\"", thisResult.GetErrorMessage().c_str(), GetAzgathString(handler, LANG_CMDPARSER_OR), nestedResult.GetErrorMessage().c_str());
                 }
             }
             else
                 return std::nullopt;
         }
 
-        static ChatCommandResult TryConsume(Trinity::ChatCommands::Variant<Ts...>& val, ChatHandler const* handler, std::string_view args)
+        static ChatCommandResult TryConsume(Azgath::ChatCommands::Variant<Ts...>& val, ChatHandler const* handler, std::string_view args)
         {
             ChatCommandResult result = TryAtIndex<0>(val, handler, args);
             if (result.HasErrorMessage() && (result.GetErrorMessage().find('\n') != std::string::npos))
-                return Trinity::StringFormat("%s %s", GetAzgathString(handler, LANG_CMDPARSER_EITHER), result.GetErrorMessage().c_str());
+                return Azgath::StringFormat("%s %s", GetAzgathString(handler, LANG_CMDPARSER_EITHER), result.GetErrorMessage().c_str());
             return result;
         }
     };

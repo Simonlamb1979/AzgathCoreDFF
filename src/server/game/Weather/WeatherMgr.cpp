@@ -37,7 +37,7 @@ namespace
 
 WeatherData const* GetWeatherData(uint32 zone_id)
 {
-    return Trinity::Containers::MapGetValuePtr(_weatherData, zone_id);
+    return Azgath::Containers::MapGetValuePtr(_weatherData, zone_id);
 }
 
 void LoadWeatherData()

@@ -52,7 +52,7 @@ class spell_hallow_end_candy : public SpellScript
 
     void HandleDummy(SpellEffIndex /*effIndex*/)
     {
-        GetCaster()->CastSpell(GetCaster(), Trinity::Containers::SelectRandomContainerElement(CandysSpells), true);
+        GetCaster()->CastSpell(GetCaster(), Azgath::Containers::SelectRandomContainerElement(CandysSpells), true);
     }
 
     void Register() override

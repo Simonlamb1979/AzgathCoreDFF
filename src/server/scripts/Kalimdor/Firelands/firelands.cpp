@@ -265,7 +265,7 @@ class spell_firelands_fiery_torment : public SpellScript
         if (targets.empty())
             return;
 
-        targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster(), true));
+        targets.sort(Azgath::ObjectDistanceOrderPred(GetCaster(), true));
         targets.resize(1);
     }
 

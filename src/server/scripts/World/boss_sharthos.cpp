@@ -104,7 +104,7 @@ public:
                     me->GetPlayerListInGrid(nearbyPlayers, 50.0f);
 
                     if (!nearbyPlayers.empty())
-                        Trinity::Containers::RandomResize(nearbyPlayers, 1);
+                        Azgath::Containers::RandomResize(nearbyPlayers, 1);
 
                     for (Player* target : nearbyPlayers)
                         me->CastSpell((Unit*)target, Spells::BurningEarthAreatrigger);

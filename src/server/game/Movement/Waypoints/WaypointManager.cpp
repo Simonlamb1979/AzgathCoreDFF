@@ -46,8 +46,8 @@ void WaypointMgr::Load()
         if (!fields[5].IsNull())
             o = fields[5].GetFloat();
 
-        Trinity::NormalizeMapCoord(x);
-        Trinity::NormalizeMapCoord(y);
+        Azgath::NormalizeMapCoord(x);
+        Azgath::NormalizeMapCoord(y);
 
         WaypointNode waypoint;
         waypoint.id = fields[1].GetUInt32();
@@ -105,8 +105,8 @@ void WaypointMgr::ReloadPath(uint32 id)
         if (!fields[4].IsNull())
             o = fields[4].GetFloat();
 
-        Trinity::NormalizeMapCoord(x);
-        Trinity::NormalizeMapCoord(y);
+        Azgath::NormalizeMapCoord(x);
+        Azgath::NormalizeMapCoord(y);
 
         WaypointNode waypoint;
         waypoint.id = fields[0].GetUInt32();

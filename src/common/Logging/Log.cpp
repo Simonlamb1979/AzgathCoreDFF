@@ -65,7 +65,7 @@ void Log::CreateAppenderFromConfigLine(std::string const& appenderName, std::str
     // if type = File. optional1 = file and option2 = mode
     // if type = Console. optional1 = Color
 
-    std::vector<std::string_view> tokens = Trinity::Tokenize(options, ',', true);
+    std::vector<std::string_view> tokens = Azgath::Tokenize(options, ',', true);
 
     size_t const size = tokens.size();
     std::string name = appenderName.substr(9);
@@ -77,8 +77,8 @@ void Log::CreateAppenderFromConfigLine(std::string const& appenderName, std::str
     }
 
     AppenderFlags flags = APPENDER_FLAGS_NONE;
-    AppenderType type = AppenderType(Trinity::StringTo<uint8>(tokens[0]).value_or(APPENDER_INVALID));
-    LogLevel level = LogLevel(Trinity::StringTo<uint8>(tokens[1]).value_or(LOG_LEVEL_INVALID));
+    AppenderType type = AppenderType(Azgath::StringTo<uint8>(tokens[0]).value_or(APPENDER_INVALID));
+    LogLevel level = LogLevel(Azgath::StringTo<uint8>(tokens[1]).value_or(LOG_LEVEL_INVALID));
 
     auto factoryFunction = appenderFactory.find(type);
     if (factoryFunction == appenderFactory.end())
@@ -95,7 +95,7 @@ void Log::CreateAppenderFromConfigLine(std::string const& appenderName, std::str
 
     if (size > 2)
     {
-        if (Optional<uint8> flagsVal = Trinity::StringTo<uint8>(tokens[2]))
+        if (Optional<uint8> flagsVal = Azgath::StringTo<uint8>(tokens[2]))
             flags = AppenderFlags(*flagsVal);
         else
         {
@@ -135,7 +135,7 @@ void Log::CreateLoggerFromConfigLine(std::string const& loggerName, std::string 
         return;
     }
 
-    std::vector<std::string_view> tokens = Trinity::Tokenize(options, ',', true);
+    std::vector<std::string_view> tokens = Azgath::Tokenize(options, ',', true);
 
     if (tokens.size() != 2)
     {
@@ -149,7 +149,7 @@ void Log::CreateLoggerFromConfigLine(std::string const& loggerName, std::string 
         return;
     }
 
-    level = LogLevel(Trinity::StringTo<uint8>(tokens[0]).value_or(LOG_LEVEL_INVALID));
+    level = LogLevel(Azgath::StringTo<uint8>(tokens[0]).value_or(LOG_LEVEL_INVALID));
     if (level > NUM_ENABLED_LOG_LEVELS)
     {
         fprintf(stderr, "Log::CreateLoggerFromConfig: Wrong Log Level '%s' for logger %s\n", std::string(tokens[0]).c_str(), name.c_str());
@@ -163,7 +163,7 @@ void Log::CreateLoggerFromConfigLine(std::string const& loggerName, std::string 
     loggers[logger->getName()].reset(logger);
     //fprintf(stdout, "Log::CreateLoggerFromConfig: Created Logger %s, Level %u\n", name.c_str(), level);
 
-    for (std::string_view appenderName : Trinity::Tokenize(tokens[1], ' ', false))
+    for (std::string_view appenderName : Azgath::Tokenize(tokens[1], ' ', false))
     {
         if (Appender* appender = GetAppenderByName(appenderName))
         {
@@ -238,7 +238,7 @@ void Log::write(std::unique_ptr<LogMessage>&& msg) const
     if (_ioContext)
     {
         std::shared_ptr<LogOperation> logOperation = std::make_shared<LogOperation>(logger, std::move(msg));
-        Trinity::Asio::post(*_ioContext, Trinity::Asio::bind_executor(*_strand, [logOperation]() { logOperation->call(); }));
+        Azgath::Asio::post(*_ioContext, Azgath::Asio::bind_executor(*_strand, [logOperation]() { logOperation->call(); }));
     }
     else
         logger->write(msg.get());
@@ -276,7 +276,7 @@ std::string Log::GetTimestampStr()
     //       SS     seconds (2 digits 00-59)
     try
     {
-        return Trinity::StringFormat("%04d-%02d-%02d_%02d-%02d-%02d",
+        return Azgath::StringFormat("%04d-%02d-%02d_%02d-%02d-%02d",
             aTm.tm_year + 1900, aTm.tm_mon + 1, aTm.tm_mday, aTm.tm_hour, aTm.tm_min, aTm.tm_sec);
     }
     catch (std::exception const& ex)
@@ -374,12 +374,12 @@ Log* Log::instance()
     return &instance;
 }
 
-void Log::Initialize(Trinity::Asio::IoContext* ioContext)
+void Log::Initialize(Azgath::Asio::IoContext* ioContext)
 {
     if (ioContext)
     {
         _ioContext = ioContext;
-        _strand = new Trinity::Asio::Strand(*ioContext);
+        _strand = new Azgath::Asio::Strand(*ioContext);
     }
 
     LoadFromConfig();

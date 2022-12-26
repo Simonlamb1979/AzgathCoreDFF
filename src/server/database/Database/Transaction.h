@@ -43,7 +43,7 @@ class TC_DATABASE_API TransactionBase
         template<typename... Args>
         void PAppend(std::string_view sql, Args&&... args)
         {
-            Append(Trinity::StringFormat(sql, std::forward<Args>(args)...).c_str());
+            Append(Azgath::StringFormat(sql, std::forward<Args>(args)...).c_str());
         }
 
         std::size_t GetSize() const { return m_queries.size(); }

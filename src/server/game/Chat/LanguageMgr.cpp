@@ -55,20 +55,20 @@ void LanguageMgr::LoadLanguages()
     // Load languages from Languages.db2. Just the id, we don't need the name
     for (LanguagesEntry const* langEntry : sLanguagesStore)
     {
-        auto spellsRange = Trinity::Containers::MapEqualRange(_langsMap, langEntry->ID);
+        auto spellsRange = Azgath::Containers::MapEqualRange(_langsMap, langEntry->ID);
         if (spellsRange.begin() == spellsRange.end())
             _langsMap.emplace(langEntry->ID, LanguageDesc());
         else
         {
             std::vector<LanguageDesc> langsWithSkill;
             for (LanguagesMap::value_type const& spellItr : spellsRange)
-                for (SkillLineAbilityMap::value_type const& skillPair : Trinity::Containers::MakeIteratorPair(sSpellMgr->GetSkillLineAbilityMapBounds(spellItr.second.SpellId)))
+                for (SkillLineAbilityMap::value_type const& skillPair : Azgath::Containers::MakeIteratorPair(sSpellMgr->GetSkillLineAbilityMapBounds(spellItr.second.SpellId)))
                     langsWithSkill.emplace_back(LanguageDesc{ spellItr.second.SpellId, uint32(skillPair.second->SkillLine) });
 
             for (LanguageDesc const& langDesc : langsWithSkill)
             {
                 // erase temporary assignment that lacked skill
-                Trinity::Containers::MultimapErasePair(_langsMap, langEntry->ID, { langDesc.SpellId, 0 });
+                Azgath::Containers::MultimapErasePair(_langsMap, langEntry->ID, { langDesc.SpellId, 0 });
                 _langsMap.emplace(langEntry->ID, langDesc);
             }
         }
@@ -104,7 +104,7 @@ void LanguageMgr::LoadLanguagesWords()
 
 LanguageMgr::WordList const* LanguageMgr::FindWordGroup(uint32 language, uint32 wordLen) const
 {
-    return Trinity::Containers::MapGetValuePtr(_wordsMap, WordKey(language, wordLen));
+    return Azgath::Containers::MapGetValuePtr(_wordsMap, WordKey(language, wordLen));
 }
 
 namespace
@@ -217,7 +217,7 @@ std::string LanguageMgr::Translate(std::string const& msg, uint32 language, Loca
 
     std::string result;
     result.reserve(textToTranslate.length());
-    for (std::string_view str : Trinity::Tokenize(textToTranslate, ' ', false))
+    for (std::string_view str : Azgath::Tokenize(textToTranslate, ' ', false))
     {
         uint32 wordLen = std::min(18u, uint32(str.length()));
         if (LanguageMgr::WordList const* wordGroup = FindWordGroup(language, wordLen))
@@ -276,7 +276,7 @@ bool LanguageMgr::IsLanguageExist(uint32 languageId) const
     return sLanguagesStore.HasRecord(languageId);
 }
 
-Trinity::IteratorPair<LanguageMgr::LanguagesMap::const_iterator> LanguageMgr::GetLanguageDescById(Language languageId) const
+Azgath::IteratorPair<LanguageMgr::LanguagesMap::const_iterator> LanguageMgr::GetLanguageDescById(Language languageId) const
 {
-    return Trinity::Containers::MapEqualRange(_langsMap, languageId);
+    return Azgath::Containers::MapEqualRange(_langsMap, languageId);
 }

@@ -58,7 +58,7 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class misc_commandscript : public CommandScript
 {
@@ -235,7 +235,7 @@ public:
             }
         }
 
-        CellCoord cellCoord = Trinity::ComputeCellCoord(object->GetPositionX(), object->GetPositionY());
+        CellCoord cellCoord = Azgath::ComputeCellCoord(object->GetPositionX(), object->GetPositionY());
         Cell cell(cellCoord);
 
         uint32 zoneId, areaId;
@@ -255,7 +255,7 @@ public:
         float groundZ = object->GetMapHeight(object->GetPositionX(), object->GetPositionY(), MAX_HEIGHT);
         float floorZ = object->GetMapHeight(object->GetPositionX(), object->GetPositionY(), object->GetPositionZ());
 
-        GridCoord gridCoord = Trinity::ComputeGridCoord(object->GetPositionX(), object->GetPositionY());
+        GridCoord gridCoord = Azgath::ComputeGridCoord(object->GetPositionX(), object->GetPositionY());
 
         int gridX = (MAX_NUMBER_OF_GRIDS - 1) - gridCoord.x_coord;
         int gridY = (MAX_NUMBER_OF_GRIDS - 1) - gridCoord.y_coord;
@@ -592,7 +592,7 @@ public:
 
     static bool HandleCommandsCommand(ChatHandler* handler)
     {
-        Trinity::ChatCommands::SendCommandHelpFor(*handler, "");
+        Azgath::ChatCommands::SendCommandHelpFor(*handler, "");
         return true;
     }
 
@@ -685,9 +685,9 @@ public:
 
     static bool HandleHelpCommand(ChatHandler* handler, Tail cmd)
     {
-        Trinity::ChatCommands::SendCommandHelpFor(*handler, cmd);
+        Azgath::ChatCommands::SendCommandHelpFor(*handler, cmd);
         if (cmd.empty())
-            Trinity::ChatCommands::SendCommandHelpFor(*handler, "help");
+            Azgath::ChatCommands::SendCommandHelpFor(*handler, "help");
         return true;
     }
 
@@ -1226,8 +1226,8 @@ public:
 
         // semicolon separated bonuslist ids (parse them after all arguments are extracted by strtok!)
         if (bonuses)
-            for (std::string_view token : Trinity::Tokenize(bonuses, ';', false))
-                if (Optional<int32> bonusListId = Trinity::StringTo<int32>(token))
+            for (std::string_view token : Azgath::Tokenize(bonuses, ';', false))
+                if (Optional<int32> bonusListId = Azgath::StringTo<int32>(token))
                     bonusListIDs.push_back(*bonusListId);
 
         ItemContext itemContext = ItemContext::NONE;
@@ -1390,8 +1390,8 @@ public:
 
         // semicolon separated bonuslist ids (parse them after all arguments are extracted by strtok!)
         if (bonuses)
-            for (std::string_view token : Trinity::Tokenize(bonuses, ';', false))
-                if (Optional<int32> bonusListId = Trinity::StringTo<int32>(token))
+            for (std::string_view token : Azgath::Tokenize(bonuses, ';', false))
+                if (Optional<int32> bonusListId = Azgath::StringTo<int32>(token))
                     bonusListIDs.push_back(*bonusListId);
 
         ItemContext itemContext = ItemContext::NONE;
@@ -1491,8 +1491,8 @@ public:
 
         // semicolon separated bonuslist ids (parse them after all arguments are extracted by strtok!)
         if (bonuses)
-            for (std::string_view token : Trinity::Tokenize(*bonuses, ';', false))
-                if (Optional<int32> bonusListId = Trinity::StringTo<int32>(token))
+            for (std::string_view token : Azgath::Tokenize(*bonuses, ';', false))
+                if (Optional<int32> bonusListId = Azgath::StringTo<int32>(token))
                     bonusListIDs.push_back(*bonusListId);
 
         ItemContext itemContext = ItemContext::NONE;
@@ -2025,8 +2025,8 @@ public:
         }
 
         // First handle any creatures that still have a corpse around
-        Trinity::RespawnDo u_do;
-        Trinity::WorldObjectWorker<Trinity::RespawnDo> worker(player, u_do);
+        Azgath::RespawnDo u_do;
+        Azgath::WorldObjectWorker<Azgath::RespawnDo> worker(player, u_do);
         Cell::VisitGridObjects(player, worker, player->GetGridActivationRange());
 
         // Now handle any that had despawned, but had respawn time logged.
@@ -2034,7 +2034,7 @@ public:
         player->GetMap()->GetRespawnInfo(data, SPAWN_TYPEMASK_ALL);
         if (!data.empty())
         {
-            uint32 const gridId = Trinity::ComputeGridCoord(player->GetPositionX(), player->GetPositionY()).GetId();
+            uint32 const gridId = Azgath::ComputeGridCoord(player->GetPositionX(), player->GetPositionY()).GetId();
             for (RespawnInfo const* info : data)
                 if (info->gridId == gridId)
                     player->GetMap()->Respawn(info->type, info->spawnId);

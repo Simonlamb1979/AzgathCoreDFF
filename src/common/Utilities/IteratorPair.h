@@ -20,7 +20,7 @@
 
 #include <utility>
 
-namespace Trinity
+namespace Azgath
 {
     /**
      * @class IteratorPair
@@ -45,13 +45,13 @@ namespace Trinity
     namespace Containers
     {
         template<typename iterator>
-        constexpr Trinity::IteratorPair<iterator> MakeIteratorPair(iterator first, iterator second)
+        constexpr Azgath::IteratorPair<iterator> MakeIteratorPair(iterator first, iterator second)
         {
             return { first, second };
         }
 
         template<typename iterator>
-        constexpr Trinity::IteratorPair<iterator> MakeIteratorPair(std::pair<iterator, iterator> iterators)
+        constexpr Azgath::IteratorPair<iterator> MakeIteratorPair(std::pair<iterator, iterator> iterators)
         {
             return iterators;
         }
@@ -64,6 +64,6 @@ namespace Trinity
     }
     //! namespace Containers
 }
-//! namespace Trinity
+//! namespace Azgath
 
 #endif // IteratorPair_h__

@@ -212,7 +212,7 @@ class spell_sha_ancestral_guidance_heal : public SpellScript
 
     void ResizeTargets(std::list<WorldObject*>& targets)
     {
-        Trinity::SelectRandomInjuredTargets(targets, 3, true);
+        Azgath::SelectRandomInjuredTargets(targets, 3, true);
     }
 
     void Register() override
@@ -233,9 +233,9 @@ class spell_sha_bloodlust : public SpellScript
 
     void RemoveInvalidTargets(std::list<WorldObject*>& targets)
     {
-        targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_SHAMAN_SATED));
-        targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_HUNTER_INSANITY));
-        targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_MAGE_TEMPORAL_DISPLACEMENT));
+        targets.remove_if(Azgath::UnitAuraCheck(true, SPELL_SHAMAN_SATED));
+        targets.remove_if(Azgath::UnitAuraCheck(true, SPELL_HUNTER_INSANITY));
+        targets.remove_if(Azgath::UnitAuraCheck(true, SPELL_MAGE_TEMPORAL_DISPLACEMENT));
     }
 
     void ApplyDebuff()
@@ -349,7 +349,7 @@ class spell_sha_downpour : public SpellScript
 
     void FilterTargets(std::list<WorldObject*>& targets)
     {
-        Trinity::SelectRandomInjuredTargets(targets, 6, true);
+        Azgath::SelectRandomInjuredTargets(targets, 6, true);
     }
 
     void CountEffectivelyHealedTarget()
@@ -578,7 +578,7 @@ class spell_sha_elemental_blast : public SpellScript
     void TriggerBuff()
     {
         Unit* caster = GetCaster();
-        uint32 spellId = *Trinity::Containers::SelectRandomWeightedContainerElement(BuffSpells, [caster](uint32 buffSpellId)
+        uint32 spellId = *Azgath::Containers::SelectRandomWeightedContainerElement(BuffSpells, [caster](uint32 buffSpellId)
         {
             return !caster->HasAura(buffSpellId) ? 1.0 : 0.0;
         });
@@ -725,7 +725,7 @@ class spell_sha_healing_rain_target_limit : public SpellScript
 
     void SelectTargets(std::list<WorldObject*>& targets)
     {
-        Trinity::SelectRandomInjuredTargets(targets, 6, true);
+        Azgath::SelectRandomInjuredTargets(targets, 6, true);
     }
 
     void Register() override
@@ -741,7 +741,7 @@ class spell_sha_healing_stream_totem_heal : public SpellScript
 
     void SelectTargets(std::list<WorldObject*>& targets)
     {
-        Trinity::SelectRandomInjuredTargets(targets, 1, true);
+        Azgath::SelectRandomInjuredTargets(targets, 1, true);
     }
 
     void Register() override
@@ -762,9 +762,9 @@ class spell_sha_heroism : public SpellScript
 
     void RemoveInvalidTargets(std::list<WorldObject*>& targets)
     {
-        targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_SHAMAN_EXHAUSTION));
-        targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_HUNTER_INSANITY));
-        targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_MAGE_TEMPORAL_DISPLACEMENT));
+        targets.remove_if(Azgath::UnitAuraCheck(true, SPELL_SHAMAN_EXHAUSTION));
+        targets.remove_if(Azgath::UnitAuraCheck(true, SPELL_HUNTER_INSANITY));
+        targets.remove_if(Azgath::UnitAuraCheck(true, SPELL_MAGE_TEMPORAL_DISPLACEMENT));
     }
 
     void ApplyDebuff()
@@ -1180,7 +1180,7 @@ class spell_sha_liquid_magma_totem : public SpellScript
         // choose one random target from targets
         if (targets.size() > 1)
         {
-            WorldObject* selected = Trinity::Containers::SelectRandomContainerElement(targets);
+            WorldObject* selected = Azgath::Containers::SelectRandomContainerElement(targets);
             targets.clear();
             targets.push_back(selected);
         }
@@ -1335,7 +1335,7 @@ class spell_sha_path_of_flames_spread : public SpellScript
     void FilterTargets(std::list<WorldObject*>& targets)
     {
         targets.remove(GetExplTargetUnit());
-        Trinity::Containers::RandomResize(targets, [this](WorldObject* target)
+        Azgath::Containers::RandomResize(targets, [this](WorldObject* target)
         {
             return target->GetTypeId() == TYPEID_UNIT && !target->ToUnit()->HasAura(SPELL_SHAMAN_FLAME_SHOCK, GetCaster()->GetGUID());
         }, 1);

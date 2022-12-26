@@ -27,7 +27,7 @@
 #include <utility>
 #include <vector>
 
-namespace Trinity
+namespace Azgath
 {
     template<class T>
     constexpr inline T* AddressOrSelf(T* ptr)
@@ -76,7 +76,7 @@ namespace Trinity
         template<class C>
         void RandomResize(C& container, std::size_t requestedSize)
         {
-            static_assert(std::is_base_of<std::forward_iterator_tag, typename std::iterator_traits<typename C::iterator>::iterator_category>::value, "Invalid container passed to Trinity::Containers::RandomResize");
+            static_assert(std::is_base_of<std::forward_iterator_tag, typename std::iterator_traits<typename C::iterator>::iterator_category>::value, "Invalid container passed to Azgath::Containers::RandomResize");
             if (std::size(container) <= requestedSize)
                 return;
             auto keepIt = std::begin(container), curIt = std::begin(container);
@@ -167,7 +167,7 @@ namespace Trinity
         }
 
         /**
-         * @fn void Trinity::Containers::RandomShuffle(Iterator begin, Iterator end)
+         * @fn void Azgath::Containers::RandomShuffle(Iterator begin, Iterator end)
          *
          * @brief Reorder the elements of the iterator range randomly.
          *
@@ -181,7 +181,7 @@ namespace Trinity
         }
 
         /**
-         * @fn void Trinity::Containers::RandomShuffle(C& container)
+         * @fn void Azgath::Containers::RandomShuffle(C& container)
          *
          * @brief Reorder the elements of the container randomly.
          *
@@ -194,7 +194,7 @@ namespace Trinity
         }
 
         /**
-         * @fn bool Trinity::Containers::Intersects(Iterator first1, Iterator last1, Iterator first2, Iterator last2)
+         * @fn bool Azgath::Containers::Intersects(Iterator first1, Iterator last1, Iterator first2, Iterator last2)
          *
          * @brief Checks if two SORTED containers have a common element
          *
@@ -222,7 +222,7 @@ namespace Trinity
         }
 
         /**
-         * @fn bool Trinity::Containers::Intersects(Iterator first1, Iterator last1, Iterator first2, Iterator last2, Predicate&& equalPred)
+         * @fn bool Azgath::Containers::Intersects(Iterator first1, Iterator last1, Iterator first2, Iterator last2, Predicate&& equalPred)
          *
          * @brief Checks if two SORTED containers have a common element
          *
@@ -336,6 +336,6 @@ namespace Trinity
     }
     //! namespace Containers
 }
-//! namespace Trinity
+//! namespace Azgath
 
 #endif //! #ifdef TRINITY_CONTAINERS_H

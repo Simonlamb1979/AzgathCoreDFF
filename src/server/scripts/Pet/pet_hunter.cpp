@@ -93,7 +93,7 @@ struct npc_pet_hunter_snake_trap : public ScriptedAI
 
             if (!targets.empty())
             {
-                Unit* target = Trinity::Containers::SelectRandomContainerElement(targets);
+                Unit* target = Azgath::Containers::SelectRandomContainerElement(targets);
                 me->GetThreatManager().FixateTarget(target);
             }
         }

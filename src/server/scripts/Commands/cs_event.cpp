@@ -30,7 +30,7 @@ EndScriptData */
 #include "Language.h"
 #include "RBAC.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class event_commandscript : public CommandScript
 {

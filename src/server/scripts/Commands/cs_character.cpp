@@ -38,7 +38,7 @@ EndScriptData */
 #include "WorldSession.h"
 #include <sstream>
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class character_commandscript : public CommandScript
 {
@@ -267,7 +267,7 @@ public:
                 if (*target->m_playerData->PlayerTitle == titleInfo->MaskID)
                     activeStr = handler->GetAzgathString(LANG_ACTIVE);
 
-                std::string titleName = Trinity::StringFormat(name, player->GetName().c_str());
+                std::string titleName = Azgath::StringFormat(name, player->GetName().c_str());
 
                 // send title in "id (idx:idx) - [namedlink locale]" format
                 if (handler->GetSession())
@@ -506,7 +506,7 @@ public:
 
         handler->PSendSysMessage(LANG_CHANGEACCOUNT_SUCCESS, player->GetName().c_str(), newAccount.GetName().c_str());
 
-        std::string logString = Trinity::StringFormat("changed ownership of player %s (%s) from account %u to account %u", player->GetName().c_str(), player->GetGUID().ToString().c_str(), oldAccountId, newAccount.GetID());
+        std::string logString = Azgath::StringFormat("changed ownership of player %s (%s) from account %u to account %u", player->GetName().c_str(), player->GetGUID().ToString().c_str(), oldAccountId, newAccount.GetID());
         if (WorldSession* session = handler->GetSession())
         {
             if (Player* player = session->GetPlayer())

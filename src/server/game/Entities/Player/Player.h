@@ -1170,7 +1170,7 @@ class TC_GAME_API Player : public Unit, public GridObject<Player>
         uint8 GetChatFlags() const;
         std::string autoReplyMsg;
 
-        int64 GetBarberShopCost(Trinity::IteratorPair<UF::ChrCustomizationChoice const*> newCustomizations) const;
+        int64 GetBarberShopCost(Azgath::IteratorPair<UF::ChrCustomizationChoice const*> newCustomizations) const;
 
         PlayerSocial* GetSocial() const { return m_social; }
         void RemoveSocial();
@@ -1713,7 +1713,7 @@ class TC_GAME_API Player : public Unit, public GridObject<Player>
 
         static bool IsValidGender(uint8 Gender) { return Gender <= GENDER_FEMALE; }
         static bool IsValidClass(uint8 Class) { return ((1 << (Class - 1)) & CLASSMASK_ALL_PLAYABLE) != 0; }
-        static bool IsValidRace(uint8 Race) { return Trinity::RaceMask<uint64>{ RACEMASK_ALL_PLAYABLE }.HasRace(Race); }
+        static bool IsValidRace(uint8 Race) { return Azgath::RaceMask<uint64>{ RACEMASK_ALL_PLAYABLE }.HasRace(Race); }
 
         /*********************************************************/
         /***                   SAVE SYSTEM                     ***/
@@ -1725,7 +1725,7 @@ class TC_GAME_API Player : public Unit, public GridObject<Player>
         void SaveGoldToDB(CharacterDatabaseTransaction trans) const;
 
         static void SaveCustomizations(CharacterDatabaseTransaction trans, ObjectGuid::LowType guid,
-            Trinity::IteratorPair<UF::ChrCustomizationChoice const*> customizations);
+            Azgath::IteratorPair<UF::ChrCustomizationChoice const*> customizations);
         static void SavePositionInDB(WorldLocation const& loc, uint16 zoneId, ObjectGuid guid, CharacterDatabaseTransaction trans);
 
         static void DeleteFromDB(ObjectGuid playerguid, uint32 accountId, bool updateRealmChars = true, bool deleteFinally = false);
@@ -2521,7 +2521,7 @@ class TC_GAME_API Player : public Unit, public GridObject<Player>
         void UpdateObjectVisibility(bool forced = true) override;
         void UpdateVisibilityForPlayer();
         void UpdateVisibilityOf(WorldObject* target);
-        void UpdateVisibilityOf(Trinity::IteratorPair<WorldObject**> targets);
+        void UpdateVisibilityOf(Azgath::IteratorPair<WorldObject**> targets);
         void UpdateTriggerVisibility();
 
         template<class T>
@@ -2754,7 +2754,7 @@ class TC_GAME_API Player : public Unit, public GridObject<Player>
         }
 
         template<typename Iter>
-        void SetCustomizations(Trinity::IteratorPair<Iter> customizations, bool markChanged = true)
+        void SetCustomizations(Azgath::IteratorPair<Iter> customizations, bool markChanged = true)
         {
             if (markChanged)
                 m_customizationsChanged = true;
@@ -3229,7 +3229,7 @@ TC_GAME_API void RemoveItemsSetItem(Player* player, Item const* item);
 // Transforms a container of customization choices with continuous storage into iterator pair that does not depend on container
 // and doesn't force implementations in header files
 template<typename Container>
-Trinity::IteratorPair<UF::ChrCustomizationChoice const*> MakeChrCustomizationChoiceRange(Container const& container)
+Azgath::IteratorPair<UF::ChrCustomizationChoice const*> MakeChrCustomizationChoiceRange(Container const& container)
 {
     static_assert(std::is_same<typename Container::value_type, UF::ChrCustomizationChoice>::value,
         "MakeChrCustomizationChoiceRange must be used with containers of UF::ChrCustomizationChoice");

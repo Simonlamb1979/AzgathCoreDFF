@@ -35,7 +35,7 @@ EndScriptData */
 #include "SpellMgr.h"
 #include "WorldSession.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 class learn_commandscript : public CommandScript
 {
 public:
@@ -117,7 +117,7 @@ public:
 
     static bool HandleLearnAllGMCommand(ChatHandler* handler)
     {
-        for (std::pair<uint32 const, SkillLineAbilityEntry const*> skillSpell : Trinity::Containers::MakeIteratorPair(sSpellMgr->GetSkillLineAbilityMapBounds(SKILL_INTERNAL)))
+        for (std::pair<uint32 const, SkillLineAbilityEntry const*> skillSpell : Azgath::Containers::MakeIteratorPair(sSpellMgr->GetSkillLineAbilityMapBounds(SKILL_INTERNAL)))
         {
             SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(skillSpell.second->Spell, DIFFICULTY_NONE);
             if (!spellInfo || !SpellMgr::IsSpellValid(spellInfo, handler->GetSession()->GetPlayer(), false))

@@ -44,7 +44,7 @@ EndScriptData */
 #include "WorldSession.h"
 #include <sstream>
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 using GameObjectSpawnId = Variant<Hyperlink<gameobject>, ObjectGuid::LowType>;
 using GameObjectEntry = Variant<Hyperlink<gameobject_entry>, uint32>;

@@ -47,7 +47,7 @@ struct RBACCommandData
     bool needDelete = false;
 };
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class rbac_commandscript : public CommandScript
 {

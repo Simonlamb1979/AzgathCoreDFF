@@ -843,12 +843,12 @@ class boss_thorim : public CreatureScript
 
                 if (count == 1)
                 {
-                    Creature* bunny = Trinity::Containers::SelectRandomContainerElement(triggerList);
+                    Creature* bunny = Azgath::Containers::SelectRandomContainerElement(triggerList);
                     triggerList.clear();
                     triggerList.push_back(bunny);
                 }
                 else
-                    Trinity::Containers::RandomResize(triggerList, count);
+                    Azgath::Containers::RandomResize(triggerList, count);
             }
 
             void SummonWave()
@@ -1023,8 +1023,8 @@ struct npc_thorim_trashAI : public ScriptedAI
             uint32 const heal = GetTotalHeal(spellInfo, caster);
 
             Unit* target = nullptr;
-            Trinity::MostHPMissingInRange checker(caster, range, heal);
-            Trinity::UnitLastSearcher<Trinity::MostHPMissingInRange> searcher(caster, target, checker);
+            Azgath::MostHPMissingInRange checker(caster, range, heal);
+            Azgath::UnitLastSearcher<Azgath::MostHPMissingInRange> searcher(caster, target, checker);
             Cell::VisitGridObjects(caster, searcher, 60.0f);
 
             return target;
@@ -1771,7 +1771,7 @@ class spell_thorim_charge_orb : public SpellScriptLoader
                 if (targets.empty())
                     return;
 
-                WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+                WorldObject* target = Azgath::Containers::SelectRandomContainerElement(targets);
                 targets.clear();
                 targets.push_back(target);
             }
@@ -1901,7 +1901,7 @@ class spell_thorim_stormhammer : public SpellScriptLoader
                     return;
                 }
 
-                WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+                WorldObject* target = Azgath::Containers::SelectRandomContainerElement(targets);
                 targets.clear();
                 targets.push_back(target);
             }
@@ -2078,12 +2078,12 @@ class spell_thorim_activate_lightning_orb_periodic : public SpellScriptLoader
                 std::vector<Creature*> triggers;
 
                 UpperOrbCheck check;
-                Trinity::CreatureListSearcher<UpperOrbCheck> searcher(caster, triggers, check);
+                Azgath::CreatureListSearcher<UpperOrbCheck> searcher(caster, triggers, check);
                 Cell::VisitGridObjects(caster, searcher, 100.f);
 
                 if (!triggers.empty())
                 {
-                    Creature* target = Trinity::Containers::SelectRandomContainerElement(triggers);
+                    Creature* target = Azgath::Containers::SelectRandomContainerElement(triggers);
                     if (Creature* thorim = instance->GetCreature(DATA_THORIM))
                         thorim->AI()->SetGUID(target->GetGUID(), DATA_CHARGED_PILLAR);
                 }

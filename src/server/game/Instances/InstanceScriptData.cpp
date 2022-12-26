@@ -238,7 +238,7 @@ void InstanceScriptDataWriter::FillDataFrom(std::string const& data)
 
 void InstanceScriptDataWriter::SetBossState(UpdateBossStateSaveDataEvent const& data)
 {
-    std::string bossIdKey = Trinity::StringFormat("%u", data.BossId);
+    std::string bossIdKey = Azgath::StringFormat("%u", data.BossId);
 
     rapidjson::Pointer::Token tokens[] =
     {

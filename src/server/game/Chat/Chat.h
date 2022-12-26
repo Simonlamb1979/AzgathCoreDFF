@@ -55,7 +55,7 @@ class TC_GAME_API ChatHandler
         template<typename... Args>
         void PSendSysMessage(const char* fmt, Args&&... args)
         {
-            SendSysMessage(Trinity::StringFormat(fmt, std::forward<Args>(args)...).c_str());
+            SendSysMessage(Azgath::StringFormat(fmt, std::forward<Args>(args)...).c_str());
         }
 
         template<typename... Args>
@@ -67,7 +67,7 @@ class TC_GAME_API ChatHandler
         template<typename... Args>
         std::string PGetParseString(uint32 entry, Args&&... args) const
         {
-            return Trinity::StringFormat(GetAzgathString(entry), std::forward<Args>(args)...);
+            return Azgath::StringFormat(GetAzgathString(entry), std::forward<Args>(args)...);
         }
 
         bool _ParseCommands(std::string_view text);

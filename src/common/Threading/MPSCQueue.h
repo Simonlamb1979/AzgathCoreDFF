@@ -22,7 +22,7 @@
 #include <atomic>
 #include <new>
 
-namespace Trinity
+namespace Azgath
 {
 namespace Impl
 {
@@ -170,6 +170,6 @@ private:
 }
 
 template<typename T, std::atomic<T*> T::* IntrusiveLink = nullptr>
-using MPSCQueue = std::conditional_t<IntrusiveLink != nullptr, Trinity::Impl::MPSCQueueIntrusive<T, IntrusiveLink>, Trinity::Impl::MPSCQueueNonIntrusive<T>>;
+using MPSCQueue = std::conditional_t<IntrusiveLink != nullptr, Azgath::Impl::MPSCQueueIntrusive<T, IntrusiveLink>, Azgath::Impl::MPSCQueueNonIntrusive<T>>;
 
 #endif // MPSCQueue_h__

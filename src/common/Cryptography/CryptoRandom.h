@@ -21,7 +21,7 @@
 #include "Define.h"
 #include <array>
 
-namespace Trinity
+namespace Azgath
 {
 namespace Crypto
 {

@@ -40,7 +40,7 @@ EndScriptData */
 #include "WorldSession.h"
 #include <sstream>
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class instance_commandscript : public CommandScript
 {

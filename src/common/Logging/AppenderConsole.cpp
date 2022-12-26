@@ -44,20 +44,20 @@ void AppenderConsole::InitColors(std::string const& name, std::string_view str)
         return;
     }
 
-    std::vector<std::string_view> colorStrs = Trinity::Tokenize(str, ' ', false);
+    std::vector<std::string_view> colorStrs = Azgath::Tokenize(str, ' ', false);
     if (colorStrs.size() != NUM_ENABLED_LOG_LEVELS)
     {
-        throw InvalidAppenderArgsException(Trinity::StringFormat("Log::CreateAppenderFromConfig: Invalid color data '%s' for console appender %s (expected %u entries, got %zu)",
+        throw InvalidAppenderArgsException(Azgath::StringFormat("Log::CreateAppenderFromConfig: Invalid color data '%s' for console appender %s (expected %u entries, got %zu)",
             std::string(str).c_str(), name.c_str(), NUM_ENABLED_LOG_LEVELS, colorStrs.size()));
     }
 
     for (uint8 i = 0; i < NUM_ENABLED_LOG_LEVELS; ++i)
     {
-        if (Optional<uint8> color = Trinity::StringTo<uint8>(colorStrs[i]); color && EnumUtils::IsValid<ColorTypes>(*color))
+        if (Optional<uint8> color = Azgath::StringTo<uint8>(colorStrs[i]); color && EnumUtils::IsValid<ColorTypes>(*color))
             _colors[i] = static_cast<ColorTypes>(*color);
         else
         {
-            throw InvalidAppenderArgsException(Trinity::StringFormat("Log::CreateAppenderFromConfig: Invalid color '%s' for log level %s on console appender %s",
+            throw InvalidAppenderArgsException(Azgath::StringFormat("Log::CreateAppenderFromConfig: Invalid color '%s' for log level %s on console appender %s",
                 std::string(colorStrs[i]).c_str(), EnumUtils::ToTitle(static_cast<LogLevel>(i)), name.c_str()));
         }
     }

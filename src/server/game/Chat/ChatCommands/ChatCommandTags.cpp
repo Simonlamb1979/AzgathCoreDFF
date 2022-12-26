@@ -27,9 +27,9 @@
 #include "World.h"
 #include "WorldSession.h"
 
-using namespace Trinity::Impl::ChatCommands;
+using namespace Azgath::Impl::ChatCommands;
 
-ChatCommandResult Trinity::ChatCommands::QuotedString::TryConsume(ChatHandler const* handler, std::string_view args)
+ChatCommandResult Azgath::ChatCommands::QuotedString::TryConsume(ChatHandler const* handler, std::string_view args)
 {
     if (args.empty())
         return std::nullopt;
@@ -60,10 +60,10 @@ ChatCommandResult Trinity::ChatCommands::QuotedString::TryConsume(ChatHandler co
     return std::nullopt;
 }
 
-Trinity::ChatCommands::AccountIdentifier::AccountIdentifier(WorldSession& session)
+Azgath::ChatCommands::AccountIdentifier::AccountIdentifier(WorldSession& session)
     : _id(session.GetAccountId()), _name(session.GetAccountName()), _session(&session) {}
 
-ChatCommandResult Trinity::ChatCommands::AccountIdentifier::TryConsume(ChatHandler const* handler, std::string_view args)
+ChatCommandResult Azgath::ChatCommands::AccountIdentifier::TryConsume(ChatHandler const* handler, std::string_view args)
 {
     std::string_view text;
     ChatCommandResult next = ArgInfo<std::string_view>::TryConsume(text, handler, args);
@@ -80,7 +80,7 @@ ChatCommandResult Trinity::ChatCommands::AccountIdentifier::TryConsume(ChatHandl
         return next;
 
     // try parsing as account id instead
-    Optional<uint32> id = Trinity::StringTo<uint32>(text, 10);
+    Optional<uint32> id = Azgath::StringTo<uint32>(text, 10);
     if (!id)
         return FormatTrinityString(handler, LANG_CMDPARSER_ACCOUNT_NAME_NO_EXIST, STRING_VIEW_FMT_ARG(_name));
     _id = *id;
@@ -92,7 +92,7 @@ ChatCommandResult Trinity::ChatCommands::AccountIdentifier::TryConsume(ChatHandl
         return FormatTrinityString(handler, LANG_CMDPARSER_ACCOUNT_ID_NO_EXIST, _id);
 }
 
-Optional<Trinity::ChatCommands::AccountIdentifier> Trinity::ChatCommands::AccountIdentifier::FromTarget(ChatHandler* handler)
+Optional<Azgath::ChatCommands::AccountIdentifier> Azgath::ChatCommands::AccountIdentifier::FromTarget(ChatHandler* handler)
 {
     if (Player* player = handler->GetPlayer())
         if (Player* target = player->GetSelectedPlayer())
@@ -101,7 +101,7 @@ Optional<Trinity::ChatCommands::AccountIdentifier> Trinity::ChatCommands::Accoun
     return std::nullopt;
 }
 
-ChatCommandResult Trinity::ChatCommands::PlayerIdentifier::TryConsume(ChatHandler const* handler, std::string_view args)
+ChatCommandResult Azgath::ChatCommands::PlayerIdentifier::TryConsume(ChatHandler const* handler, std::string_view args)
 {
     Variant<Hyperlink<player>, ObjectGuid::LowType, std::string_view> val;
     ChatCommandResult next = ArgInfo<decltype(val)>::TryConsume(val, handler, args);
@@ -135,10 +135,10 @@ ChatCommandResult Trinity::ChatCommands::PlayerIdentifier::TryConsume(ChatHandle
     }
 }
 
-Trinity::ChatCommands::PlayerIdentifier::PlayerIdentifier(Player& player)
+Azgath::ChatCommands::PlayerIdentifier::PlayerIdentifier(Player& player)
     : _name(player.GetName()), _guid(player.GetGUID()), _player(&player) {}
 
-/*static*/ Optional<Trinity::ChatCommands::PlayerIdentifier> Trinity::ChatCommands::PlayerIdentifier::FromTarget(ChatHandler* handler)
+/*static*/ Optional<Azgath::ChatCommands::PlayerIdentifier> Azgath::ChatCommands::PlayerIdentifier::FromTarget(ChatHandler* handler)
 {
     if (Player* player = handler->GetPlayer())
         if (Player* target = player->GetSelectedPlayer())
@@ -147,7 +147,7 @@ Trinity::ChatCommands::PlayerIdentifier::PlayerIdentifier(Player& player)
 
 }
 
-/*static*/ Optional<Trinity::ChatCommands::PlayerIdentifier> Trinity::ChatCommands::PlayerIdentifier::FromSelf(ChatHandler* handler)
+/*static*/ Optional<Azgath::ChatCommands::PlayerIdentifier> Azgath::ChatCommands::PlayerIdentifier::FromSelf(ChatHandler* handler)
 {
     if (Player* player = handler->GetPlayer())
         return { *player };

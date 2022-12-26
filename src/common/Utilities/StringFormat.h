@@ -20,7 +20,7 @@
 
 #include "fmt/printf.h"
 
-namespace Trinity
+namespace Azgath
 {
     /// Default TC string format function.
     template<typename... Args>

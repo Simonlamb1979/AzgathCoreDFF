@@ -56,7 +56,7 @@ namespace
     Optional<std::string> DownloadFile(std::string const& serverName, int16 port, std::string const& getCommand)
     {
         boost::system::error_code error;
-        Trinity::Asio::IoContext ioContext;
+        Azgath::Asio::IoContext ioContext;
         boost::asio::ssl::context sslContext(boost::asio::ssl::context::sslv23);
         sslContext.set_options(boost::asio::ssl::context::no_sslv2, error);
         sslContext.set_options(boost::asio::ssl::context::no_sslv3, error);
@@ -64,7 +64,7 @@ namespace
         sslContext.set_options(boost::asio::ssl::context::no_tlsv1_1, error);
         sslContext.set_default_verify_paths(error);
 
-        Trinity::Asio::Resolver resolver(ioContext);
+        Azgath::Asio::Resolver resolver(ioContext);
 
         Optional<boost::asio::ip::tcp::endpoint> endpoint = resolver.Resolve(boost::asio::ip::tcp::v4(), serverName, std::to_string(port));
         if (!endpoint)

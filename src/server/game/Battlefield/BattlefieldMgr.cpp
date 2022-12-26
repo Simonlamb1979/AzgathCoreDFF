@@ -158,7 +158,7 @@ Battlefield* BattlefieldMgr::GetBattlefieldToZoneId(Map const* map, uint32 zoneI
 
 Battlefield* BattlefieldMgr::GetBattlefieldByBattleId(Map const* map, uint32 battleId)
 {
-    if (BattlefieldsMapByMap::mapped_type const* battlefields = Trinity::Containers::MapGetValuePtr(_battlefieldsByMap, map))
+    if (BattlefieldsMapByMap::mapped_type const* battlefields = Azgath::Containers::MapGetValuePtr(_battlefieldsByMap, map))
         for (std::unique_ptr<Battlefield> const& battlefield : *battlefields)
             if (battlefield->GetBattleId() == battleId)
                 return battlefield.get();

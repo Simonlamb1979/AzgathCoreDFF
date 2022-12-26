@@ -38,7 +38,7 @@ EndScriptData */
 #include "World.h"
 #include "WorldSession.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class message_commandscript : public CommandScript
 {
@@ -155,7 +155,7 @@ public:
         if (message.empty())
             return false;
 
-        sWorld->SendServerMessage(SERVER_MSG_STRING, Trinity::StringFormat(handler->GetAzgathString(LANG_SYSTEMMESSAGE), message.data()).c_str());
+        sWorld->SendServerMessage(SERVER_MSG_STRING, Azgath::StringFormat(handler->GetAzgathString(LANG_SYSTEMMESSAGE), message.data()).c_str());
         return true;
     }
 

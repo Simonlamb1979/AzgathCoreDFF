@@ -30,7 +30,7 @@ EndScriptData */
 #include "RBAC.h"
 #include "WorldSession.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class honor_commandscript : public CommandScript
 {

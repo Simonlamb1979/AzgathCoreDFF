@@ -1103,9 +1103,9 @@ public:
                                 EMOTE_ONESHOT_ROAR
                             };
 
-                            Creature* victim = Trinity::Containers::SelectRandomContainerElement(nearbyVictims);
+                            Creature* victim = Azgath::Containers::SelectRandomContainerElement(nearbyVictims);
                             if (victim->IsAlive())
-                                victim->HandleEmoteCommand(Trinity::Containers::SelectRandomContainerElement(emotes));
+                                victim->HandleEmoteCommand(Azgath::Containers::SelectRandomContainerElement(emotes));
                         }
                         break;
                     }

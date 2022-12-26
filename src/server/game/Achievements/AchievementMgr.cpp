@@ -660,8 +660,8 @@ void PlayerAchievementMgr::SendAchievementEarned(AchievementEntry const* achieve
     {
         if (Guild* guild = sGuildMgr->GetGuildById(_owner->GetGuildId()))
         {
-            Trinity::BroadcastTextBuilder _builder(_owner, CHAT_MSG_GUILD_ACHIEVEMENT, BROADCAST_TEXT_ACHIEVEMENT_EARNED, _owner->GetNativeGender(), _owner, achievement->ID);
-            Trinity::LocalizedDo<Trinity::BroadcastTextBuilder> _localizer(_builder);
+            Azgath::BroadcastTextBuilder _builder(_owner, CHAT_MSG_GUILD_ACHIEVEMENT, BROADCAST_TEXT_ACHIEVEMENT_EARNED, _owner->GetNativeGender(), _owner, achievement->ID);
+            Azgath::LocalizedDo<Azgath::BroadcastTextBuilder> _localizer(_builder);
             guild->BroadcastWorker(_localizer, _owner);
         }
 
@@ -677,9 +677,9 @@ void PlayerAchievementMgr::SendAchievementEarned(AchievementEntry const* achieve
         // if player is in world he can tell his friends about new achievement
         else if (_owner->IsInWorld())
         {
-            Trinity::BroadcastTextBuilder _builder(_owner, CHAT_MSG_ACHIEVEMENT, BROADCAST_TEXT_ACHIEVEMENT_EARNED, _owner->GetNativeGender(), _owner, achievement->ID);
-            Trinity::LocalizedDo<Trinity::BroadcastTextBuilder> _localizer(_builder);
-            Trinity::PlayerDistWorker<Trinity::LocalizedDo<Trinity::BroadcastTextBuilder>> _worker(_owner, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY), _localizer);
+            Azgath::BroadcastTextBuilder _builder(_owner, CHAT_MSG_ACHIEVEMENT, BROADCAST_TEXT_ACHIEVEMENT_EARNED, _owner->GetNativeGender(), _owner, achievement->ID);
+            Azgath::LocalizedDo<Azgath::BroadcastTextBuilder> _localizer(_builder);
+            Azgath::PlayerDistWorker<Azgath::LocalizedDo<Azgath::BroadcastTextBuilder>> _worker(_owner, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY), _localizer);
             Cell::VisitWorldObjects(_owner, _worker, sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY));
         }
     }
@@ -760,8 +760,8 @@ void GuildAchievementMgr::LoadFromDB(PreparedQueryResult achievementResult, Prep
 
             CompletedAchievementData& ca = _completedAchievements[achievementid];
             ca.Date = fields[1].GetInt64();
-            for (std::string_view guid : Trinity::Tokenize(fields[2].GetStringView(), ' ', false))
-                if (Optional<ObjectGuid::LowType> parsedGuid = Trinity::StringTo<ObjectGuid::LowType>(guid))
+            for (std::string_view guid : Azgath::Tokenize(fields[2].GetStringView(), ' ', false))
+                if (Optional<ObjectGuid::LowType> parsedGuid = Azgath::StringTo<ObjectGuid::LowType>(guid))
                     ca.CompletingPlayers.insert(ObjectGuid::Create<HighGuid::Player>(*parsedGuid));
 
             ca.Changed = false;
@@ -1052,12 +1052,12 @@ AchievementGlobalMgr::~AchievementGlobalMgr() = default;
 
 std::string PlayerAchievementMgr::GetOwnerInfo() const
 {
-    return Trinity::StringFormat("%s %s", _owner->GetGUID().ToString().c_str(), _owner->GetName().c_str());
+    return Azgath::StringFormat("%s %s", _owner->GetGUID().ToString().c_str(), _owner->GetName().c_str());
 }
 
 std::string GuildAchievementMgr::GetOwnerInfo() const
 {
-    return Trinity::StringFormat("Guild ID " UI64FMTD " %s", _owner->GetId(), _owner->GetName().c_str());
+    return Azgath::StringFormat("Guild ID " UI64FMTD " %s", _owner->GetId(), _owner->GetName().c_str());
 }
 
 AchievementGlobalMgr* AchievementGlobalMgr::Instance()
@@ -1382,7 +1382,7 @@ void AchievementGlobalMgr::LoadRewardLocales()
 
 uint32 AchievementGlobalMgr::GetAchievementScriptId(uint32 achievementId) const
 {
-    if (uint32 const* scriptId = Trinity::Containers::MapGetValuePtr(_achievementScripts, achievementId))
+    if (uint32 const* scriptId = Azgath::Containers::MapGetValuePtr(_achievementScripts, achievementId))
         return *scriptId;
     return 0;
 }

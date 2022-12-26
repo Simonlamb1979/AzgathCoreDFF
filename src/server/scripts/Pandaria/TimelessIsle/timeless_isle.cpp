@@ -211,7 +211,7 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            Trinity::Containers::RandomResize(targets, 4);
+            Azgath::Containers::RandomResize(targets, 4);
         }
 
         void Register()
@@ -237,7 +237,7 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            Trinity::Containers::RandomResize(targets, 1);
+            Azgath::Containers::RandomResize(targets, 1);
         }
 
         void Register()
@@ -263,7 +263,7 @@ public:
 
         void FilterTargets(std::list<WorldObject*>& targets)
         {
-            Trinity::Containers::RandomResize(targets, 6);
+            Azgath::Containers::RandomResize(targets, 6);
         }
 
         void Register()

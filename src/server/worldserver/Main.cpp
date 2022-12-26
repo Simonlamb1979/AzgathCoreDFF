@@ -93,7 +93,7 @@ int m_ServiceStatus = -1;
 class FreezeDetector
 {
 public:
-    FreezeDetector(Trinity::Asio::IoContext& ioContext, uint32 maxCoreStuckTime)
+    FreezeDetector(Azgath::Asio::IoContext& ioContext, uint32 maxCoreStuckTime)
         : _timer(ioContext), _worldLoopCounter(0), _lastChangeMsTime(getMSTime()), _maxCoreStuckTimeInMs(maxCoreStuckTime) { }
 
     static void Start(std::shared_ptr<FreezeDetector> const& freezeDetector)
@@ -105,14 +105,14 @@ public:
     static void Handler(std::weak_ptr<FreezeDetector> freezeDetectorRef, boost::system::error_code const& error);
 
 private:
-    Trinity::Asio::DeadlineTimer _timer;
+    Azgath::Asio::DeadlineTimer _timer;
     uint32 _worldLoopCounter;
     uint32 _lastChangeMsTime;
     uint32 _maxCoreStuckTimeInMs;
 };
 
 void SignalHandler(boost::system::error_code const& error, int signalNumber);
-AsyncAcceptor* StartRaSocketAcceptor(Trinity::Asio::IoContext& ioContext);
+AsyncAcceptor* StartRaSocketAcceptor(Azgath::Asio::IoContext& ioContext);
 bool StartDB();
 void StopDB();
 void WorldUpdateLoop();
@@ -124,7 +124,7 @@ variables_map GetConsoleArguments(int argc, char** argv, fs::path& configFile, s
 /// Launch the Trinity server
 extern int main(int argc, char** argv)
 {
-    signal(SIGABRT, &Trinity::AbortHandler);
+    signal(SIGABRT, &Azgath::AbortHandler);
 
     auto configFile = fs::absolute(_TRINITY_CORE_CONFIG);
     std::string configService;
@@ -196,13 +196,13 @@ extern int main(int argc, char** argv)
 
     std::vector<std::string> overriddenKeys = sConfigMgr->OverrideWithEnvVariablesIfAny();
 
-    std::shared_ptr<Trinity::Asio::IoContext> ioContext = std::make_shared<Trinity::Asio::IoContext>();
+    std::shared_ptr<Azgath::Asio::IoContext> ioContext = std::make_shared<Azgath::Asio::IoContext>();
 
     sLog->RegisterAppender<AppenderDB>();
     // If logs are supposed to be handled async then we need to pass the IoContext into the Log singleton
     sLog->Initialize(sConfigMgr->GetBoolDefault("Log.Async.Enable", false) ? ioContext.get() : nullptr);
 
-    Trinity::Banner::Show("worldserver-daemon",
+    Azgath::Banner::Show("worldserver-daemon",
         [](char const* text)
         {
             TC_LOG_INFO("server.worldserver", "%s", text);
@@ -252,7 +252,7 @@ extern int main(int argc, char** argv)
     if (numThreads < 1)
         numThreads = 1;
 
-    std::shared_ptr<Trinity::ThreadPool> threadPool = std::make_shared<Trinity::ThreadPool>(numThreads);
+    std::shared_ptr<Azgath::ThreadPool> threadPool = std::make_shared<Azgath::ThreadPool>(numThreads);
 
     for (int i = 0; i < numThreads; ++i)
         threadPool->PostWork([ioContext]() { ioContext->run(); });
@@ -575,7 +575,7 @@ void FreezeDetector::Handler(std::weak_ptr<FreezeDetector> freezeDetectorRef, bo
     }
 }
 
-AsyncAcceptor* StartRaSocketAcceptor(Trinity::Asio::IoContext& ioContext)
+AsyncAcceptor* StartRaSocketAcceptor(Azgath::Asio::IoContext& ioContext)
 {
     uint16 raPort = uint16(sConfigMgr->GetIntDefault("Ra.Port", 3443));
     std::string raListener = sConfigMgr->GetStringDefault("Ra.IP", "0.0.0.0");

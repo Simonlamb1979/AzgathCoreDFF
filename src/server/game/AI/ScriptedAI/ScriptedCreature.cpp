@@ -262,8 +262,8 @@ void ScriptedAI::ForceCombatStopForCreatureEntry(uint32 entry, float maxSearchRa
     TC_LOG_DEBUG("scripts.ai", "ScriptedAI::ForceCombatStopForCreatureEntry: called on '%s'. Debug info: %s", me->GetGUID().ToString().c_str(), me->GetDebugInfo().c_str());
 
     std::list<Creature*> creatures;
-    Trinity::AllCreaturesOfEntryInRange check(me, entry, maxSearchRange);
-    Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange> searcher(me, creatures, check);
+    Azgath::AllCreaturesOfEntryInRange check(me, entry, maxSearchRange);
+    Azgath::CreatureListSearcher<Azgath::AllCreaturesOfEntryInRange> searcher(me, creatures, check);
 
     if (!samePhase)
         PhasingHandler::SetAlwaysVisible(me, true, false);
@@ -419,8 +419,8 @@ void ScriptedAI::DoTeleportAll(float x, float y, float z, float o)
 Unit* ScriptedAI::DoSelectLowestHpFriendly(float range, uint32 minHPDiff)
 {
     Unit* unit = nullptr;
-    Trinity::MostHPMissingInRange u_check(me, range, minHPDiff);
-    Trinity::UnitLastSearcher<Trinity::MostHPMissingInRange> searcher(me, unit, u_check);
+    Azgath::MostHPMissingInRange u_check(me, range, minHPDiff);
+    Azgath::UnitLastSearcher<Azgath::MostHPMissingInRange> searcher(me, unit, u_check);
     Cell::VisitAllObjects(me, searcher, range);
 
     return unit;
@@ -429,8 +429,8 @@ Unit* ScriptedAI::DoSelectLowestHpFriendly(float range, uint32 minHPDiff)
 Unit* ScriptedAI::DoSelectBelowHpPctFriendlyWithEntry(uint32 entry, float range, uint8 minHPDiff, bool excludeSelf)
 {
     Unit* unit = nullptr;
-    Trinity::FriendlyBelowHpPctEntryInRange u_check(me, entry, range, minHPDiff, excludeSelf);
-    Trinity::UnitLastSearcher<Trinity::FriendlyBelowHpPctEntryInRange> searcher(me, unit, u_check);
+    Azgath::FriendlyBelowHpPctEntryInRange u_check(me, entry, range, minHPDiff, excludeSelf);
+    Azgath::UnitLastSearcher<Azgath::FriendlyBelowHpPctEntryInRange> searcher(me, unit, u_check);
     Cell::VisitAllObjects(me, searcher, range);
 
     return unit;
@@ -439,8 +439,8 @@ Unit* ScriptedAI::DoSelectBelowHpPctFriendlyWithEntry(uint32 entry, float range,
 std::list<Creature*> ScriptedAI::DoFindFriendlyCC(float range)
 {
     std::list<Creature*> list;
-    Trinity::FriendlyCCedInRange u_check(me, range);
-    Trinity::CreatureListSearcher<Trinity::FriendlyCCedInRange> searcher(me, list, u_check);
+    Azgath::FriendlyCCedInRange u_check(me, range);
+    Azgath::CreatureListSearcher<Azgath::FriendlyCCedInRange> searcher(me, list, u_check);
     Cell::VisitAllObjects(me, searcher, range);
 
     return list;
@@ -449,8 +449,8 @@ std::list<Creature*> ScriptedAI::DoFindFriendlyCC(float range)
 std::list<Creature*> ScriptedAI::DoFindFriendlyMissingBuff(float range, uint32 uiSpellid)
 {
     std::list<Creature*> list;
-    Trinity::FriendlyMissingBuffInRange u_check(me, range, uiSpellid);
-    Trinity::CreatureListSearcher<Trinity::FriendlyMissingBuffInRange> searcher(me, list, u_check);
+    Azgath::FriendlyMissingBuffInRange u_check(me, range, uiSpellid);
+    Azgath::CreatureListSearcher<Azgath::FriendlyMissingBuffInRange> searcher(me, list, u_check);
     Cell::VisitAllObjects(me, searcher, range);
 
     return list;
@@ -460,8 +460,8 @@ Player* ScriptedAI::GetPlayerAtMinimumRange(float minimumRange)
 {
     Player* player = nullptr;
 
-    Trinity::PlayerAtMinimumRangeAway check(me, minimumRange);
-    Trinity::PlayerSearcher<Trinity::PlayerAtMinimumRangeAway> searcher(me, player, check);
+    Azgath::PlayerAtMinimumRangeAway check(me, minimumRange);
+    Azgath::PlayerSearcher<Azgath::PlayerAtMinimumRangeAway> searcher(me, player, check);
     Cell::VisitWorldObjects(me, searcher, minimumRange);
 
     return player;

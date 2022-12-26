@@ -22,7 +22,7 @@
 #include <boost/asio/thread_pool.hpp>
 #include <thread>
 
-namespace Trinity
+namespace Azgath
 {
 class ThreadPool
 {

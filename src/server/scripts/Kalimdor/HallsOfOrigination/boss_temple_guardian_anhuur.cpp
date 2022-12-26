@@ -139,7 +139,7 @@ public:
                     std::list<Creature*> stalkers;
                     GetCreatureListWithEntryInGrid(stalkers, me, NPC_CAVE_IN_STALKER, 100.0f);
 
-                    stalkers.remove_if(Trinity::HeightDifferenceCheck(door, 0.0f, false)); // Target only the bottom ones
+                    stalkers.remove_if(Azgath::HeightDifferenceCheck(door, 0.0f, false)); // Target only the bottom ones
                     for (std::list<Creature*>::iterator itr = stalkers.begin(); itr != stalkers.end(); ++itr)
                     {
                         if ((*itr)->GetPositionX() > door->GetPositionX())
@@ -239,17 +239,17 @@ public:
 
                         std::list<Creature*> stalkers;
                         GetCreatureListWithEntryInGrid(stalkers, me, NPC_CAVE_IN_STALKER, 100.0f);
-                        stalkers.remove_if(Trinity::HeightDifferenceCheck(ObjectAccessor::GetGameObject(*me, instance->GetGuidData(DATA_ANHUUR_DOOR)), 5.0f, true));
+                        stalkers.remove_if(Azgath::HeightDifferenceCheck(ObjectAccessor::GetGameObject(*me, instance->GetGuidData(DATA_ANHUUR_DOOR)), 5.0f, true));
 
                         if (stalkers.empty())
                             break;
 
-                        stalkers.sort(Trinity::ObjectDistanceOrderPred(target));
+                        stalkers.sort(Azgath::ObjectDistanceOrderPred(target));
 
                         // Get the closest statue face (any of its eyes)
                         Creature* eye1 = stalkers.front();
                         stalkers.remove(eye1); // Remove the eye.
-                        stalkers.sort(Trinity::ObjectDistanceOrderPred(eye1)); // Find the second eye.
+                        stalkers.sort(Azgath::ObjectDistanceOrderPred(eye1)); // Find the second eye.
                         Creature* eye2 = stalkers.front();
 
                         eye1->CastSpell(eye1, SPELL_SEARING_LIGHT, true);
@@ -289,9 +289,9 @@ class spell_anhuur_shield_of_light : public SpellScriptLoader
                 {
                     if (GameObject* go = ObjectAccessor::GetGameObject(*GetCaster(), script->GetGuidData(DATA_ANHUUR_DOOR)))
                     {
-                        targets.remove_if(Trinity::HeightDifferenceCheck(go, 5.0f, false));
+                        targets.remove_if(Azgath::HeightDifferenceCheck(go, 5.0f, false));
                         targets.remove(GetCaster());
-                        targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+                        targets.sort(Azgath::ObjectDistanceOrderPred(GetCaster()));
                         targets.resize(2);
                     }
                 }

@@ -69,7 +69,7 @@ int32 handle_post_plugin(soap* soapClient)
     return sLoginService.HandleHttpRequest(soapClient, "POST", sLoginService._postHandlers);
 }
 
-bool LoginRESTService::Start(Trinity::Asio::IoContext* ioContext)
+bool LoginRESTService::Start(Azgath::Asio::IoContext* ioContext)
 {
     _ioContext = ioContext;
     _bindIP = sConfigMgr->GetStringDefault("BindIP", "0.0.0.0");
@@ -80,7 +80,7 @@ bool LoginRESTService::Start(Trinity::Asio::IoContext* ioContext)
         _port = 8081;
     }
 
-    Trinity::Asio::Resolver resolver(*ioContext);
+    Azgath::Asio::Resolver resolver(*ioContext);
 
     std::string configuredAddress = sConfigMgr->GetStringDefault("LoginREST.ExternalAddress", "127.0.0.1");
     Optional<boost::asio::ip::tcp::endpoint> externalAddress = resolver.Resolve(boost::asio::ip::tcp::v4(), configuredAddress, std::to_string(_port));
@@ -101,7 +101,7 @@ bool LoginRESTService::Start(Trinity::Asio::IoContext* ioContext)
     }
 
     _localAddress = *localAddress;
-    _localNetmask = Trinity::Net::GetDefaultNetmaskV4(_localAddress.address().to_v4());
+    _localNetmask = Azgath::Net::GetDefaultNetmaskV4(_localAddress.address().to_v4());
 
     // set up form inputs
     Battlenet::JSON::Login::FormInput* input;
@@ -142,7 +142,7 @@ boost::asio::ip::tcp::endpoint const& LoginRESTService::GetAddressForClient(boos
     else if (_localAddress.address().is_loopback())
         return _externalAddress;
 
-    if (Trinity::Net::IsInNetwork(_localAddress.address().to_v4(), _localNetmask, address.to_v4()))
+    if (Azgath::Net::IsInNetwork(_localAddress.address().to_v4(), _localNetmask, address.to_v4()))
         return _localAddress;
 
     return _externalAddress;
@@ -201,7 +201,7 @@ void LoginRESTService::Run()
 
         TC_LOG_DEBUG("server.rest", "Accepted connection from IP=%s", boost::asio::ip::address_v4(soapClient->GetClient()->ip).to_string().c_str());
 
-        Trinity::Asio::post(*_ioContext, [soapClient]()
+        Azgath::Asio::post(*_ioContext, [soapClient]()
         {
             soapClient->GetClient()->user = (void*)&soapClient; // this allows us to make a copy of pointer inside GET/POST handlers to increment reference count
             soap_begin(soapClient->GetClient());
@@ -291,7 +291,7 @@ int32 LoginRESTService::HandleGetGameAccounts(std::shared_ptr<AsyncRequest> requ
         SendResponse(request->GetClient(), response);
     })));
 
-    Trinity::Asio::post(*_ioContext, [this, request]() { HandleAsyncRequest(request); });
+    Azgath::Asio::post(*_ioContext, [this, request]() { HandleAsyncRequest(request); });
 
     return SOAP_OK;
 }
@@ -299,7 +299,7 @@ int32 LoginRESTService::HandleGetGameAccounts(std::shared_ptr<AsyncRequest> requ
 int32 LoginRESTService::HandleGetPortal(std::shared_ptr<AsyncRequest> request)
 {
     boost::asio::ip::tcp::endpoint const& endpoint = GetAddressForClient(boost::asio::ip::address_v4(request->GetClient()->ip));
-    std::string response = Trinity::StringFormat("%s:%d", endpoint.address().to_string().c_str(), sConfigMgr->GetIntDefault("BattlenetPort", 1119));
+    std::string response = Azgath::StringFormat("%s:%d", endpoint.address().to_string().c_str(), sConfigMgr->GetIntDefault("BattlenetPort", 1119));
 
     soap_response(request->GetClient(), SOAP_FILE);
     soap_send_raw(request->GetClient(), response.c_str(), response.length());
@@ -360,7 +360,7 @@ int32 LoginRESTService::HandlePostLogin(std::shared_ptr<AsyncRequest> request)
             {
                 if (loginTicket.empty() || loginTicketExpiry < time(nullptr))
                 {
-                    std::array<uint8, 20> ticket = Trinity::Crypto::GetRandomBytes<20>();
+                    std::array<uint8, 20> ticket = Azgath::Crypto::GetRandomBytes<20>();
 
                     loginTicket = "TC-" + ByteArrayToHexStr(ticket);
                 }
@@ -431,7 +431,7 @@ int32 LoginRESTService::HandlePostLogin(std::shared_ptr<AsyncRequest> request)
         sLoginService.SendResponse(request->GetClient(), loginResult);
     })));
 
-    Trinity::Asio::post(*_ioContext, [this, request]() { HandleAsyncRequest(request); });
+    Azgath::Asio::post(*_ioContext, [this, request]() { HandleAsyncRequest(request); });
 
     return SOAP_OK;
 }
@@ -471,7 +471,7 @@ int32 LoginRESTService::HandlePostRefreshLoginTicket(std::shared_ptr<AsyncReques
         SendResponse(request->GetClient(), loginRefreshResult);
     })));
 
-    Trinity::Asio::post(*_ioContext, [this, request]() { HandleAsyncRequest(request); });
+    Azgath::Asio::post(*_ioContext, [this, request]() { HandleAsyncRequest(request); });
 
     return SOAP_OK;
 }
@@ -489,7 +489,7 @@ void LoginRESTService::HandleAsyncRequest(std::shared_ptr<AsyncRequest> request)
 {
     if (!request->InvokeIfReady())
     {
-        Trinity::Asio::post(*_ioContext, [this, request]() { HandleAsyncRequest(request); });
+        Azgath::Asio::post(*_ioContext, [this, request]() { HandleAsyncRequest(request); });
     }
     else if (request->GetResponseStatus())
     {
@@ -500,11 +500,11 @@ void LoginRESTService::HandleAsyncRequest(std::shared_ptr<AsyncRequest> request)
 
 std::string LoginRESTService::CalculateShaPassHash(std::string const& name, std::string const& password)
 {
-    Trinity::Crypto::SHA256 email;
+    Azgath::Crypto::SHA256 email;
     email.UpdateData(name);
     email.Finalize();
 
-    Trinity::Crypto::SHA256 sha;
+    Azgath::Crypto::SHA256 sha;
     sha.UpdateData(ByteArrayToHexStr(email.GetDigest()));
     sha.UpdateData(":");
     sha.UpdateData(password);

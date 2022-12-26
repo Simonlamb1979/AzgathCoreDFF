@@ -18,13 +18,13 @@
 #include "ChatCommandHelpers.h"
 #include "Chat.h"
 
-void Trinity::Impl::ChatCommands::SendErrorMessageToHandler(ChatHandler* handler, std::string_view str)
+void Azgath::Impl::ChatCommands::SendErrorMessageToHandler(ChatHandler* handler, std::string_view str)
 {
     handler->SendSysMessage(str);
     handler->SetSentErrorMessage(true);
 }
 
-char const* Trinity::Impl::ChatCommands::GetAzgathString(ChatHandler const* handler, TrinityStrings which)
+char const* Azgath::Impl::ChatCommands::GetAzgathString(ChatHandler const* handler, TrinityStrings which)
 {
     return handler->GetAzgathString(which);
 }

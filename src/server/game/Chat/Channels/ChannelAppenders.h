@@ -32,12 +32,12 @@ class ChannelNameBuilder
         ChannelNameBuilder(Channel const* source, PacketModifier const& modifier)
             : _source(source), _modifier(modifier){ }
 
-        Trinity::PacketSenderOwning<WorldPackets::Channel::ChannelNotify>* operator()(LocaleConstant locale) const
+        Azgath::PacketSenderOwning<WorldPackets::Channel::ChannelNotify>* operator()(LocaleConstant locale) const
         {
             // LocalizedPacketDo sends client DBC locale, we need to get available to server locale
             LocaleConstant localeIdx = sWorld->GetAvailableDbcLocale(locale);
 
-            Trinity::PacketSenderOwning<WorldPackets::Channel::ChannelNotify>* sender = new Trinity::PacketSenderOwning<WorldPackets::Channel::ChannelNotify>();
+            Azgath::PacketSenderOwning<WorldPackets::Channel::ChannelNotify>* sender = new Azgath::PacketSenderOwning<WorldPackets::Channel::ChannelNotify>();
             sender->Data.Type = _modifier.NotificationType;
             sender->Data._Channel = _source->GetName(localeIdx);
             _modifier.Append(sender->Data);

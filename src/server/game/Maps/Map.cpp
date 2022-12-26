@@ -253,7 +253,7 @@ template<>
 void Map::SwitchGridContainers(Creature* obj, bool on)
 {
     ASSERT(!obj->IsPermanentWorldObject());
-    CellCoord p = Trinity::ComputeCellCoord(obj->GetPositionX(), obj->GetPositionY());
+    CellCoord p = Azgath::ComputeCellCoord(obj->GetPositionX(), obj->GetPositionY());
     if (!p.IsCoordValid())
     {
         TC_LOG_ERROR("maps", "Map::SwitchGridContainers: Object %s has invalid coordinates X:%f Y:%f grid cell [%u:%u]", obj->GetGUID().ToString().c_str(), obj->GetPositionX(), obj->GetPositionY(), p.x_coord, p.y_coord);
@@ -415,7 +415,7 @@ void Map::LoadGridForActiveObject(float x, float y, WorldObject const* object)
 
 bool Map::AddPlayerToMap(Player* player, bool initPlayer /*= true*/)
 {
-    CellCoord cellCoord = Trinity::ComputeCellCoord(player->GetPositionX(), player->GetPositionY());
+    CellCoord cellCoord = Azgath::ComputeCellCoord(player->GetPositionX(), player->GetPositionY());
     if (!cellCoord.IsCoordValid())
     {
         TC_LOG_ERROR("maps", "Map::Add: Player %s has invalid coordinates X:%f Y:%f grid cell [%u:%u]", player->GetGUID().ToString().c_str(), player->GetPositionX(), player->GetPositionY(), cellCoord.x_coord, cellCoord.y_coord);
@@ -457,7 +457,7 @@ void Map::UpdatePersonalPhasesForPlayer(Player const* player)
 
 int32 Map::GetWorldStateValue(int32 worldStateId) const
 {
-    if (int32 const* value = Trinity::Containers::MapGetValuePtr(_worldStateValues, worldStateId))
+    if (int32 const* value = Azgath::Containers::MapGetValuePtr(_worldStateValues, worldStateId))
         return *value;
 
     return 0;
@@ -523,7 +523,7 @@ bool Map::AddToMap(T* obj)
         return true;
     }
 
-    CellCoord cellCoord = Trinity::ComputeCellCoord(obj->GetPositionX(), obj->GetPositionY());
+    CellCoord cellCoord = Azgath::ComputeCellCoord(obj->GetPositionX(), obj->GetPositionY());
     //It will create many problems (including crashes) if an object is not added to grid after creation
     //The correct way to fix it is to make AddToMap return false and delete the object if it is not added to grid
     //But now AddToMap is used in too many places, I will just see how many ASSERT failures it will cause
@@ -566,7 +566,7 @@ bool Map::AddToMap(Transport* obj)
     if (obj->IsInWorld())
         return true;
 
-    CellCoord cellCoord = Trinity::ComputeCellCoord(obj->GetPositionX(), obj->GetPositionY());
+    CellCoord cellCoord = Azgath::ComputeCellCoord(obj->GetPositionX(), obj->GetPositionY());
     if (!cellCoord.IsCoordValid())
     {
         TC_LOG_ERROR("maps", "Map::Add: Object %s has invalid coordinates X:%f Y:%f grid cell [%u:%u]", obj->GetGUID().ToString().c_str(), obj->GetPositionX(), obj->GetPositionY(), cellCoord.x_coord, cellCoord.y_coord);
@@ -602,7 +602,7 @@ bool Map::IsGridLoaded(GridCoord const& p) const
     return (getNGrid(p.x_coord, p.y_coord) && isGridObjectDataLoaded(p.x_coord, p.y_coord));
 }
 
-void Map::VisitNearbyCellsOf(WorldObject* obj, TypeContainerVisitor<Trinity::ObjectUpdater, GridTypeMapContainer> &gridVisitor, TypeContainerVisitor<Trinity::ObjectUpdater, WorldTypeMapContainer> &worldVisitor)
+void Map::VisitNearbyCellsOf(WorldObject* obj, TypeContainerVisitor<Azgath::ObjectUpdater, GridTypeMapContainer> &gridVisitor, TypeContainerVisitor<Azgath::ObjectUpdater, WorldTypeMapContainer> &worldVisitor)
 {
     // Check for valid position
     if (!obj->IsPositionValid())
@@ -675,11 +675,11 @@ void Map::Update(uint32 t_diff)
     /// update active cells around players and active objects
     resetMarkedCells();
 
-    Trinity::ObjectUpdater updater(t_diff);
+    Azgath::ObjectUpdater updater(t_diff);
     // for creature
-    TypeContainerVisitor<Trinity::ObjectUpdater, GridTypeMapContainer  > grid_object_update(updater);
+    TypeContainerVisitor<Azgath::ObjectUpdater, GridTypeMapContainer  > grid_object_update(updater);
     // for pets
-    TypeContainerVisitor<Trinity::ObjectUpdater, WorldTypeMapContainer > world_object_update(updater);
+    TypeContainerVisitor<Azgath::ObjectUpdater, WorldTypeMapContainer > world_object_update(updater);
 
     // the player iterator is stored in the map object
     // to make sure calls to Map::Remove don't invalidate it
@@ -840,9 +840,9 @@ void Map::ProcessRelocationNotifies(const uint32 diff)
                 Cell cell(pair);
                 cell.SetNoCreate();
 
-                Trinity::DelayedUnitRelocation cell_relocation(cell, pair, *this, MAX_VISIBILITY_DISTANCE);
-                TypeContainerVisitor<Trinity::DelayedUnitRelocation, GridTypeMapContainer  > grid_object_relocation(cell_relocation);
-                TypeContainerVisitor<Trinity::DelayedUnitRelocation, WorldTypeMapContainer > world_object_relocation(cell_relocation);
+                Azgath::DelayedUnitRelocation cell_relocation(cell, pair, *this, MAX_VISIBILITY_DISTANCE);
+                TypeContainerVisitor<Azgath::DelayedUnitRelocation, GridTypeMapContainer  > grid_object_relocation(cell_relocation);
+                TypeContainerVisitor<Azgath::DelayedUnitRelocation, WorldTypeMapContainer > world_object_relocation(cell_relocation);
                 Visit(cell, grid_object_relocation);
                 Visit(cell, world_object_relocation);
             }
@@ -2020,11 +2020,11 @@ size_t Map::DespawnAll(SpawnObjectType type, ObjectGuid::LowType spawnId)
     switch (type)
     {
         case SPAWN_TYPE_CREATURE:
-            for (auto const& pair : Trinity::Containers::MapEqualRange(GetCreatureBySpawnIdStore(), spawnId))
+            for (auto const& pair : Azgath::Containers::MapEqualRange(GetCreatureBySpawnIdStore(), spawnId))
                 toUnload.push_back(pair.second);
             break;
         case SPAWN_TYPE_GAMEOBJECT:
-            for (auto const& pair : Trinity::Containers::MapEqualRange(GetGameObjectBySpawnIdStore(), spawnId))
+            for (auto const& pair : Azgath::Containers::MapEqualRange(GetGameObjectBySpawnIdStore(), spawnId))
                 toUnload.push_back(pair.second);
             break;
         default:
@@ -2628,7 +2628,7 @@ bool Map::ActiveObjectsNearGrid(NGridType const& ngrid) const
     {
         Player* player = iter->GetSource();
 
-        CellCoord p = Trinity::ComputeCellCoord(player->GetPositionX(), player->GetPositionY());
+        CellCoord p = Azgath::ComputeCellCoord(player->GetPositionX(), player->GetPositionY());
         if ((cell_min.x_coord <= p.x_coord && p.x_coord <= cell_max.x_coord) &&
             (cell_min.y_coord <= p.y_coord && p.y_coord <= cell_max.y_coord))
             return true;
@@ -2638,7 +2638,7 @@ bool Map::ActiveObjectsNearGrid(NGridType const& ngrid) const
     {
         WorldObject* obj = *iter;
 
-        CellCoord p = Trinity::ComputeCellCoord(obj->GetPositionX(), obj->GetPositionY());
+        CellCoord p = Azgath::ComputeCellCoord(obj->GetPositionX(), obj->GetPositionY());
         if ((cell_min.x_coord <= p.x_coord && p.x_coord <= cell_max.x_coord) &&
             (cell_min.y_coord <= p.y_coord && p.y_coord <= cell_max.y_coord))
             return true;
@@ -2674,12 +2674,12 @@ void Map::AddToActive(WorldObject* obj)
 
     if (respawnLocation)
     {
-        GridCoord p = Trinity::ComputeGridCoord(respawnLocation->GetPositionX(), respawnLocation->GetPositionY());
+        GridCoord p = Azgath::ComputeGridCoord(respawnLocation->GetPositionX(), respawnLocation->GetPositionY());
         if (getNGrid(p.x_coord, p.y_coord))
             getNGrid(p.x_coord, p.y_coord)->incUnloadActiveLock();
         else
         {
-            GridCoord p2 = Trinity::ComputeGridCoord(obj->GetPositionX(), obj->GetPositionY());
+            GridCoord p2 = Azgath::ComputeGridCoord(obj->GetPositionX(), obj->GetPositionY());
             TC_LOG_ERROR("maps", "Active object %s added to grid[%u, %u] but spawn grid[%u, %u] was not loaded.",
                 obj->GetGUID().ToString().c_str(), p.x_coord, p.y_coord, p2.x_coord, p2.y_coord);
         }
@@ -2713,12 +2713,12 @@ void Map::RemoveFromActive(WorldObject* obj)
 
     if (respawnLocation)
     {
-        GridCoord p = Trinity::ComputeGridCoord(respawnLocation->GetPositionX(), respawnLocation->GetPositionY());
+        GridCoord p = Azgath::ComputeGridCoord(respawnLocation->GetPositionX(), respawnLocation->GetPositionY());
         if (getNGrid(p.x_coord, p.y_coord))
             getNGrid(p.x_coord, p.y_coord)->decUnloadActiveLock();
         else
         {
-            GridCoord p2 = Trinity::ComputeGridCoord(obj->GetPositionX(), obj->GetPositionY());
+            GridCoord p2 = Azgath::ComputeGridCoord(obj->GetPositionX(), obj->GetPositionY());
             TC_LOG_ERROR("maps", "Active object %s removed from to grid[%u, %u] but spawn grid[%u, %u] was not loaded.",
                 obj->GetGUID().ToString().c_str(), p.x_coord, p.y_coord, p2.x_coord, p2.y_coord);
         }
@@ -3470,7 +3470,7 @@ void Map::LoadRespawnTimes()
             if (SpawnData::TypeHasData(type))
             {
                 if (SpawnData const* data = sObjectMgr->GetSpawnData(type, spawnId))
-                    SaveRespawnTime(type, spawnId, data->id, time_t(respawnTime), Trinity::ComputeGridCoord(data->spawnPoint.GetPositionX(), data->spawnPoint.GetPositionY()).GetId(), nullptr, true);
+                    SaveRespawnTime(type, spawnId, data->id, time_t(respawnTime), Azgath::ComputeGridCoord(data->spawnPoint.GetPositionX(), data->spawnPoint.GetPositionY()).GetId(), nullptr, true);
                 else
                     TC_LOG_ERROR("maps", "Loading saved respawn time of %" PRIu64 " for spawnid (%u," UI64FMTD ") - spawn does not exist, ignoring", respawnTime, uint32(type), spawnId);
             }
@@ -3587,7 +3587,7 @@ void Map::LoadCorpseData()
         for (uint32 phaseId : phases[guid])
             PhasingHandler::AddPhase(corpse, phaseId, false);
 
-        corpse->SetCustomizations(Trinity::Containers::MakeIteratorPair(customizations[guid].begin(), customizations[guid].end()));
+        corpse->SetCustomizations(Azgath::Containers::MakeIteratorPair(customizations[guid].begin(), customizations[guid].end()));
 
         AddCorpse(corpse);
 
@@ -3667,7 +3667,7 @@ Corpse* Map::ConvertCorpseToBones(ObjectGuid const& ownerGuid, bool insignia /*=
         bones->SetRace(corpse->m_corpseData->RaceID);
         bones->SetSex(corpse->m_corpseData->Sex);
         bones->SetClass(corpse->m_corpseData->Class);
-        bones->SetCustomizations(Trinity::Containers::MakeIteratorPair(corpse->m_corpseData->Customizations.begin(), corpse->m_corpseData->Customizations.end()));
+        bones->SetCustomizations(Azgath::Containers::MakeIteratorPair(corpse->m_corpseData->Customizations.begin(), corpse->m_corpseData->Customizations.end()));
         bones->ReplaceAllFlags(corpse->m_corpseData->Flags | CORPSE_FLAG_BONES);
         bones->SetFactionTemplate(corpse->m_corpseData->FactionTemplate);
 
@@ -3801,7 +3801,7 @@ Weather* Map::GetOrGenerateZoneDefaultWeather(uint32 zoneId)
 
 WeatherState Map::GetZoneWeather(uint32 zoneId) const
 {
-    ZoneDynamicInfo const* zoneDynamicInfo = Trinity::Containers::MapGetValuePtr(_zoneDynamicInfo, zoneId);
+    ZoneDynamicInfo const* zoneDynamicInfo = Azgath::Containers::MapGetValuePtr(_zoneDynamicInfo, zoneId);
     if (zoneDynamicInfo)
     {
         if (WeatherState weatherId = zoneDynamicInfo->WeatherId)

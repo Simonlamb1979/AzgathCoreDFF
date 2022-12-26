@@ -45,7 +45,7 @@ bool SmoothPhasing::IsReplacing(ObjectGuid guid) const
 bool SmoothPhasing::IsBeingReplacedForSeer(ObjectGuid seer) const
 {
     if (std::holds_alternative<SmoothPhasingInfoViewerDependent>(_storage))
-        if (SmoothPhasingInfo const* smoothPhasingInfo = Trinity::Containers::MapGetValuePtr(std::get<SmoothPhasingInfoViewerDependent>(_storage), seer))
+        if (SmoothPhasingInfo const* smoothPhasingInfo = Azgath::Containers::MapGetValuePtr(std::get<SmoothPhasingInfoViewerDependent>(_storage), seer))
             return !smoothPhasingInfo->Disabled;
 
     return false;
@@ -54,7 +54,7 @@ bool SmoothPhasing::IsBeingReplacedForSeer(ObjectGuid seer) const
 SmoothPhasingInfo const* SmoothPhasing::GetInfoForSeer(ObjectGuid seer) const
 {
     if (std::holds_alternative<SmoothPhasingInfoViewerDependent>(_storage))
-        return Trinity::Containers::MapGetValuePtr(std::get<SmoothPhasingInfoViewerDependent>(_storage), seer);
+        return Azgath::Containers::MapGetValuePtr(std::get<SmoothPhasingInfoViewerDependent>(_storage), seer);
 
     return &std::get<SmoothPhasingInfoSingle>(_storage);
 }
@@ -62,6 +62,6 @@ SmoothPhasingInfo const* SmoothPhasing::GetInfoForSeer(ObjectGuid seer) const
 void SmoothPhasing::DisableReplacementForSeer(ObjectGuid seer)
 {
     if (std::holds_alternative<SmoothPhasingInfoViewerDependent>(_storage))
-        if (SmoothPhasingInfo* smoothPhasingInfo = Trinity::Containers::MapGetValuePtr(std::get<SmoothPhasingInfoViewerDependent>(_storage), seer))
+        if (SmoothPhasingInfo* smoothPhasingInfo = Azgath::Containers::MapGetValuePtr(std::get<SmoothPhasingInfoViewerDependent>(_storage), seer))
             smoothPhasingInfo->Disabled = true;
 }

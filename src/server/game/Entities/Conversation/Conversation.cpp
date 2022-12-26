@@ -121,7 +121,7 @@ struct ConversationActorFillVisitor
     {
         Creature const* bestFit = nullptr;
 
-        for (auto const& [_, creature] : Trinity::Containers::MapEqualRange(_map->GetCreatureBySpawnIdStore(), worldObject.SpawnId))
+        for (auto const& [_, creature] : Azgath::Containers::MapEqualRange(_map->GetCreatureBySpawnIdStore(), worldObject.SpawnId))
         {
             bestFit = creature;
 
@@ -266,7 +266,7 @@ void Conversation::AddActor(int32 actorId, uint32 actorIdx, ConversationActorTyp
 
 Milliseconds const* Conversation::GetLineStartTime(LocaleConstant locale, int32 lineId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_lineStartTimes, { locale, lineId });
+    return Azgath::Containers::MapGetValuePtr(_lineStartTimes, { locale, lineId });
 }
 
 Milliseconds Conversation::GetLastLineEndTime(LocaleConstant locale) const

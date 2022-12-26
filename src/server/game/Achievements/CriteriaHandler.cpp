@@ -122,7 +122,7 @@ bool CriteriaData::IsValid(Criteria const* criteria)
                     criteria->ID, criteria->Entry->Type, DataType, ClassRace.Class);
                 return false;
             }
-            if (!Trinity::RaceMask<uint64>{ RACEMASK_ALL_PLAYABLE }.HasRace(ClassRace.Race))
+            if (!Azgath::RaceMask<uint64>{ RACEMASK_ALL_PLAYABLE }.HasRace(ClassRace.Race))
             {
                 TC_LOG_ERROR("sql.sql", "Table `criteria_data` (Entry: %u Type: %u) for data type CRITERIA_DATA_TYPE_T_PLAYER_CLASS_RACE (%u) contains a non-existing race in value2 (%u), ignored.",
                     criteria->ID, criteria->Entry->Type, DataType, ClassRace.Race);
@@ -2969,7 +2969,7 @@ bool CriteriaHandler::ModifierSatisfied(ModifierTreeEntry const* modifier, uint6
         case ModifierTreeType::PlayerIsInstanceOwner: // 196 NYI
             return false;
         case ModifierTreeType::PlayerHasHeirloom: // 197
-            if (!Trinity::Containers::MapGetValuePtr(referencePlayer->GetSession()->GetCollectionMgr()->GetAccountHeirlooms(), reqValue))
+            if (!Azgath::Containers::MapGetValuePtr(referencePlayer->GetSession()->GetCollectionMgr()->GetAccountHeirlooms(), reqValue))
                 return false;
             break;
         case ModifierTreeType::TeamPoints: // 198 NYI
@@ -4410,7 +4410,7 @@ CriteriaList const& CriteriaMgr::GetPlayerCriteriaByType(CriteriaType type, uint
 
 CriteriaList const& CriteriaMgr::GetScenarioCriteriaByTypeAndScenario(CriteriaType type, uint32 scenarioId) const
 {
-    if (CriteriaList const* criteriaList = Trinity::Containers::MapGetValuePtr(_scenarioCriteriasByTypeAndScenarioId[size_t(type)], scenarioId))
+    if (CriteriaList const* criteriaList = Azgath::Containers::MapGetValuePtr(_scenarioCriteriasByTypeAndScenarioId[size_t(type)], scenarioId))
         return *criteriaList;
 
     return EmptyCriteriaList;
@@ -4455,7 +4455,7 @@ void CriteriaMgr::LoadCriteriaModifiersTree()
 
     // Build tree
     for (std::pair<uint32 const, ModifierTreeNode*>& criteriaModifier : _criteriaModifiers)
-        if (ModifierTreeNode* parentNode = Trinity::Containers::MapGetValuePtr(_criteriaModifiers, criteriaModifier.second->Entry->Parent))
+        if (ModifierTreeNode* parentNode = Azgath::Containers::MapGetValuePtr(_criteriaModifiers, criteriaModifier.second->Entry->Parent))
             parentNode->Children.push_back(criteriaModifier.second);
 
     TC_LOG_INFO("server.loading", ">> Loaded %u criteria modifiers in %u ms", uint32(_criteriaModifiers.size()), GetMSTimeDiffToNow(oldMSTime));
@@ -4534,7 +4534,7 @@ void CriteriaMgr::LoadCriteriaList()
     // Build tree
     for (std::pair<uint32 const, CriteriaTree*> const& criteriaTree : _criteriaTrees)
     {
-        if (CriteriaTree* parent = Trinity::Containers::MapGetValuePtr(_criteriaTrees, criteriaTree.second->Entry->Parent))
+        if (CriteriaTree* parent = Azgath::Containers::MapGetValuePtr(_criteriaTrees, criteriaTree.second->Entry->Parent))
             parent->Children.push_back(criteriaTree.second);
 
         if (sCriteriaStore.HasRecord(criteriaTree.second->Entry->CriteriaID))
@@ -4562,7 +4562,7 @@ void CriteriaMgr::LoadCriteriaList()
         Criteria* criteria = new Criteria();
         criteria->ID = criteriaEntry->ID;
         criteria->Entry = criteriaEntry;
-        criteria->Modifier = Trinity::Containers::MapGetValuePtr(_criteriaModifiers, criteriaEntry->ModifierTreeId);
+        criteria->Modifier = Azgath::Containers::MapGetValuePtr(_criteriaModifiers, criteriaEntry->ModifierTreeId);
 
         _criteria[criteria->ID] = criteria;
 

@@ -42,7 +42,7 @@ bool DBUpdaterUtil::CheckExecutable()
     boost::filesystem::path exe(GetCorrectedMySQLExecutable());
     if (!is_regular_file(exe))
     {
-        exe = Trinity::SearchExecutableInPath("mysql");
+        exe = Azgath::SearchExecutableInPath("mysql");
         if (!exe.empty() && is_regular_file(exe))
         {
             // Correct the path to the cli
@@ -268,7 +268,7 @@ bool DBUpdater<T>::Update(DatabaseWorkerPool<T>& pool)
         return false;
     }
 
-    std::string const info = Trinity::StringFormat("Containing " SZFMTD " new and " SZFMTD " archived updates.",
+    std::string const info = Azgath::StringFormat("Containing " SZFMTD " new and " SZFMTD " archived updates.",
         result.recent, result.archived);
 
     if (!result.updated)
@@ -416,14 +416,14 @@ void DBUpdater<T>::ApplyFile(DatabaseWorkerPool<T>& pool, std::string const& hos
 
     // Execute sql file
     args.emplace_back("-e");
-    args.emplace_back(Trinity::StringFormat("BEGIN; SOURCE %s; COMMIT;", path.generic_string().c_str()));
+    args.emplace_back(Azgath::StringFormat("BEGIN; SOURCE %s; COMMIT;", path.generic_string().c_str()));
 
     // Database
     if (!database.empty())
         args.emplace_back(database);
 
     // Invokes a mysql process which doesn't leak credentials to logs
-    int const ret = Trinity::StartProcess(DBUpdaterUtil::GetCorrectedMySQLExecutable(), args,
+    int const ret = Azgath::StartProcess(DBUpdaterUtil::GetCorrectedMySQLExecutable(), args,
                                  "sql.updates", "", true);
 
     if (ret != EXIT_SUCCESS)

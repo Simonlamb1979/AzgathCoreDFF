@@ -45,7 +45,7 @@ void Warden::MakeModuleForClient()
     TC_LOG_DEBUG("warden", "Make module for client");
     InitializeModuleForClient(_module.emplace());
 
-    _module->Id = Trinity::Crypto::MD5::GetDigestOf(_module->CompressedData, _module->CompressedSize);
+    _module->Id = Azgath::Crypto::MD5::GetDigestOf(_module->CompressedData, _module->CompressedSize);
 }
 
 void Warden::SendModuleToClient()
@@ -164,7 +164,7 @@ union keyData
 uint32 Warden::BuildChecksum(uint8 const* data, uint32 length)
 {
     keyData hash;
-    hash.bytes = Trinity::Crypto::SHA1::GetDigestOf(data, size_t(length));
+    hash.bytes = Azgath::Crypto::SHA1::GetDigestOf(data, size_t(length));
     uint32 checkSum = 0;
     for (uint8 i = 0; i < 5; ++i)
         checkSum = checkSum ^ hash.ints[i];
@@ -193,7 +193,7 @@ char const* Warden::ApplyPenalty(WardenCheck const* check)
             std::string banReason = "Warden Anticheat Violation";
             // Check can be NULL, for example if the client sent a wrong signature in the warden packet (CHECKSUM FAIL)
             if (check)
-                banReason += Trinity::StringFormat(": %s (CheckId: %u", check->Comment.c_str(), uint32(check->CheckId));
+                banReason += Azgath::StringFormat(": %s (CheckId: %u", check->Comment.c_str(), uint32(check->CheckId));
 
             sWorld->BanAccount(BAN_ACCOUNT, accountName, sWorld->getIntConfig(CONFIG_WARDEN_CLIENT_BAN_DURATION), banReason, "Server");
 

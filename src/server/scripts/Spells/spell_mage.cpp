@@ -1316,10 +1316,10 @@ class spell_mage_time_warp : public SpellScript
 
     void RemoveInvalidTargets(std::list<WorldObject*>& targets)
     {
-        targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_MAGE_TEMPORAL_DISPLACEMENT));
-        targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_HUNTER_INSANITY));
-        targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_SHAMAN_EXHAUSTION));
-        targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_SHAMAN_SATED));
+        targets.remove_if(Azgath::UnitAuraCheck(true, SPELL_MAGE_TEMPORAL_DISPLACEMENT));
+        targets.remove_if(Azgath::UnitAuraCheck(true, SPELL_HUNTER_INSANITY));
+        targets.remove_if(Azgath::UnitAuraCheck(true, SPELL_SHAMAN_EXHAUSTION));
+        targets.remove_if(Azgath::UnitAuraCheck(true, SPELL_SHAMAN_SATED));
     }
 
     void ApplyDebuff()

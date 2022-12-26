@@ -25,7 +25,7 @@
 #include "WorldSession.h"
 
 template<class T>
-inline void Trinity::VisibleNotifier::Visit(GridRefManager<T> &m)
+inline void Azgath::VisibleNotifier::Visit(GridRefManager<T> &m)
 {
     for (typename GridRefManager<T>::iterator iter = m.begin(); iter != m.end(); ++iter)
     {
@@ -35,7 +35,7 @@ inline void Trinity::VisibleNotifier::Visit(GridRefManager<T> &m)
 }
 
 template<typename PacketSender>
-void Trinity::MessageDistDeliverer<PacketSender>::Visit(PlayerMapType& m) const
+void Azgath::MessageDistDeliverer<PacketSender>::Visit(PlayerMapType& m) const
 {
     for (PlayerMapType::iterator iter = m.begin(); iter != m.end(); ++iter)
     {
@@ -61,7 +61,7 @@ void Trinity::MessageDistDeliverer<PacketSender>::Visit(PlayerMapType& m) const
 }
 
 template<typename PacketSender>
-void Trinity::MessageDistDeliverer<PacketSender>::Visit(CreatureMapType& m) const
+void Azgath::MessageDistDeliverer<PacketSender>::Visit(CreatureMapType& m) const
 {
     for (CreatureMapType::iterator iter = m.begin(); iter != m.end(); ++iter)
     {
@@ -84,7 +84,7 @@ void Trinity::MessageDistDeliverer<PacketSender>::Visit(CreatureMapType& m) cons
 }
 
 template<typename PacketSender>
-void Trinity::MessageDistDeliverer<PacketSender>::Visit(DynamicObjectMapType& m) const
+void Azgath::MessageDistDeliverer<PacketSender>::Visit(DynamicObjectMapType& m) const
 {
     for (DynamicObjectMapType::iterator iter = m.begin(); iter != m.end(); ++iter)
     {
@@ -106,7 +106,7 @@ void Trinity::MessageDistDeliverer<PacketSender>::Visit(DynamicObjectMapType& m)
 }
 
 template<typename PacketSender>
-void Trinity::MessageDistDelivererToHostile<PacketSender>::Visit(PlayerMapType& m) const
+void Azgath::MessageDistDelivererToHostile<PacketSender>::Visit(PlayerMapType& m) const
 {
     for (PlayerMapType::iterator iter = m.begin(); iter != m.end(); ++iter)
     {
@@ -132,7 +132,7 @@ void Trinity::MessageDistDelivererToHostile<PacketSender>::Visit(PlayerMapType& 
 }
 
 template<typename PacketSender>
-void Trinity::MessageDistDelivererToHostile<PacketSender>::Visit(CreatureMapType& m) const
+void Azgath::MessageDistDelivererToHostile<PacketSender>::Visit(CreatureMapType& m) const
 {
     for (CreatureMapType::iterator iter = m.begin(); iter != m.end(); ++iter)
     {
@@ -155,7 +155,7 @@ void Trinity::MessageDistDelivererToHostile<PacketSender>::Visit(CreatureMapType
 }
 
 template<typename PacketSender>
-void Trinity::MessageDistDelivererToHostile<PacketSender>::Visit(DynamicObjectMapType& m) const
+void Azgath::MessageDistDelivererToHostile<PacketSender>::Visit(DynamicObjectMapType& m) const
 {
     for (DynamicObjectMapType::iterator iter = m.begin(); iter != m.end(); ++iter)
     {
@@ -181,7 +181,7 @@ void Trinity::MessageDistDelivererToHostile<PacketSender>::Visit(DynamicObjectMa
 // WorldObject searchers & workers
 
 template<class Check>
-void Trinity::WorldObjectSearcher<Check>::Visit(GameObjectMapType &m)
+void Azgath::WorldObjectSearcher<Check>::Visit(GameObjectMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_GAMEOBJECT))
         return;
@@ -204,7 +204,7 @@ void Trinity::WorldObjectSearcher<Check>::Visit(GameObjectMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectSearcher<Check>::Visit(PlayerMapType &m)
+void Azgath::WorldObjectSearcher<Check>::Visit(PlayerMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_PLAYER))
         return;
@@ -227,7 +227,7 @@ void Trinity::WorldObjectSearcher<Check>::Visit(PlayerMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectSearcher<Check>::Visit(CreatureMapType &m)
+void Azgath::WorldObjectSearcher<Check>::Visit(CreatureMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_CREATURE))
         return;
@@ -250,7 +250,7 @@ void Trinity::WorldObjectSearcher<Check>::Visit(CreatureMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectSearcher<Check>::Visit(CorpseMapType &m)
+void Azgath::WorldObjectSearcher<Check>::Visit(CorpseMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_CORPSE))
         return;
@@ -273,7 +273,7 @@ void Trinity::WorldObjectSearcher<Check>::Visit(CorpseMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectSearcher<Check>::Visit(DynamicObjectMapType &m)
+void Azgath::WorldObjectSearcher<Check>::Visit(DynamicObjectMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_DYNAMICOBJECT))
         return;
@@ -296,7 +296,7 @@ void Trinity::WorldObjectSearcher<Check>::Visit(DynamicObjectMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectSearcher<Check>::Visit(AreaTriggerMapType &m)
+void Azgath::WorldObjectSearcher<Check>::Visit(AreaTriggerMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_AREATRIGGER))
         return;
@@ -319,7 +319,7 @@ void Trinity::WorldObjectSearcher<Check>::Visit(AreaTriggerMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectSearcher<Check>::Visit(SceneObjectMapType &m)
+void Azgath::WorldObjectSearcher<Check>::Visit(SceneObjectMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_SCENEOBJECT))
         return;
@@ -342,7 +342,7 @@ void Trinity::WorldObjectSearcher<Check>::Visit(SceneObjectMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectSearcher<Check>::Visit(ConversationMapType &m)
+void Azgath::WorldObjectSearcher<Check>::Visit(ConversationMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_CONVERSATION))
         return;
@@ -365,7 +365,7 @@ void Trinity::WorldObjectSearcher<Check>::Visit(ConversationMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectLastSearcher<Check>::Visit(GameObjectMapType &m)
+void Azgath::WorldObjectLastSearcher<Check>::Visit(GameObjectMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_GAMEOBJECT))
         return;
@@ -381,7 +381,7 @@ void Trinity::WorldObjectLastSearcher<Check>::Visit(GameObjectMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectLastSearcher<Check>::Visit(PlayerMapType &m)
+void Azgath::WorldObjectLastSearcher<Check>::Visit(PlayerMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_PLAYER))
         return;
@@ -397,7 +397,7 @@ void Trinity::WorldObjectLastSearcher<Check>::Visit(PlayerMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectLastSearcher<Check>::Visit(CreatureMapType &m)
+void Azgath::WorldObjectLastSearcher<Check>::Visit(CreatureMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_CREATURE))
         return;
@@ -413,7 +413,7 @@ void Trinity::WorldObjectLastSearcher<Check>::Visit(CreatureMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectLastSearcher<Check>::Visit(CorpseMapType &m)
+void Azgath::WorldObjectLastSearcher<Check>::Visit(CorpseMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_CORPSE))
         return;
@@ -429,7 +429,7 @@ void Trinity::WorldObjectLastSearcher<Check>::Visit(CorpseMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectLastSearcher<Check>::Visit(DynamicObjectMapType &m)
+void Azgath::WorldObjectLastSearcher<Check>::Visit(DynamicObjectMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_DYNAMICOBJECT))
         return;
@@ -445,7 +445,7 @@ void Trinity::WorldObjectLastSearcher<Check>::Visit(DynamicObjectMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectLastSearcher<Check>::Visit(AreaTriggerMapType &m)
+void Azgath::WorldObjectLastSearcher<Check>::Visit(AreaTriggerMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_AREATRIGGER))
         return;
@@ -461,7 +461,7 @@ void Trinity::WorldObjectLastSearcher<Check>::Visit(AreaTriggerMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectLastSearcher<Check>::Visit(SceneObjectMapType &m)
+void Azgath::WorldObjectLastSearcher<Check>::Visit(SceneObjectMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_SCENEOBJECT))
         return;
@@ -477,7 +477,7 @@ void Trinity::WorldObjectLastSearcher<Check>::Visit(SceneObjectMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectLastSearcher<Check>::Visit(ConversationMapType &m)
+void Azgath::WorldObjectLastSearcher<Check>::Visit(ConversationMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_CONVERSATION))
         return;
@@ -493,7 +493,7 @@ void Trinity::WorldObjectLastSearcher<Check>::Visit(ConversationMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectListSearcher<Check>::Visit(PlayerMapType &m)
+void Azgath::WorldObjectListSearcher<Check>::Visit(PlayerMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_PLAYER))
         return;
@@ -504,7 +504,7 @@ void Trinity::WorldObjectListSearcher<Check>::Visit(PlayerMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectListSearcher<Check>::Visit(CreatureMapType &m)
+void Azgath::WorldObjectListSearcher<Check>::Visit(CreatureMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_CREATURE))
         return;
@@ -515,7 +515,7 @@ void Trinity::WorldObjectListSearcher<Check>::Visit(CreatureMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectListSearcher<Check>::Visit(CorpseMapType &m)
+void Azgath::WorldObjectListSearcher<Check>::Visit(CorpseMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_CORPSE))
         return;
@@ -526,7 +526,7 @@ void Trinity::WorldObjectListSearcher<Check>::Visit(CorpseMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectListSearcher<Check>::Visit(GameObjectMapType &m)
+void Azgath::WorldObjectListSearcher<Check>::Visit(GameObjectMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_GAMEOBJECT))
         return;
@@ -537,7 +537,7 @@ void Trinity::WorldObjectListSearcher<Check>::Visit(GameObjectMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectListSearcher<Check>::Visit(DynamicObjectMapType &m)
+void Azgath::WorldObjectListSearcher<Check>::Visit(DynamicObjectMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_DYNAMICOBJECT))
         return;
@@ -548,7 +548,7 @@ void Trinity::WorldObjectListSearcher<Check>::Visit(DynamicObjectMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectListSearcher<Check>::Visit(AreaTriggerMapType &m)
+void Azgath::WorldObjectListSearcher<Check>::Visit(AreaTriggerMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_AREATRIGGER))
         return;
@@ -559,7 +559,7 @@ void Trinity::WorldObjectListSearcher<Check>::Visit(AreaTriggerMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectListSearcher<Check>::Visit(SceneObjectMapType &m)
+void Azgath::WorldObjectListSearcher<Check>::Visit(SceneObjectMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_SCENEOBJECT))
         return;
@@ -570,7 +570,7 @@ void Trinity::WorldObjectListSearcher<Check>::Visit(SceneObjectMapType &m)
 }
 
 template<class Check>
-void Trinity::WorldObjectListSearcher<Check>::Visit(ConversationMapType &m)
+void Azgath::WorldObjectListSearcher<Check>::Visit(ConversationMapType &m)
 {
     if (!(i_mapTypeMask & GRID_MAP_TYPE_MASK_CONVERSATION))
         return;
@@ -583,7 +583,7 @@ void Trinity::WorldObjectListSearcher<Check>::Visit(ConversationMapType &m)
 // Gameobject searchers
 
 template<class Check>
-void Trinity::GameObjectSearcher<Check>::Visit(GameObjectMapType &m)
+void Azgath::GameObjectSearcher<Check>::Visit(GameObjectMapType &m)
 {
     // already found
     if (i_object)
@@ -603,7 +603,7 @@ void Trinity::GameObjectSearcher<Check>::Visit(GameObjectMapType &m)
 }
 
 template<class Check>
-void Trinity::GameObjectLastSearcher<Check>::Visit(GameObjectMapType &m)
+void Azgath::GameObjectLastSearcher<Check>::Visit(GameObjectMapType &m)
 {
     for (GameObjectMapType::iterator itr=m.begin(); itr != m.end(); ++itr)
     {
@@ -616,7 +616,7 @@ void Trinity::GameObjectLastSearcher<Check>::Visit(GameObjectMapType &m)
 }
 
 template<class Check>
-void Trinity::GameObjectListSearcher<Check>::Visit(GameObjectMapType &m)
+void Azgath::GameObjectListSearcher<Check>::Visit(GameObjectMapType &m)
 {
     for (GameObjectMapType::iterator itr=m.begin(); itr != m.end(); ++itr)
         if (itr->GetSource()->InSamePhase(*i_phaseShift))
@@ -627,7 +627,7 @@ void Trinity::GameObjectListSearcher<Check>::Visit(GameObjectMapType &m)
 // Unit searchers
 
 template<class Check>
-void Trinity::UnitSearcher<Check>::Visit(CreatureMapType &m)
+void Azgath::UnitSearcher<Check>::Visit(CreatureMapType &m)
 {
     // already found
     if (i_object)
@@ -647,7 +647,7 @@ void Trinity::UnitSearcher<Check>::Visit(CreatureMapType &m)
 }
 
 template<class Check>
-void Trinity::UnitSearcher<Check>::Visit(PlayerMapType &m)
+void Azgath::UnitSearcher<Check>::Visit(PlayerMapType &m)
 {
     // already found
     if (i_object)
@@ -667,7 +667,7 @@ void Trinity::UnitSearcher<Check>::Visit(PlayerMapType &m)
 }
 
 template<class Check>
-void Trinity::UnitLastSearcher<Check>::Visit(CreatureMapType &m)
+void Azgath::UnitLastSearcher<Check>::Visit(CreatureMapType &m)
 {
     for (CreatureMapType::iterator itr=m.begin(); itr != m.end(); ++itr)
     {
@@ -680,7 +680,7 @@ void Trinity::UnitLastSearcher<Check>::Visit(CreatureMapType &m)
 }
 
 template<class Check>
-void Trinity::UnitLastSearcher<Check>::Visit(PlayerMapType &m)
+void Azgath::UnitLastSearcher<Check>::Visit(PlayerMapType &m)
 {
     for (PlayerMapType::iterator itr=m.begin(); itr != m.end(); ++itr)
     {
@@ -693,7 +693,7 @@ void Trinity::UnitLastSearcher<Check>::Visit(PlayerMapType &m)
 }
 
 template<class Check>
-void Trinity::UnitListSearcher<Check>::Visit(PlayerMapType &m)
+void Azgath::UnitListSearcher<Check>::Visit(PlayerMapType &m)
 {
     for (PlayerMapType::iterator itr=m.begin(); itr != m.end(); ++itr)
         if (itr->GetSource()->InSamePhase(*i_phaseShift))
@@ -702,7 +702,7 @@ void Trinity::UnitListSearcher<Check>::Visit(PlayerMapType &m)
 }
 
 template<class Check>
-void Trinity::UnitListSearcher<Check>::Visit(CreatureMapType &m)
+void Azgath::UnitListSearcher<Check>::Visit(CreatureMapType &m)
 {
     for (CreatureMapType::iterator itr=m.begin(); itr != m.end(); ++itr)
         if (itr->GetSource()->InSamePhase(*i_phaseShift))
@@ -713,7 +713,7 @@ void Trinity::UnitListSearcher<Check>::Visit(CreatureMapType &m)
 // Creature searchers
 
 template<class Check>
-void Trinity::CreatureSearcher<Check>::Visit(CreatureMapType &m)
+void Azgath::CreatureSearcher<Check>::Visit(CreatureMapType &m)
 {
     // already found
     if (i_object)
@@ -733,7 +733,7 @@ void Trinity::CreatureSearcher<Check>::Visit(CreatureMapType &m)
 }
 
 template<class Check>
-void Trinity::CreatureLastSearcher<Check>::Visit(CreatureMapType &m)
+void Azgath::CreatureLastSearcher<Check>::Visit(CreatureMapType &m)
 {
     for (CreatureMapType::iterator itr=m.begin(); itr != m.end(); ++itr)
     {
@@ -746,7 +746,7 @@ void Trinity::CreatureLastSearcher<Check>::Visit(CreatureMapType &m)
 }
 
 template<class Check>
-void Trinity::CreatureListSearcher<Check>::Visit(CreatureMapType &m)
+void Azgath::CreatureListSearcher<Check>::Visit(CreatureMapType &m)
 {
     for (CreatureMapType::iterator itr=m.begin(); itr != m.end(); ++itr)
         if (itr->GetSource()->InSamePhase(*i_phaseShift))
@@ -755,7 +755,7 @@ void Trinity::CreatureListSearcher<Check>::Visit(CreatureMapType &m)
 }
 
 template<class Check>
-void Trinity::PlayerListSearcher<Check>::Visit(PlayerMapType &m)
+void Azgath::PlayerListSearcher<Check>::Visit(PlayerMapType &m)
 {
     for (PlayerMapType::iterator itr=m.begin(); itr != m.end(); ++itr)
         if (itr->GetSource()->InSamePhase(*i_phaseShift))
@@ -764,7 +764,7 @@ void Trinity::PlayerListSearcher<Check>::Visit(PlayerMapType &m)
 }
 
 template<class Check>
-void Trinity::PlayerSearcher<Check>::Visit(PlayerMapType &m)
+void Azgath::PlayerSearcher<Check>::Visit(PlayerMapType &m)
 {
     // already found
     if (i_object)
@@ -784,7 +784,7 @@ void Trinity::PlayerSearcher<Check>::Visit(PlayerMapType &m)
 }
 
 template<class Check>
-void Trinity::PlayerLastSearcher<Check>::Visit(PlayerMapType& m)
+void Azgath::PlayerLastSearcher<Check>::Visit(PlayerMapType& m)
 {
     for (PlayerMapType::iterator itr = m.begin(); itr != m.end(); ++itr)
     {
@@ -797,7 +797,7 @@ void Trinity::PlayerLastSearcher<Check>::Visit(PlayerMapType& m)
 }
 
 template<typename Localizer>
-void Trinity::LocalizedDo<Localizer>::operator()(Player const* p)
+void Azgath::LocalizedDo<Localizer>::operator()(Player const* p)
 {
     LocaleConstant loc_idx = p->GetSession()->GetSessionDbLocaleIndex();
     uint32 cache_idx = loc_idx + 1;

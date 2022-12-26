@@ -32,7 +32,7 @@ struct EnumText
     char const* const Description;
 };
 
-namespace Trinity::Impl::EnumUtilsImpl
+namespace Azgath::Impl::EnumUtilsImpl
 {
     template <typename Enum>
     struct EnumUtils
@@ -48,20 +48,20 @@ class EnumUtils
 {
     public:
         template <typename Enum>
-        static size_t Count() { return Trinity::Impl::EnumUtilsImpl::EnumUtils<Enum>::Count(); }
+        static size_t Count() { return Azgath::Impl::EnumUtilsImpl::EnumUtils<Enum>::Count(); }
         template <typename Enum>
-        static EnumText ToString(Enum value) { return Trinity::Impl::EnumUtilsImpl::EnumUtils<Enum>::ToString(value); }
+        static EnumText ToString(Enum value) { return Azgath::Impl::EnumUtilsImpl::EnumUtils<Enum>::ToString(value); }
         template <typename Enum>
-        static Enum FromIndex(size_t index) { return Trinity::Impl::EnumUtilsImpl::EnumUtils<Enum>::FromIndex(index); }
+        static Enum FromIndex(size_t index) { return Azgath::Impl::EnumUtilsImpl::EnumUtils<Enum>::FromIndex(index); }
         template <typename Enum>
-        static uint32 ToIndex(Enum value) { return Trinity::Impl::EnumUtilsImpl::EnumUtils<Enum>::ToIndex(value);}
+        static uint32 ToIndex(Enum value) { return Azgath::Impl::EnumUtilsImpl::EnumUtils<Enum>::ToIndex(value);}
 
         template<typename Enum>
         static bool IsValid(Enum value)
         {
             try
             {
-                Trinity::Impl::EnumUtilsImpl::EnumUtils<Enum>::ToIndex(value);
+                Azgath::Impl::EnumUtilsImpl::EnumUtils<Enum>::ToIndex(value);
                 return true;
             } catch (...)
             {
@@ -117,7 +117,7 @@ class EnumUtils
         static Iterator<Enum> End() { return Iterator<Enum>(); }
 
         template <typename Enum>
-        static Trinity::IteratorPair<Iterator<Enum>> Iterate() { return { Begin<Enum>(), End<Enum>() }; }
+        static Azgath::IteratorPair<Iterator<Enum>> Iterate() { return { Begin<Enum>(), End<Enum>() }; }
 
         template <typename Enum>
         static char const* ToConstant(Enum value) { return ToString(value).Constant; }

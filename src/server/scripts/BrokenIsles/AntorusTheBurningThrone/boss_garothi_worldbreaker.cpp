@@ -162,11 +162,11 @@ namespace TargetHandler
 
         // We have less available nontank targets than we want, include tanks
         if (targetsCopy.size() < preferedSize)
-            Trinity::Containers::RandomResize(targets, preferedSize);
+            Azgath::Containers::RandomResize(targets, preferedSize);
         else
         {
             // Our target list has enough alternative targets, resize
-            Trinity::Containers::RandomResize(targetsCopy, preferedSize);
+            Azgath::Containers::RandomResize(targetsCopy, preferedSize);
             targets = targetsCopy;
         }
     }
@@ -409,7 +409,7 @@ struct boss_garothi_worldbreaker : public BossAI
                 {
                     GuidSet guids = _surgingFelDummyGuids;
                     guids.erase(_lastSurgingFelDummyGuid);
-                    _lastSurgingFelDummyGuid = Trinity::Containers::SelectRandomContainerElement(guids);
+                    _lastSurgingFelDummyGuid = Azgath::Containers::SelectRandomContainerElement(guids);
                     if (Creature* dummy = ObjectAccessor::GetCreature(*me, _lastSurgingFelDummyGuid))
                         dummy->CastSpell(dummy, SPELL_SURGING_FEL_AREA_TRIGGER);
 

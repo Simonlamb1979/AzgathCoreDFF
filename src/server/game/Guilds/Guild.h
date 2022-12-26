@@ -233,7 +233,7 @@ struct GuildReward
 {
     uint32 ItemID;
     uint8 MinGuildRep;
-    Trinity::RaceMask<uint64> RaceMask;
+    Azgath::RaceMask<uint64> RaceMask;
     uint64 Cost;
     std::vector<uint32> AchievementsRequired;
 };

@@ -80,7 +80,7 @@ void GarrisonGridLoader::Visit(GameObjectMapType& m)
         for (Garrison::Plot* plot : plots)
         {
             Position const& spawn = plot->PacketInfo.PlotPos.Pos;
-            if (cellCoord != Trinity::ComputeCellCoord(spawn.GetPositionX(), spawn.GetPositionY()))
+            if (cellCoord != Azgath::ComputeCellCoord(spawn.GetPositionX(), spawn.GetPositionY()))
                 continue;
 
             GameObject* go = plot->CreateGameObject(i_map, i_garrison->GetFaction());

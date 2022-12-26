@@ -769,7 +769,7 @@ class spell_xt002_heart_overload_periodic : public SpellScript
         if (possibleCreatures.empty())
             return nullptr;
 
-        return Trinity::Containers::SelectRandomContainerElement(possibleCreatures);
+        return Azgath::Containers::SelectRandomContainerElement(possibleCreatures);
     }
 
     void HandleScript(SpellEffIndex /*effIndex*/)

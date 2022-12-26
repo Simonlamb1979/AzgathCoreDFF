@@ -73,7 +73,7 @@
  // 6. Update guild achievements.
  // 7. Scenario credit
 
-KillRewarder::KillRewarder(Trinity::IteratorPair<Player**> killers, Unit* victim, bool isBattleGround) :
+KillRewarder::KillRewarder(Azgath::IteratorPair<Player**> killers, Unit* victim, bool isBattleGround) :
     // 1. Initialize internal variables to default values.
     _killers(killers), _victim(victim),
     _groupRate(1.0f), _maxNotGrayMember(nullptr), _count(0), _sumLevel(0), _xp(0),
@@ -108,7 +108,7 @@ inline void KillRewarder::_InitGroupData(Player const* killer)
                         _maxLevel = lvl;
                     // 2.4. _maxNotGrayMember - maximum level of alive group member within reward distance,
                     //      for whom victim is not gray;
-                    uint32 grayLevel = Trinity::XP::GetGrayLevel(lvl);
+                    uint32 grayLevel = Azgath::XP::GetGrayLevel(lvl);
                     if (_victim->GetLevelForTarget(member) > grayLevel && (!_maxNotGrayMember || _maxNotGrayMember->GetLevel() < lvl))
                         _maxNotGrayMember = member;
                 }
@@ -130,7 +130,7 @@ inline void KillRewarder::_InitXP(Player* player, Player const* killer)
     // * otherwise, not in PvP;
     // * not if killer is on vehicle.
     if (_isBattleGround || (!_isPvP && !killer->GetVehicle()))
-        _xp = Trinity::XP::Gain(player, _victim, _isBattleGround);
+        _xp = Azgath::XP::Gain(player, _victim, _isBattleGround);
 }
 
 inline void KillRewarder::_RewardHonor(Player* player)
@@ -238,7 +238,7 @@ void KillRewarder::_RewardGroup(Group const* group, Player const* killer)
             {
                 // 3.1.2. Alter group rate if group is in raid (not for battlegrounds).
                 bool const isRaid = !_isPvP && sMapStore.LookupEntry(killer->GetMapId())->IsRaid() && group->isRaidGroup();
-                _groupRate = Trinity::XP::xp_in_group_rate(_count, isRaid);
+                _groupRate = Azgath::XP::xp_in_group_rate(_count, isRaid);
             }
 
             // 3.1.3. Reward each group member (even dead or corpse) within reward distance.

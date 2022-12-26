@@ -820,7 +820,7 @@ BattlegroundTypeId BattlegroundMgr::GetRandomBG(BattlegroundTypeId bgTypeId)
             }
         }
 
-        return *Trinity::Containers::SelectRandomWeightedContainerElement(ids, weights);
+        return *Azgath::Containers::SelectRandomWeightedContainerElement(ids, weights);
     }
 
     return BATTLEGROUND_TYPE_NONE;

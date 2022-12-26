@@ -96,7 +96,7 @@ struct boss_sulfuron : public BossAI
                 {
                     std::list<Creature*> healers = DoFindFriendlyMissingBuff(45.0f, SPELL_INSPIRE);
                     if (!healers.empty())
-                        DoCast(Trinity::Containers::SelectRandomContainerElement(healers), SPELL_INSPIRE);
+                        DoCast(Azgath::Containers::SelectRandomContainerElement(healers), SPELL_INSPIRE);
 
                     DoCast(me, SPELL_INSPIRE);
                     events.ScheduleEvent(EVENT_INSPIRE, 20s, 26s);

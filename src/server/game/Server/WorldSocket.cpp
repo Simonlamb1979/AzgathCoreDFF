@@ -62,7 +62,7 @@ WorldSocket::WorldSocket(tcp::socket&& socket) : Socket(std::move(socket)),
     _type(CONNECTION_TYPE_REALM), _key(0), _OverSpeedPings(0),
     _worldSession(nullptr), _authed(false), _canRequestHotfixes(true), _sendBufferSize(4096), _compressionStream(nullptr)
 {
-    Trinity::Crypto::GetRandomBytes(_serverChallenge);
+    Azgath::Crypto::GetRandomBytes(_serverChallenge);
     _sessionKey.fill(0);
     _encryptKey.fill(0);
     _headerBuffer.Resize(sizeof(IncomingPacketHeader));
@@ -241,7 +241,7 @@ void WorldSocket::HandleSendAuthSession()
 {
     WorldPackets::Auth::AuthChallenge challenge;
     challenge.Challenge = _serverChallenge;
-    memcpy(challenge.DosChallenge.data(), Trinity::Crypto::GetRandomBytes<32>().data(), 32);
+    memcpy(challenge.DosChallenge.data(), Azgath::Crypto::GetRandomBytes<32>().data(), 32);
     challenge.DosZeroBits = 1;
 
     SendPacketAndLogOpcode(*challenge.Write());
@@ -700,7 +700,7 @@ void WorldSocket::HandleAuthSessionCallback(std::shared_ptr<WorldPackets::Auth::
     // For hook purposes, we get Remoteaddress at this point.
     std::string address = GetRemoteIpAddress().to_string();
 
-    Trinity::Crypto::SHA256 digestKeyHash;
+    Azgath::Crypto::SHA256 digestKeyHash;
     digestKeyHash.UpdateData(account.Game.KeyData.data(), account.Game.KeyData.size());
     if (account.Game.OS == "Wn64")
         digestKeyHash.UpdateData(buildInfo->Win64AuthSeed.data(), buildInfo->Win64AuthSeed.size());
@@ -709,7 +709,7 @@ void WorldSocket::HandleAuthSessionCallback(std::shared_ptr<WorldPackets::Auth::
 
     digestKeyHash.Finalize();
 
-    Trinity::Crypto::HMAC_SHA256 hmac(digestKeyHash.GetDigest());
+    Azgath::Crypto::HMAC_SHA256 hmac(digestKeyHash.GetDigest());
     hmac.UpdateData(authSession->LocalChallenge);
     hmac.UpdateData(_serverChallenge);
     hmac.UpdateData(AuthCheckSeed, 16);
@@ -723,20 +723,20 @@ void WorldSocket::HandleAuthSessionCallback(std::shared_ptr<WorldPackets::Auth::
         return;
     }
 
-    Trinity::Crypto::SHA256 keyData;
+    Azgath::Crypto::SHA256 keyData;
     keyData.UpdateData(account.Game.KeyData.data(), account.Game.KeyData.size());
     keyData.Finalize();
 
-    Trinity::Crypto::HMAC_SHA256 sessionKeyHmac(keyData.GetDigest());
+    Azgath::Crypto::HMAC_SHA256 sessionKeyHmac(keyData.GetDigest());
     sessionKeyHmac.UpdateData(_serverChallenge);
     sessionKeyHmac.UpdateData(authSession->LocalChallenge);
     sessionKeyHmac.UpdateData(SessionKeySeed, 16);
     sessionKeyHmac.Finalize();
 
-    SessionKeyGenerator<Trinity::Crypto::SHA256> sessionKeyGenerator(sessionKeyHmac.GetDigest());
+    SessionKeyGenerator<Azgath::Crypto::SHA256> sessionKeyGenerator(sessionKeyHmac.GetDigest());
     sessionKeyGenerator.Generate(_sessionKey.data(), 40);
 
-    Trinity::Crypto::HMAC_SHA256 encryptKeyGen(_sessionKey);
+    Azgath::Crypto::HMAC_SHA256 encryptKeyGen(_sessionKey);
     encryptKeyGen.UpdateData(authSession->LocalChallenge);
     encryptKeyGen.UpdateData(_serverChallenge);
     encryptKeyGen.UpdateData(EncryptionKeySeed, 16);
@@ -925,7 +925,7 @@ void WorldSocket::HandleAuthContinuedSessionCallback(std::shared_ptr<WorldPacket
     std::string login = fields[0].GetString();
     _sessionKey = fields[1].GetBinary<SESSION_KEY_LENGTH>();
 
-    Trinity::Crypto::HMAC_SHA256 hmac(_sessionKey);
+    Azgath::Crypto::HMAC_SHA256 hmac(_sessionKey);
     hmac.UpdateData(reinterpret_cast<uint8 const*>(&authSession->Key), sizeof(authSession->Key));
     hmac.UpdateData(authSession->LocalChallenge);
     hmac.UpdateData(_serverChallenge);
@@ -939,7 +939,7 @@ void WorldSocket::HandleAuthContinuedSessionCallback(std::shared_ptr<WorldPacket
         return;
     }
 
-    Trinity::Crypto::HMAC_SHA256 encryptKeyGen(_sessionKey);
+    Azgath::Crypto::HMAC_SHA256 encryptKeyGen(_sessionKey);
     encryptKeyGen.UpdateData(authSession->LocalChallenge);
     encryptKeyGen.UpdateData(_serverChallenge);
     encryptKeyGen.UpdateData(EncryptionKeySeed, 16);

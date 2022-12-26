@@ -120,7 +120,7 @@ void ChatHandler::SendSysMessage(std::string_view str, bool escapeCharacters)
     // Replace every "|" with "||" in msg
     if (escapeCharacters && msg.find('|') != std::string::npos)
     {
-        std::vector<std::string_view> tokens = Trinity::Tokenize(msg, '|', true);
+        std::vector<std::string_view> tokens = Azgath::Tokenize(msg, '|', true);
         std::ostringstream stream;
         for (size_t i = 0; i < tokens.size() - 1; ++i)
             stream << tokens[i] << "||";
@@ -130,7 +130,7 @@ void ChatHandler::SendSysMessage(std::string_view str, bool escapeCharacters)
     }
 
     WorldPackets::Chat::Chat packet;
-    for (std::string_view line : Trinity::Tokenize(str, '\n', true))
+    for (std::string_view line : Azgath::Tokenize(str, '\n', true))
     {
         packet.Initialize(CHAT_MSG_SYSTEM, LANG_UNIVERSAL, nullptr, nullptr, line);
         m_session->SendPacket(packet.Write());
@@ -140,7 +140,7 @@ void ChatHandler::SendSysMessage(std::string_view str, bool escapeCharacters)
 void ChatHandler::SendGlobalSysMessage(const char *str)
 {
     WorldPackets::Chat::Chat packet;
-    for (std::string_view line : Trinity::Tokenize(str, '\n', true))
+    for (std::string_view line : Azgath::Tokenize(str, '\n', true))
     {
         packet.Initialize(CHAT_MSG_SYSTEM, LANG_UNIVERSAL, nullptr, nullptr, line);
         sWorld->SendGlobalMessage(packet.Write());
@@ -150,7 +150,7 @@ void ChatHandler::SendGlobalSysMessage(const char *str)
 void ChatHandler::SendGlobalGMSysMessage(const char *str)
 {
     WorldPackets::Chat::Chat packet;
-    for (std::string_view line : Trinity::Tokenize(str, '\n', true))
+    for (std::string_view line : Azgath::Tokenize(str, '\n', true))
     {
         packet.Initialize(CHAT_MSG_SYSTEM, LANG_UNIVERSAL, nullptr, nullptr, line);
         sWorld->SendGlobalGMMessage(packet.Write());
@@ -164,7 +164,7 @@ void ChatHandler::SendSysMessage(uint32 entry)
 
 bool ChatHandler::_ParseCommands(std::string_view text)
 {
-    if (Trinity::ChatCommands::TryExecuteCommand(*this, text))
+    if (Azgath::ChatCommands::TryExecuteCommand(*this, text))
         return true;
 
     // Pretend commands don't exist for regular players
@@ -194,7 +194,7 @@ bool ChatHandler::ParseCommands(std::string_view text)
         return false;
 
     // ignore messages with separator after .
-    if (text[1] == Trinity::Impl::ChatCommands::COMMAND_DELIMITER)
+    if (text[1] == Azgath::Impl::ChatCommands::COMMAND_DELIMITER)
         return false;
 
     return _ParseCommands(text.substr(1));
@@ -381,8 +381,8 @@ GameObject* ChatHandler::GetNearbyGameObject()
 
     Player* pl = m_session->GetPlayer();
     GameObject* obj = nullptr;
-    Trinity::NearestGameObjectCheck check(*pl);
-    Trinity::GameObjectLastSearcher<Trinity::NearestGameObjectCheck> searcher(pl, obj, check);
+    Azgath::NearestGameObjectCheck check(*pl);
+    Azgath::GameObjectLastSearcher<Azgath::NearestGameObjectCheck> searcher(pl, obj, check);
     Cell::VisitGridObjects(pl, searcher, SIZE_OF_GRIDS);
     return obj;
 }

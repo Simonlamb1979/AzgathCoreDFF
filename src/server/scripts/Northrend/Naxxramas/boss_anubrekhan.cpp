@@ -188,7 +188,7 @@ struct boss_anubrekhan : public BossAI
                 case EVENT_SCARABS:
                     if (!guardCorpses.empty())
                     {
-                        if (Creature* creatureTarget = ObjectAccessor::GetCreature(*me, Trinity::Containers::SelectRandomContainerElement(guardCorpses)))
+                        if (Creature* creatureTarget = ObjectAccessor::GetCreature(*me, Azgath::Containers::SelectRandomContainerElement(guardCorpses)))
                         {
                             creatureTarget->CastSpell(creatureTarget, SPELL_SUMMON_CORPSE_SCARABS_MOB, CastSpellExtraArgs(TRIGGERED_FULL_MASK)
                                 .SetOriginalCaster(me->GetGUID()));

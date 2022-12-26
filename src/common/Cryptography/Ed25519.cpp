@@ -22,7 +22,7 @@
 #include <openssl/pem.h>
 #include <memory>
 
-namespace Trinity::Crypto
+namespace Azgath::Crypto
 {
 Ed25519::Ed25519() = default;
 

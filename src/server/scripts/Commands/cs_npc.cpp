@@ -47,7 +47,7 @@ EndScriptData */
 #include "World.h"
 #include "WorldSession.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 using CreatureSpawnId = Variant<Hyperlink<creature>, ObjectGuid::LowType>;
 using CreatureEntry = Variant<Hyperlink<creature_entry>, uint32>;
@@ -195,8 +195,8 @@ public:
         vItem.Type = ITEM_VENDOR_TYPE_ITEM;
 
         if (bonusListIDs)
-            for (std::string_view token : Trinity::Tokenize(*bonusListIDs, ';', false))
-                if (Optional<int32> bonusListID = Trinity::StringTo<int32>(token))
+            for (std::string_view token : Azgath::Tokenize(*bonusListIDs, ';', false))
+                if (Optional<int32> bonusListID = Azgath::StringTo<int32>(token))
                     vItem.BonusListIDs.push_back(*bonusListID);
 
         if (!sObjectMgr->IsVendorItemValid(vendor_entry, vItem, handler->GetSession()->GetPlayer()))
@@ -686,7 +686,7 @@ public:
 
         if (!sCreatureDisplayInfoStore.LookupEntry(displayId))
         {
-            handler->PSendSysMessage(LANG_COMMAND_INVALID_PARAM, Trinity::ToString(displayId).c_str());
+            handler->PSendSysMessage(LANG_COMMAND_INVALID_PARAM, Azgath::ToString(displayId).c_str());
             handler->SetSentErrorMessage(true);
             return false;
         }
@@ -1179,7 +1179,7 @@ public:
             if (!pair.second)
                 continue;
             Player const* player = ObjectAccessor::FindConnectedPlayer(pair.first);
-            handler->PSendSysMessage(LANG_COMMAND_NPC_SHOWLOOT_SUBLABEL, player ? player->GetName().c_str() : Trinity::StringFormat("Offline player (GUID %s)", pair.first.ToString().c_str()).c_str(), pair.second->size());
+            handler->PSendSysMessage(LANG_COMMAND_NPC_SHOWLOOT_SUBLABEL, player ? player->GetName().c_str() : Azgath::StringFormat("Offline player (GUID %s)", pair.first.ToString().c_str()).c_str(), pair.second->size());
 
             for (auto it = pair.second->cbegin(); it != pair.second->cend(); ++it)
             {

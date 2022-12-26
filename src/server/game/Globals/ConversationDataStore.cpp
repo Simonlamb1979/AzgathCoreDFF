@@ -205,7 +205,7 @@ void ConversationDataStore::LoadConversationTemplates()
 
     auto getFirstLineIdFromAnyLineId = [&](uint32 lineId)
     {
-        while (uint32 const* prevLineId = Trinity::Containers::MapGetValuePtr(prevConversationLineIds, lineId))
+        while (uint32 const* prevLineId = Azgath::Containers::MapGetValuePtr(prevConversationLineIds, lineId))
             lineId = *prevLineId;
 
         return lineId;
@@ -241,7 +241,7 @@ void ConversationDataStore::LoadConversationTemplates()
 
             while (currentConversationLine != nullptr)
             {
-                if (ConversationLineTemplate const* conversationLineTemplate = Trinity::Containers::MapGetValuePtr(_conversationLineTemplateStore, currentConversationLine->ID))
+                if (ConversationLineTemplate const* conversationLineTemplate = Azgath::Containers::MapGetValuePtr(_conversationLineTemplateStore, currentConversationLine->ID))
                     conversationTemplate.Lines.push_back(conversationLineTemplate);
                 else
                     TC_LOG_ERROR("sql.sql", "Table `conversation_line_template` has missing template for line (ID: %u) in Conversation %u, skipped", currentConversationLine->ID, conversationTemplate.Id);
@@ -266,12 +266,12 @@ void ConversationDataStore::LoadConversationTemplates()
 
 ConversationTemplate const* ConversationDataStore::GetConversationTemplate(uint32 conversationId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_conversationTemplateStore, conversationId);
+    return Azgath::Containers::MapGetValuePtr(_conversationTemplateStore, conversationId);
 }
 
 ConversationLineTemplate const* ConversationDataStore::GetConversationLineTemplate(uint32 conversationLineId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_conversationLineTemplateStore, conversationLineId);
+    return Azgath::Containers::MapGetValuePtr(_conversationLineTemplateStore, conversationLineId);
 }
 
 ConversationDataStore* ConversationDataStore::Instance()

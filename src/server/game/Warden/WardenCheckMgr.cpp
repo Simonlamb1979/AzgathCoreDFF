@@ -109,7 +109,7 @@ void WardenCheckMgr::LoadWardenChecks()
                 continue;
             }
 
-            std::string str = Trinity::StringFormat("%04u", id);
+            std::string str = Azgath::StringFormat("%04u", id);
             ASSERT(str.size() == 4);
             std::copy(str.begin(), str.end(), wardenCheck.IdStr.begin());
         }

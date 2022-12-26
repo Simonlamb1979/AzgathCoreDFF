@@ -28,11 +28,11 @@
 #include "StringFormat.h"
 #include "World.h"
 
-using namespace Trinity::Hyperlinks;
+using namespace Azgath::Hyperlinks;
 
 inline uint8 toHex(char c) { return (c >= '0' && c <= '9') ? c - '0' + 0x10 : (c >= 'a' && c <= 'f') ? c - 'a' + 0x1a : 0x00; }
 // Validates a single hyperlink
-HyperlinkInfo Trinity::Hyperlinks::ParseSingleHyperlink(std::string_view str)
+HyperlinkInfo Azgath::Hyperlinks::ParseSingleHyperlink(std::string_view str)
 {
     uint32 color = 0;
     std::string_view tag;
@@ -430,7 +430,7 @@ struct LinkValidator<LinkTags::keystone>
 
         for (LocaleConstant i = LOCALE_enUS; i < TOTAL_LOCALES; i = LocaleConstant(i + 1))
         {
-            std::string expectedText = Trinity::StringFormat("%s (%u)", data.Map->Name[i], data.Level);
+            std::string expectedText = Azgath::StringFormat("%s (%u)", data.Map->Name[i], data.Level);
             if (expectedText == text)
                 return true;
         }
@@ -601,7 +601,7 @@ struct LinkValidator<LinkTags::transmogset>
         {
             if (ItemNameDescriptionEntry const* itemNameDescription = sItemNameDescriptionStore.LookupEntry(set->ItemNameDescriptionID))
             {
-                std::string expectedText = Trinity::StringFormat("%s (%s)", set->Name[i], itemNameDescription->Description[i]);
+                std::string expectedText = Azgath::StringFormat("%s (%s)", set->Name[i], itemNameDescription->Description[i]);
                 if (expectedText.c_str() == text)
                     return true;
             }
@@ -699,7 +699,7 @@ static bool ValidateLinkInfo(HyperlinkInfo const& info)
 }
 
 // Validates all hyperlinks and control sequences contained in str
-bool Trinity::Hyperlinks::CheckAllLinks(std::string_view str)
+bool Azgath::Hyperlinks::CheckAllLinks(std::string_view str)
 {
     // Step 1: Disallow all control sequences except ||, |H, |h, |c and |r
     {

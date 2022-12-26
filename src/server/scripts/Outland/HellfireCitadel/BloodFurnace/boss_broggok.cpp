@@ -163,7 +163,7 @@ struct BroggokPrisionersAI : public ScriptedAI
         scheduler.CancelAll();
         scheduler.Schedule(1s, 5s, [this](TaskContext emote)
         {
-            me->HandleEmoteCommand(Trinity::Containers::SelectRandomContainerElement(PrisionersEmotes));
+            me->HandleEmoteCommand(Azgath::Containers::SelectRandomContainerElement(PrisionersEmotes));
             emote.Repeat(6s, 9s);
         });
     }

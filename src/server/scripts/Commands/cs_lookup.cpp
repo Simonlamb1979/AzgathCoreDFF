@@ -42,7 +42,7 @@ EndScriptData */
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class lookup_commandscript : public CommandScript
 {
@@ -905,7 +905,7 @@ public:
                         uint32 tempValue = target->GetSkillTempBonusValue(id);
 
                         char const* valFormat = handler->GetAzgathString(LANG_SKILL_VALUES);
-                        valStr = Trinity::StringFormat(valFormat, curValue, maxValue, permValue, tempValue);
+                        valStr = Azgath::StringFormat(valFormat, curValue, maxValue, permValue, tempValue);
                     }
 
                     // send skill in "id - [namedlink locale]" format
@@ -1289,7 +1289,7 @@ public:
                             ? handler->GetAzgathString(LANG_ACTIVE)
                             : "";
 
-                        std::string titleNameStr = Trinity::StringFormat(name.c_str(), targetName);
+                        std::string titleNameStr = Azgath::StringFormat(name.c_str(), targetName);
 
                         // send title in "id (idx:idx) - [namedlink locale]" format
                         if (handler->GetSession())

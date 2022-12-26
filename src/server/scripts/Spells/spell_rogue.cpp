@@ -316,7 +316,7 @@ class spell_rog_killing_spree_aura : public AuraScript
     {
         while (!_targets.empty())
         {
-            ObjectGuid guid = Trinity::Containers::SelectRandomContainerElement(_targets);
+            ObjectGuid guid = Azgath::Containers::SelectRandomContainerElement(_targets);
             if (Unit* target = ObjectAccessor::GetUnit(*GetTarget(), guid))
             {
                 GetTarget()->CastSpell(target, SPELL_ROGUE_KILLING_SPREE_TELEPORT, true);
@@ -477,7 +477,7 @@ class spell_rog_roll_the_bones : public SpellScript
         }
 
         std::vector<uint32> possibleBuffs(std::begin(Spells), std::end(Spells));
-        Trinity::Containers::RandomShuffle(possibleBuffs);
+        Azgath::Containers::RandomShuffle(possibleBuffs);
 
         // https://www.icy-veins.com/wow/outlaw-rogue-pve-dps-rotation-cooldowns-abilities
         // 1 Roll the Bones buff  : 100.0 % chance;

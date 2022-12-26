@@ -29,7 +29,7 @@ EndScriptData */
 #include "Player.h"
 #include "RBAC.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class bf_commandscript : public CommandScript
 {

@@ -340,7 +340,7 @@ class spell_pri_divine_hymn : public SpellScript
 
         if (targets.size() > maxTargets)
         {
-            targets.sort(Trinity::HealthPctOrderPred());
+            targets.sort(Azgath::HealthPctOrderPred());
             targets.resize(maxTargets);
         }
     }
@@ -1181,12 +1181,12 @@ class spell_pri_prayer_of_mending_jump : public spell_pri_prayer_of_mending_Spel
         }
 
         if (foundPlayer)
-            targets.remove_if(Trinity::ObjectTypeIdCheck(TYPEID_PLAYER, false));
+            targets.remove_if(Azgath::ObjectTypeIdCheck(TYPEID_PLAYER, false));
 
         // choose one random target from targets
         if (targets.size() > 1)
         {
-            WorldObject* selected = Trinity::Containers::SelectRandomContainerElement(targets);
+            WorldObject* selected = Azgath::Containers::SelectRandomContainerElement(targets);
             targets.clear();
             targets.push_back(selected);
         }

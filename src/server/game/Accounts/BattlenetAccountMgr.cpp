@@ -181,11 +181,11 @@ uint8 Battlenet::AccountMgr::GetMaxIndex(uint32 accountId)
 
 std::string Battlenet::AccountMgr::CalculateShaPassHash(std::string_view name, std::string_view password)
 {
-    Trinity::Crypto::SHA256 email;
+    Azgath::Crypto::SHA256 email;
     email.UpdateData(name);
     email.Finalize();
 
-    Trinity::Crypto::SHA256 sha;
+    Azgath::Crypto::SHA256 sha;
     sha.UpdateData(ByteArrayToHexStr(email.GetDigest()));
     sha.UpdateData(":");
     sha.UpdateData(password);

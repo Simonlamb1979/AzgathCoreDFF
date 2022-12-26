@@ -384,14 +384,14 @@ struct boss_sartharion : public BossAI
     void CastLavaStrikeOnTarget(Unit* target)
     {
         std::list<Creature*> fireCyclonesList;
-        Trinity::AllCreaturesOfEntryInRange checker(me, NPC_FIRE_CYCLONE, 200.0f);
-        Trinity::CreatureListSearcher<Trinity::AllCreaturesOfEntryInRange> searcher(me, fireCyclonesList, checker);
+        Azgath::AllCreaturesOfEntryInRange checker(me, NPC_FIRE_CYCLONE, 200.0f);
+        Azgath::CreatureListSearcher<Azgath::AllCreaturesOfEntryInRange> searcher(me, fireCyclonesList, checker);
         Cell::VisitAllObjects(me, searcher, 200.0f);
 
         if (fireCyclonesList.empty())
             return;
 
-        Trinity::Containers::SelectRandomContainerElement(fireCyclonesList)->CastSpell(target, SPELL_LAVA_STRIKE, true);
+        Azgath::Containers::SelectRandomContainerElement(fireCyclonesList)->CastSpell(target, SPELL_LAVA_STRIKE, true);
     }
 
     void UpdateAI(uint32 diff) override

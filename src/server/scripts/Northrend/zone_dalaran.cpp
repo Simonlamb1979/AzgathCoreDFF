@@ -165,7 +165,7 @@ struct npc_minigob_manabonk : public ScriptedAI
         if (PlayerInDalaranList.empty())
             return nullptr;
 
-        return Trinity::Containers::SelectRandomContainerElement(PlayerInDalaranList);
+        return Azgath::Containers::SelectRandomContainerElement(PlayerInDalaranList);
     }
 
     void SendMailToPlayer(Player* player) const

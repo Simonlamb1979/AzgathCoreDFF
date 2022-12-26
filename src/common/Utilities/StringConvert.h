@@ -28,11 +28,11 @@
 #include <string_view>
 #include <type_traits>
 
-namespace Trinity::Impl::StringConvertImpl
+namespace Azgath::Impl::StringConvertImpl
 {
     template <typename T, typename = void> struct For
     {
-        static_assert(Trinity::dependant_false_v<T>, "Unsupported type used for ToString or StringTo");
+        static_assert(Azgath::dependant_false_v<T>, "Unsupported type used for ToString or StringTo");
         /*
         static Optional<T> FromString(std::string_view str, ...);
         static std::string ToString(T&& val, ...);
@@ -257,18 +257,18 @@ namespace Trinity::Impl::StringConvertImpl
 #endif
 }
 
-namespace Trinity
+namespace Azgath
 {
     template <typename Result, typename... Params>
     Optional<Result> StringTo(std::string_view str, Params&&... params)
     {
-        return Trinity::Impl::StringConvertImpl::For<Result>::FromString(str, std::forward<Params>(params)...);
+        return Azgath::Impl::StringConvertImpl::For<Result>::FromString(str, std::forward<Params>(params)...);
     }
 
     template <typename Type, typename... Params>
     std::string ToString(Type&& val, Params&&... params)
     {
-        return Trinity::Impl::StringConvertImpl::For<std::decay_t<Type>>::ToString(std::forward<Type>(val), std::forward<Params>(params)...);
+        return Azgath::Impl::StringConvertImpl::For<std::decay_t<Type>>::ToString(std::forward<Type>(val), std::forward<Params>(params)...);
     }
 }
 

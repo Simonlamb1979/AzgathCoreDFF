@@ -243,13 +243,13 @@ std::array<uint8, 32> constexpr EnterEncryptedModePrivateKey =
     0xC3, 0x6F, 0x8A, 0xE7, 0x5A, 0x9A, 0xA7, 0xC9
 };
 
-std::unique_ptr<Trinity::Crypto::RsaSignature> ConnectToRSA;
-std::unique_ptr<Trinity::Crypto::Ed25519> EnterEncryptedModeSigner;
+std::unique_ptr<Azgath::Crypto::RsaSignature> ConnectToRSA;
+std::unique_ptr<Azgath::Crypto::Ed25519> EnterEncryptedModeSigner;
 }
 
 bool WorldPackets::Auth::ConnectTo::InitializeEncryption()
 {
-    std::unique_ptr<Trinity::Crypto::RsaSignature> rsa = std::make_unique<Trinity::Crypto::RsaSignature>();
+    std::unique_ptr<Azgath::Crypto::RsaSignature> rsa = std::make_unique<Azgath::Crypto::RsaSignature>();
     if (!rsa->LoadKeyFromString(RSAPrivateKey))
         return false;
 
@@ -290,8 +290,8 @@ WorldPacket const* WorldPackets::Auth::ConnectTo::Write()
     signBuffer << uint32(Payload.Where.Type);
     signBuffer << uint16(Payload.Port);
 
-    Trinity::Crypto::RsaSignature rsa(*ConnectToRSA);
-    Trinity::Crypto::RsaSignature::SHA256 digestGenerator;
+    Azgath::Crypto::RsaSignature rsa(*ConnectToRSA);
+    Azgath::Crypto::RsaSignature::SHA256 digestGenerator;
     std::vector<uint8> signature;
     rsa.Sign(signBuffer.contents(), signBuffer.size(), digestGenerator, signature);
 
@@ -321,7 +321,7 @@ void WorldPackets::Auth::ConnectToFailed::Read()
 
 bool WorldPackets::Auth::EnterEncryptedMode::InitializeEncryption()
 {
-    std::unique_ptr<Trinity::Crypto::Ed25519> ed25519 = std::make_unique<Trinity::Crypto::Ed25519>();
+    std::unique_ptr<Azgath::Crypto::Ed25519> ed25519 = std::make_unique<Azgath::Crypto::Ed25519>();
     if (!ed25519->LoadFromByteArray(EnterEncryptedModePrivateKey))
         return false;
 
@@ -339,11 +339,11 @@ std::array<uint8, 16> constexpr EnableEncryptionContext = { 0xA7, 0x1F, 0xB6, 0x
 
 WorldPacket const* WorldPackets::Auth::EnterEncryptedMode::Write()
 {
-    std::array<uint8, 32> toSign = Trinity::Crypto::HMAC_SHA256::GetDigestOf(EncryptionKey,
+    std::array<uint8, 32> toSign = Azgath::Crypto::HMAC_SHA256::GetDigestOf(EncryptionKey,
         std::array<uint8, 1>{uint8(Enabled ? 1 : 0)},
         EnableEncryptionSeed);
 
-    Trinity::Crypto::Ed25519 ed25519(*EnterEncryptedModeSigner);
+    Azgath::Crypto::Ed25519 ed25519(*EnterEncryptedModeSigner);
     std::vector<uint8> signature;
 
     ed25519.SignWithContext(toSign, { EnableEncryptionContext.begin(), EnableEncryptionContext.end() }, signature);

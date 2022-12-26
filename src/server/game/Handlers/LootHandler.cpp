@@ -81,7 +81,7 @@ void WorldSession::HandleAutostoreLootItemOpcode(WorldPackets::Loot::LootItem& p
     /// @todo Implement looting by LootObject guid
     for (WorldPackets::Loot::LootRequest const& req : packet.Loot)
     {
-        Loot* loot = Trinity::Containers::MapGetValuePtr(player->GetAELootView(), req.Object);
+        Loot* loot = Azgath::Containers::MapGetValuePtr(player->GetAELootView(), req.Object);
         if (!loot)
         {
             player->SendLootRelease(ObjectGuid::Empty);
@@ -229,7 +229,7 @@ void WorldSession::HandleLootOpcode(WorldPackets::Loot::LootUnit& packet)
     GetPlayer()->RemoveAurasWithInterruptFlags(SpellAuraInterruptFlags::Looting);
 
     std::vector<Creature*> corpses;
-    Trinity::CreatureListSearcher<AELootCreatureCheck> searcher(_player, corpses, check);
+    Azgath::CreatureListSearcher<AELootCreatureCheck> searcher(_player, corpses, check);
     Cell::VisitGridObjects(_player, searcher, AELootCreatureCheck::LootDistance);
 
     if (!corpses.empty())
@@ -408,7 +408,7 @@ void WorldSession::HandleLootMasterGiveOpcode(WorldPackets::Loot::MasterLootItem
 
     for (WorldPackets::Loot::LootRequest const& req : masterLootItem.Loot)
     {
-        Loot* loot = Trinity::Containers::MapGetValuePtr(_player->GetAELootView(), req.Object);
+        Loot* loot = Azgath::Containers::MapGetValuePtr(_player->GetAELootView(), req.Object);
 
         if (!loot || loot->GetLootMethod() != MASTER_LOOT)
             return;

@@ -30,7 +30,7 @@
 #include "RBAC.h"
 #include "SpellAuras.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 enum Spells
 {

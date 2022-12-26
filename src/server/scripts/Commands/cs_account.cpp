@@ -42,7 +42,7 @@ EndScriptData */
 #include "WorldSession.h"
 #include <unordered_map>
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class account_commandscript : public CommandScript
 {
@@ -125,17 +125,17 @@ public:
         }
 
         // store random suggested secrets
-        static std::unordered_map<uint32, Trinity::Crypto::TOTP::Secret> suggestions;
-        auto pair = suggestions.emplace(std::piecewise_construct, std::make_tuple(accountId), std::make_tuple(Trinity::Crypto::TOTP::RECOMMENDED_SECRET_LENGTH)); // std::vector 1-argument size_t constructor invokes resize
+        static std::unordered_map<uint32, Azgath::Crypto::TOTP::Secret> suggestions;
+        auto pair = suggestions.emplace(std::piecewise_construct, std::make_tuple(accountId), std::make_tuple(Azgath::Crypto::TOTP::RECOMMENDED_SECRET_LENGTH)); // std::vector 1-argument size_t constructor invokes resize
         if (pair.second) // no suggestion yet, generate random secret
-            Trinity::Crypto::GetRandomBytes(pair.first->second);
+            Azgath::Crypto::GetRandomBytes(pair.first->second);
 
         if (!pair.second && token) // suggestion already existed and token specified - validate
         {
-            if (Trinity::Crypto::TOTP::ValidateToken(pair.first->second, *token))
+            if (Azgath::Crypto::TOTP::ValidateToken(pair.first->second, *token))
             {
                 if (masterKey)
-                    Trinity::Crypto::AEEncryptWithRandomIV<Trinity::Crypto::AES>(pair.first->second, *masterKey);
+                    Azgath::Crypto::AEEncryptWithRandomIV<Azgath::Crypto::AES>(pair.first->second, *masterKey);
 
                 LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_ACCOUNT_TOTP_SECRET);
                 stmt->setBinary(0, pair.first->second);
@@ -150,7 +150,7 @@ public:
         }
 
         // new suggestion, or no token specified, output TOTP parameters
-        handler->PSendSysMessage(LANG_2FA_SECRET_SUGGESTION, Trinity::Encoding::Base32::Encode(pair.first->second).c_str());
+        handler->PSendSysMessage(LANG_2FA_SECRET_SUGGESTION, Azgath::Encoding::Base32::Encode(pair.first->second).c_str());
         handler->SetSentErrorMessage(true);
         return false;
     }
@@ -166,7 +166,7 @@ public:
         }
 
         uint32 const accountId = handler->GetSession()->GetAccountId();
-        Trinity::Crypto::TOTP::Secret secret;
+        Azgath::Crypto::TOTP::Secret secret;
         { // get current TOTP secret
             LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_ACCOUNT_TOTP_SECRET);
             stmt->setUInt32(0, accountId);
@@ -195,7 +195,7 @@ public:
         {
             if (masterKey)
             {
-                bool success = Trinity::Crypto::AEDecrypt<Trinity::Crypto::AES>(secret, *masterKey);
+                bool success = Azgath::Crypto::AEDecrypt<Azgath::Crypto::AES>(secret, *masterKey);
                 if (!success)
                 {
                     TC_LOG_ERROR("misc", "Account %u has invalid ciphertext in TOTP token.", accountId);
@@ -205,7 +205,7 @@ public:
                 }
             }
 
-            if (Trinity::Crypto::TOTP::ValidateToken(secret, *token))
+            if (Azgath::Crypto::TOTP::ValidateToken(secret, *token))
             {
                 LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_ACCOUNT_TOTP_SECRET);
                 stmt->setNull(0);
@@ -884,14 +884,14 @@ public:
             return false;
         }
 
-        Optional<std::vector<uint8>> decoded = Trinity::Encoding::Base32::Decode(secret);
+        Optional<std::vector<uint8>> decoded = Azgath::Encoding::Base32::Decode(secret);
         if (!decoded)
         {
             handler->SendSysMessage(LANG_2FA_SECRET_INVALID);
             handler->SetSentErrorMessage(true);
             return false;
         }
-        if (128 < (decoded->size() + Trinity::Crypto::AES::IV_SIZE_BYTES + Trinity::Crypto::AES::TAG_SIZE_BYTES))
+        if (128 < (decoded->size() + Azgath::Crypto::AES::IV_SIZE_BYTES + Azgath::Crypto::AES::TAG_SIZE_BYTES))
         {
             handler->SendSysMessage(LANG_2FA_SECRET_TOO_LONG);
             handler->SetSentErrorMessage(true);
@@ -899,7 +899,7 @@ public:
         }
 
         if (masterKey)
-            Trinity::Crypto::AEEncryptWithRandomIV<Trinity::Crypto::AES>(*decoded, *masterKey);
+            Azgath::Crypto::AEEncryptWithRandomIV<Azgath::Crypto::AES>(*decoded, *masterKey);
 
         LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_ACCOUNT_TOTP_SECRET);
         stmt->setBinary(0, *decoded);

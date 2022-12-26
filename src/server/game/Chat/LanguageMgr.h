@@ -67,7 +67,7 @@ class TC_GAME_API LanguageMgr
         std::string Translate(std::string const& msg, uint32 language, LocaleConstant locale) const;
 
         bool IsLanguageExist(uint32 languageId) const;
-        Trinity::IteratorPair<LanguagesMap::const_iterator> GetLanguageDescById(Language languageId) const;
+        Azgath::IteratorPair<LanguagesMap::const_iterator> GetLanguageDescById(Language languageId) const;
 
         /* Calls a callback for each available language.
          * Callback signature: bool callback(uint32 lang, LanguageDesc const& languageDesc)

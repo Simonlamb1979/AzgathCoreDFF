@@ -2119,7 +2119,7 @@ class spell_toc_bloodlust : public SpellScript
 
     void RemoveInvalidTargets(std::list<WorldObject*>& targets)
     {
-        targets.remove_if(Trinity::UnitAuraCheck(true, AURA_SATED));
+        targets.remove_if(Azgath::UnitAuraCheck(true, AURA_SATED));
     }
 
     void ApplyDebuff()
@@ -2148,7 +2148,7 @@ class spell_toc_heroism : public SpellScript
 
     void RemoveInvalidTargets(std::list<WorldObject*>& targets)
     {
-        targets.remove_if(Trinity::UnitAuraCheck(true, AURA_EXHAUSTION));
+        targets.remove_if(Azgath::UnitAuraCheck(true, AURA_EXHAUSTION));
     }
 
     void ApplyDebuff()

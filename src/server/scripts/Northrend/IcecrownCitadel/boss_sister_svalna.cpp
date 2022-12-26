@@ -658,7 +658,7 @@ struct npc_crok_scourgebane : public EscortAI
                 // get all nearby vrykul
                 std::list<Creature*> temp;
                 FrostwingVrykulSearcher check(me, 80.0f);
-                Trinity::CreatureListSearcher<FrostwingVrykulSearcher> searcher(me, temp, check);
+                Azgath::CreatureListSearcher<FrostwingVrykulSearcher> searcher(me, temp, check);
                 Cell::VisitGridObjects(me, searcher, 80.0f);
 
                 _aliveTrash.clear();
@@ -684,8 +684,8 @@ struct npc_crok_scourgebane : public EscortAI
         {
             _wipeCheckTimer = 1000;
             Player* player = nullptr;
-            Trinity::AnyPlayerInObjectRangeCheck check(me, 60.0f);
-            Trinity::PlayerSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(me, player, check);
+            Azgath::AnyPlayerInObjectRangeCheck check(me, 60.0f);
+            Azgath::PlayerSearcher<Azgath::AnyPlayerInObjectRangeCheck> searcher(me, player, check);
             Cell::VisitWorldObjects(me, searcher, 60.0f);
             // wipe
             if (!player)
@@ -694,7 +694,7 @@ struct npc_crok_scourgebane : public EscortAI
                 if (damage >= me->GetHealth())
                 {
                     FrostwingGauntletRespawner respawner;
-                    Trinity::CreatureWorker<FrostwingGauntletRespawner> worker(me, respawner);
+                    Azgath::CreatureWorker<FrostwingGauntletRespawner> worker(me, respawner);
                     Cell::VisitGridObjects(me, worker, 333.0f);
                     Talk(SAY_CROK_DEATH);
                 }
@@ -960,7 +960,7 @@ struct npc_captain_arnath : public npc_argent_captainAI
                 case EVENT_ARNATH_PW_SHIELD:
                 {
                     std::list<Creature*> targets = DoFindFriendlyMissingBuff(40.0f, SPELL_POWER_WORD_SHIELD);
-                    DoCast(Trinity::Containers::SelectRandomContainerElement(targets), SPELL_POWER_WORD_SHIELD);
+                    DoCast(Azgath::Containers::SelectRandomContainerElement(targets), SPELL_POWER_WORD_SHIELD);
                     Events.ScheduleEvent(EVENT_ARNATH_PW_SHIELD, 15s, 20s);
                     break;
                 }
@@ -988,8 +988,8 @@ private:
     Creature* FindFriendlyCreature() const
     {
         Creature* target = nullptr;
-        Trinity::MostHPMissingInRange u_check(me, 60.0f, 0);
-        Trinity::CreatureLastSearcher<Trinity::MostHPMissingInRange> searcher(me, target, u_check);
+        Azgath::MostHPMissingInRange u_check(me, 60.0f, 0);
+        Azgath::CreatureLastSearcher<Azgath::MostHPMissingInRange> searcher(me, target, u_check);
         Cell::VisitGridObjects(me, searcher, 60.0f);
         return target;
     }
@@ -1424,7 +1424,7 @@ class spell_svalna_revive_champion : public SpellScript
     void RemoveAliveTarget(std::list<WorldObject*>& targets)
     {
         targets.remove_if(ICCSvalnaAliveCheck());
-        Trinity::Containers::RandomResize(targets, 2);
+        Azgath::Containers::RandomResize(targets, 2);
     }
 
     void Land(SpellEffIndex /*effIndex*/)

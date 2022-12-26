@@ -405,7 +405,7 @@ typedef std::unordered_map<uint32, std::vector<ItemSpecOverrideEntry const*>> It
 typedef std::unordered_map<uint32, DB2Manager::MountTypeXCapabilitySet> MountCapabilitiesByTypeContainer;
 typedef std::unordered_map<uint32, DB2Manager::MountXDisplayContainer> MountDisplaysCointainer;
 typedef std::unordered_map<uint32, std::array<std::vector<NameGenEntry const*>, 2>> NameGenContainer;
-typedef std::array<std::vector<Trinity::wregex>, TOTAL_LOCALES + 1> NameValidationRegexContainer;
+typedef std::array<std::vector<Azgath::wregex>, TOTAL_LOCALES + 1> NameValidationRegexContainer;
 typedef std::unordered_map<uint32, std::vector<uint32>> PhaseGroupContainer;
 typedef std::array<PowerTypeEntry const*, MAX_POWERS> PowerTypesContainer;
 typedef std::unordered_map<uint32, std::pair<std::vector<QuestPackageItemEntry const*>, std::vector<QuestPackageItemEntry const*>>> QuestPackageItemContainer;
@@ -565,7 +565,7 @@ void LoadDB2(std::bitset<TOTAL_LOCALES>& availableDb2Locales, std::vector<std::s
     {
         if (e.code() == std::errc::no_such_file_or_directory)
         {
-            errlist.push_back(Trinity::StringFormat("File %s%s/%s does not exist", db2Path.c_str(), localeNames[defaultLocale], storage->GetFileName().c_str()));
+            errlist.push_back(Azgath::StringFormat("File %s%s/%s does not exist", db2Path.c_str(), localeNames[defaultLocale], storage->GetFileName().c_str()));
         }
         else
             throw;
@@ -1126,12 +1126,12 @@ uint32 DB2Manager::LoadStores(std::string const& dataPath, LocaleConstant defaul
         {
             _chrModelsByRaceAndGender[{ uint8(raceModel->ChrRacesID), uint8(raceModel->Sex) }] = model;
 
-            if (std::vector<ChrCustomizationOptionEntry const*> const* customizationOptionsForModel = Trinity::Containers::MapGetValuePtr(customizationOptionsByModel, model->ID))
+            if (std::vector<ChrCustomizationOptionEntry const*> const* customizationOptionsForModel = Azgath::Containers::MapGetValuePtr(customizationOptionsByModel, model->ID))
             {
                 std::vector<ChrCustomizationOptionEntry const*>& raceOptions = _chrCustomizationOptionsByRaceAndGender[{ uint8(raceModel->ChrRacesID), uint8(raceModel->Sex) }];
                 raceOptions.insert(raceOptions.end(), customizationOptionsForModel->begin(), customizationOptionsForModel->end());
 
-                if (uint32 const* parentRace = Trinity::Containers::MapGetValuePtr(parentRaces, raceModel->ChrRacesID))
+                if (uint32 const* parentRace = Azgath::Containers::MapGetValuePtr(parentRaces, raceModel->ChrRacesID))
                 {
                     std::vector<ChrCustomizationOptionEntry const*>& parentRaceOptions = _chrCustomizationOptionsByRaceAndGender[{ uint8(*parentRace), uint8(raceModel->Sex) }];
                     parentRaceOptions.insert(parentRaceOptions.end(), customizationOptionsForModel->begin(), customizationOptionsForModel->end());
@@ -1139,16 +1139,16 @@ uint32 DB2Manager::LoadStores(std::string const& dataPath, LocaleConstant defaul
             }
 
             // link shapeshift displays to race/gender/form
-            for (std::pair<uint32 const, std::pair<uint32, uint8>> const& shapeshiftOptionsForModel : Trinity::Containers::MapEqualRange(shapeshiftFormByModel, model->ID))
+            for (std::pair<uint32 const, std::pair<uint32, uint8>> const& shapeshiftOptionsForModel : Azgath::Containers::MapEqualRange(shapeshiftFormByModel, model->ID))
             {
                 ShapeshiftFormModelData& data = _chrCustomizationChoicesForShapeshifts[{ uint8(raceModel->ChrRacesID), uint8(raceModel->Sex), shapeshiftOptionsForModel.second.second }];
                 data.OptionID = shapeshiftOptionsForModel.second.first;
-                data.Choices = Trinity::Containers::MapGetValuePtr(_chrCustomizationChoicesByOption, shapeshiftOptionsForModel.second.first);
+                data.Choices = Azgath::Containers::MapGetValuePtr(_chrCustomizationChoicesByOption, shapeshiftOptionsForModel.second.first);
                 if (data.Choices)
                 {
                     data.Displays.resize(data.Choices->size());
                     for (std::size_t i = 0; i < data.Choices->size(); ++i)
-                        data.Displays[i] = Trinity::Containers::MapGetValuePtr(displayInfoByCustomizationChoice, (*data.Choices)[i]->ID);
+                        data.Displays[i] = Azgath::Containers::MapGetValuePtr(displayInfoByCustomizationChoice, (*data.Choices)[i]->ID);
                 }
             }
         }
@@ -1304,7 +1304,7 @@ uint32 DB2Manager::LoadStores(std::string const& dataPath, LocaleConstant defaul
         bool conversionResult = Utf8toWStr(namesProfanity->Name, name);
         ASSERT(conversionResult);
         if (namesProfanity->Language != -1)
-            _nameValidators[namesProfanity->Language].emplace_back(name, Trinity::regex::perl | Trinity::regex::icase | Trinity::regex::optimize);
+            _nameValidators[namesProfanity->Language].emplace_back(name, Azgath::regex::perl | Azgath::regex::icase | Azgath::regex::optimize);
         else
         {
             for (uint32 i = 0; i < TOTAL_LOCALES; ++i)
@@ -1312,7 +1312,7 @@ uint32 DB2Manager::LoadStores(std::string const& dataPath, LocaleConstant defaul
                 if (i == LOCALE_none)
                     continue;
 
-                _nameValidators[i].emplace_back(name, Trinity::regex::perl | Trinity::regex::icase | Trinity::regex::optimize);
+                _nameValidators[i].emplace_back(name, Azgath::regex::perl | Azgath::regex::icase | Azgath::regex::optimize);
             }
         }
     }
@@ -1322,7 +1322,7 @@ uint32 DB2Manager::LoadStores(std::string const& dataPath, LocaleConstant defaul
         std::wstring name;
         bool conversionResult = Utf8toWStr(namesReserved->Name, name);
         ASSERT(conversionResult);
-        _nameValidators[TOTAL_LOCALES].emplace_back(name, Trinity::regex::perl | Trinity::regex::icase | Trinity::regex::optimize);
+        _nameValidators[TOTAL_LOCALES].emplace_back(name, Azgath::regex::perl | Azgath::regex::icase | Azgath::regex::optimize);
     }
 
     for (NamesReservedLocaleEntry const* namesReserved : sNamesReservedLocaleStore)
@@ -1337,7 +1337,7 @@ uint32 DB2Manager::LoadStores(std::string const& dataPath, LocaleConstant defaul
                 continue;
 
             if (namesReserved->LocaleMask & (1 << i))
-                _nameValidators[i].emplace_back(name, Trinity::regex::perl | Trinity::regex::icase | Trinity::regex::optimize);
+                _nameValidators[i].emplace_back(name, Azgath::regex::perl | Azgath::regex::icase | Azgath::regex::optimize);
         }
     }
 
@@ -1503,7 +1503,7 @@ uint32 DB2Manager::LoadStores(std::string const& dataPath, LocaleConstant defaul
 
             UiMapAssignmentEntry const* uiMapAssignment = nullptr;
             UiMapAssignmentEntry const* parentUiMapAssignment = nullptr;
-            for (std::pair<int32 const, UiMapAssignmentEntry const*> const& uiMapAssignmentForMap : Trinity::Containers::MapEqualRange(uiMapAssignmentByUiMap, uiMap->ID))
+            for (std::pair<int32 const, UiMapAssignmentEntry const*> const& uiMapAssignmentForMap : Azgath::Containers::MapEqualRange(uiMapAssignmentByUiMap, uiMap->ID))
             {
                 if (uiMapAssignmentForMap.second->MapID >= 0 &&
                     uiMapAssignmentForMap.second->Region[1].X - uiMapAssignmentForMap.second->Region[0].X > 0 &&
@@ -1517,7 +1517,7 @@ uint32 DB2Manager::LoadStores(std::string const& dataPath, LocaleConstant defaul
             if (!uiMapAssignment)
                 continue;
 
-            for (std::pair<int32 const, UiMapAssignmentEntry const*> const& uiMapAssignmentForMap : Trinity::Containers::MapEqualRange(uiMapAssignmentByUiMap, uiMap->ParentUiMapID))
+            for (std::pair<int32 const, UiMapAssignmentEntry const*> const& uiMapAssignmentForMap : Azgath::Containers::MapEqualRange(uiMapAssignmentByUiMap, uiMap->ParentUiMapID))
             {
                 if (uiMapAssignmentForMap.second->MapID == uiMapAssignment->MapID &&
                     uiMapAssignmentForMap.second->Region[1].X - uiMapAssignmentForMap.second->Region[0].X > 0 &&
@@ -1551,7 +1551,7 @@ uint32 DB2Manager::LoadStores(std::string const& dataPath, LocaleConstant defaul
             }
         }
 
-        if (UiMapLinkEntry const* uiMapLink = Trinity::Containers::MapGetValuePtr(uiMapLinks, std::make_pair(uiMap->ParentUiMapID, uiMap->ID)))
+        if (UiMapLinkEntry const* uiMapLink = Azgath::Containers::MapGetValuePtr(uiMapLinks, std::make_pair(uiMap->ParentUiMapID, uiMap->ID)))
         {
             bounds.IsUiAssignment = false;
             bounds.IsUiLink = true;
@@ -1662,7 +1662,7 @@ void DB2Manager::LoadHotfixData()
 
     for (auto itr = deletedRecords.begin(); itr != deletedRecords.end(); ++itr)
         if (itr->second)
-            if (DB2StorageBase* store = Trinity::Containers::MapGetValuePtr(_stores, itr->first.first))
+            if (DB2StorageBase* store = Azgath::Containers::MapGetValuePtr(_stores, itr->first.first))
                 store->EraseRecord(itr->first.second);
 
     TC_LOG_INFO("server.loading", ">> Loaded " SZFMTD " hotfix records in %u ms", _hotfixData.size(), GetMSTimeDiffToNow(oldMSTime));
@@ -1742,7 +1742,7 @@ void DB2Manager::LoadHotfixOptionalData(uint32 localeMask)
         Field* fields = result->Fetch();
 
         uint32 tableHash = fields[0].GetUInt32();
-        auto allowedHotfixes = Trinity::Containers::MapEqualRange(_allowedHotfixOptionalData, tableHash);
+        auto allowedHotfixes = Azgath::Containers::MapEqualRange(_allowedHotfixOptionalData, tableHash);
         if (allowedHotfixes.begin() == allowedHotfixes.end())
         {
             TC_LOG_ERROR("sql.sql", "Table `hotfix_optional_data` references DB2 store by hash 0x%X that is not allowed to have optional data", tableHash);
@@ -1811,14 +1811,14 @@ std::vector<uint8> const* DB2Manager::GetHotfixBlobData(uint32 tableHash, int32 
 {
     ASSERT(IsValidLocale(locale), "Locale %u is invalid locale", uint32(locale));
 
-    return Trinity::Containers::MapGetValuePtr(_hotfixBlob[locale], std::make_pair(tableHash, recordId));
+    return Azgath::Containers::MapGetValuePtr(_hotfixBlob[locale], std::make_pair(tableHash, recordId));
 }
 
 std::vector<DB2Manager::HotfixOptionalData> const* DB2Manager::GetHotfixOptionalData(uint32 tableHash, int32 recordId, LocaleConstant locale) const
 {
     ASSERT(IsValidLocale(locale), "Locale %u is invalid locale", uint32(locale));
 
-    return Trinity::Containers::MapGetValuePtr(_hotfixOptionalData[locale], std::make_pair(tableHash, recordId));
+    return Azgath::Containers::MapGetValuePtr(_hotfixOptionalData[locale], std::make_pair(tableHash, recordId));
 }
 
 uint32 DB2Manager::GetEmptyAnimStateID() const
@@ -1873,17 +1873,17 @@ std::vector<ArtifactPowerEntry const*> DB2Manager::GetArtifactPowers(uint8 artif
 
 std::unordered_set<uint32> const* DB2Manager::GetArtifactPowerLinks(uint32 artifactPowerId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_artifactPowerLinks, artifactPowerId);
+    return Azgath::Containers::MapGetValuePtr(_artifactPowerLinks, artifactPowerId);
 }
 
 ArtifactPowerRankEntry const* DB2Manager::GetArtifactPowerRank(uint32 artifactPowerId, uint8 rank) const
 {
-    return Trinity::Containers::MapGetValuePtr(_artifactPowerRanks, { artifactPowerId, rank });
+    return Azgath::Containers::MapGetValuePtr(_artifactPowerRanks, { artifactPowerId, rank });
 }
 
 AzeriteEmpoweredItemEntry const* DB2Manager::GetAzeriteEmpoweredItem(uint32 itemId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_azeriteEmpoweredItems, itemId);
+    return Azgath::Containers::MapGetValuePtr(_azeriteEmpoweredItems, itemId);
 }
 
 bool DB2Manager::IsAzeriteItem(uint32 itemId) const
@@ -1894,7 +1894,7 @@ bool DB2Manager::IsAzeriteItem(uint32 itemId) const
 
 AzeriteEssencePowerEntry const* DB2Manager::GetAzeriteEssencePower(uint32 azeriteEssenceId, uint32 rank) const
 {
-    return Trinity::Containers::MapGetValuePtr(_azeriteEssencePowersByIdAndRank, std::make_pair(azeriteEssenceId, rank));
+    return Azgath::Containers::MapGetValuePtr(_azeriteEssencePowersByIdAndRank, std::make_pair(azeriteEssenceId, rank));
 }
 
 std::vector<AzeriteItemMilestonePowerEntry const*> const& DB2Manager::GetAzeriteItemMilestonePowers() const
@@ -1911,7 +1911,7 @@ AzeriteItemMilestonePowerEntry const* DB2Manager::GetAzeriteItemMilestonePower(u
 std::vector<AzeritePowerSetMemberEntry const*> const* DB2Manager::GetAzeritePowers(uint32 itemId) const
 {
     if (AzeriteEmpoweredItemEntry const* azeriteEmpoweredItem = GetAzeriteEmpoweredItem(itemId))
-        return Trinity::Containers::MapGetValuePtr(_azeritePowers, azeriteEmpoweredItem->AzeritePowerSetID);
+        return Azgath::Containers::MapGetValuePtr(_azeritePowers, azeriteEmpoweredItem->AzeritePowerSetID);
 
     return nullptr;
 }
@@ -1919,12 +1919,12 @@ std::vector<AzeritePowerSetMemberEntry const*> const* DB2Manager::GetAzeritePowe
 uint32 DB2Manager::GetRequiredAzeriteLevelForAzeritePowerTier(uint32 azeriteUnlockSetId, ItemContext context, uint32 tier) const
 {
     ASSERT(tier < MAX_AZERITE_EMPOWERED_TIER);
-    if (std::array<uint8, MAX_AZERITE_EMPOWERED_TIER> const* levels = Trinity::Containers::MapGetValuePtr(_azeriteTierUnlockLevels, std::make_pair(azeriteUnlockSetId, context)))
+    if (std::array<uint8, MAX_AZERITE_EMPOWERED_TIER> const* levels = Azgath::Containers::MapGetValuePtr(_azeriteTierUnlockLevels, std::make_pair(azeriteUnlockSetId, context)))
         return (*levels)[tier];
 
     AzeriteTierUnlockSetEntry const* azeriteTierUnlockSet = sAzeriteTierUnlockSetStore.LookupEntry(azeriteUnlockSetId);
     if (azeriteTierUnlockSet && azeriteTierUnlockSet->Flags & AZERITE_TIER_UNLOCK_SET_FLAG_DEFAULT)
-        if (std::array<uint8, MAX_AZERITE_EMPOWERED_TIER> const* levels = Trinity::Containers::MapGetValuePtr(_azeriteTierUnlockLevels, std::make_pair(azeriteUnlockSetId, ItemContext::NONE)))
+        if (std::array<uint8, MAX_AZERITE_EMPOWERED_TIER> const* levels = Azgath::Containers::MapGetValuePtr(_azeriteTierUnlockLevels, std::make_pair(azeriteUnlockSetId, ItemContext::NONE)))
             return (*levels)[tier];
 
     return sAzeriteLevelInfoStore.GetNumRows();
@@ -1948,7 +1948,7 @@ char const* DB2Manager::GetBroadcastTextValue(BroadcastTextEntry const* broadcas
 
 int32 const* DB2Manager::GetBroadcastTextDuration(int32 broadcastTextId, LocaleConstant locale /*= DEFAULT_LOCALE*/) const
 {
-    return Trinity::Containers::MapGetValuePtr(_broadcastTextDurations, { broadcastTextId, WowLocaleToCascLocaleBit[locale] });
+    return Azgath::Containers::MapGetValuePtr(_broadcastTextDurations, { broadcastTextId, WowLocaleToCascLocaleBit[locale] });
 }
 
 ChrClassUIDisplayEntry const* DB2Manager::GetUiDisplayForClass(Classes unitClass) const
@@ -1976,22 +1976,22 @@ uint32 DB2Manager::GetPowerIndexByClass(Powers power, uint32 classId) const
 
 std::vector<ChrCustomizationChoiceEntry const*> const* DB2Manager::GetCustomiztionChoices(uint32 chrCustomizationOptionId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_chrCustomizationChoicesByOption, chrCustomizationOptionId);
+    return Azgath::Containers::MapGetValuePtr(_chrCustomizationChoicesByOption, chrCustomizationOptionId);
 }
 
 std::vector<ChrCustomizationOptionEntry const*> const* DB2Manager::GetCustomiztionOptions(uint8 race, uint8 gender) const
 {
-    return Trinity::Containers::MapGetValuePtr(_chrCustomizationOptionsByRaceAndGender, { race,gender });
+    return Azgath::Containers::MapGetValuePtr(_chrCustomizationOptionsByRaceAndGender, { race,gender });
 }
 
 std::unordered_map<uint32, std::vector<uint32>> const* DB2Manager::GetRequiredCustomizationChoices(uint32 chrCustomizationReqId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_chrCustomizationRequiredChoices, chrCustomizationReqId);
+    return Azgath::Containers::MapGetValuePtr(_chrCustomizationRequiredChoices, chrCustomizationReqId);
 }
 
 ChrModelEntry const* DB2Manager::GetChrModel(uint8 race, uint8 gender) const
 {
-    return Trinity::Containers::MapGetValuePtr(_chrModelsByRaceAndGender, { race, gender });
+    return Azgath::Containers::MapGetValuePtr(_chrModelsByRaceAndGender, { race, gender });
 }
 
 char const* DB2Manager::GetChrRaceName(uint8 race, LocaleConstant locale /*= DEFAULT_LOCALE*/)
@@ -2077,7 +2077,7 @@ char const* DB2Manager::GetCreatureFamilyPetName(uint32 petfamily, LocaleConstan
 
 CurrencyContainerEntry const* DB2Manager::GetCurrencyContainerForCurrencyQuantity(uint32 currencyId, int32 quantity) const
 {
-    for (std::pair<uint32 const, CurrencyContainerEntry const*> const& p : Trinity::Containers::MapEqualRange(_currencyContainers, currencyId))
+    for (std::pair<uint32 const, CurrencyContainerEntry const*> const& p : Azgath::Containers::MapEqualRange(_currencyContainers, currencyId))
         if (quantity >= p.second->MinAmount && (!p.second->MaxAmount || quantity <= p.second->MaxAmount))
             return p.second;
 
@@ -2086,7 +2086,7 @@ CurrencyContainerEntry const* DB2Manager::GetCurrencyContainerForCurrencyQuantit
 
 std::pair<float, float> DB2Manager::GetCurveXAxisRange(uint32 curveId) const
 {
-    if (std::vector<CurvePointEntry const*> const* points = Trinity::Containers::MapGetValuePtr(_curvePoints, curveId))
+    if (std::vector<CurvePointEntry const*> const* points = Azgath::Containers::MapGetValuePtr(_curvePoints, curveId))
         return { points->front()->Pos.X, points->back()->Pos.X };
 
     return { 0.0f, 0.0f };
@@ -2250,10 +2250,10 @@ float DB2Manager::GetCurveValueAt(uint32 curveId, float x) const
 
 EmotesTextSoundEntry const* DB2Manager::GetTextSoundEmoteFor(uint32 emote, uint8 race, uint8 gender, uint8 class_) const
 {
-    if (EmotesTextSoundEntry const* emotesTextSound = Trinity::Containers::MapGetValuePtr(_emoteTextSounds, { emote, race, gender, class_ }))
+    if (EmotesTextSoundEntry const* emotesTextSound = Azgath::Containers::MapGetValuePtr(_emoteTextSounds, { emote, race, gender, class_ }))
         return emotesTextSound;
 
-    if (EmotesTextSoundEntry const* emotesTextSound = Trinity::Containers::MapGetValuePtr(_emoteTextSounds, { emote, race, gender, uint8(0) }))
+    if (EmotesTextSoundEntry const* emotesTextSound = Azgath::Containers::MapGetValuePtr(_emoteTextSounds, { emote, race, gender, uint8(0) }))
         return emotesTextSound;
 
     return nullptr;
@@ -2311,7 +2311,7 @@ float DB2Manager::EvaluateExpectedStat(ExpectedStatType stat, uint32 level, int3
             break;
     }
 
-    std::vector<ContentTuningXExpectedEntry const*> const* contentTuningMods = Trinity::Containers::MapGetValuePtr(_expectedStatModsByContentTuning, contentTuningId);
+    std::vector<ContentTuningXExpectedEntry const*> const* contentTuningMods = Azgath::Containers::MapGetValuePtr(_expectedStatModsByContentTuning, contentTuningId);
     float value = 0.0f;
     switch (stat)
     {
@@ -2389,12 +2389,12 @@ float DB2Manager::EvaluateExpectedStat(ExpectedStatType stat, uint32 level, int3
 
 std::vector<uint32> const* DB2Manager::GetFactionTeamList(uint32 faction) const
 {
-    return Trinity::Containers::MapGetValuePtr(_factionTeams, faction);
+    return Azgath::Containers::MapGetValuePtr(_factionTeams, faction);
 }
 
 DB2Manager::FriendshipRepReactionSet const* DB2Manager::GetFriendshipRepReactions(uint32 friendshipRepID) const
 {
-    return Trinity::Containers::MapGetValuePtr(_friendshipRepReactions, friendshipRepID);
+    return Azgath::Containers::MapGetValuePtr(_friendshipRepReactions, friendshipRepID);
 }
 
 uint32 DB2Manager::GetGlobalCurveId(GlobalCurve globalCurveType) const
@@ -2408,22 +2408,22 @@ uint32 DB2Manager::GetGlobalCurveId(GlobalCurve globalCurveType) const
 
 std::vector<uint32> const* DB2Manager::GetGlyphBindableSpells(uint32 glyphPropertiesId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_glyphBindableSpells, glyphPropertiesId);
+    return Azgath::Containers::MapGetValuePtr(_glyphBindableSpells, glyphPropertiesId);
 }
 
 std::vector<uint32> const* DB2Manager::GetGlyphRequiredSpecs(uint32 glyphPropertiesId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_glyphRequiredSpecs, glyphPropertiesId);
+    return Azgath::Containers::MapGetValuePtr(_glyphRequiredSpecs, glyphPropertiesId);
 }
 
 HeirloomEntry const* DB2Manager::GetHeirloomByItemId(uint32 itemId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_heirlooms, itemId);
+    return Azgath::Containers::MapGetValuePtr(_heirlooms, itemId);
 }
 
 DB2Manager::ItemBonusList const* DB2Manager::GetItemBonusList(uint32 bonusListId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_itemBonusLists, bonusListId);
+    return Azgath::Containers::MapGetValuePtr(_itemBonusLists, bonusListId);
 }
 
 uint32 DB2Manager::GetItemBonusListForItemLevelDelta(int16 delta) const
@@ -2518,7 +2518,7 @@ std::set<uint32> DB2Manager::GetDefaultItemBonusTree(uint32 itemId, ItemContext 
             }
         }
 
-        if (AzeriteUnlockMappingEntry const* azeriteUnlockMapping = Trinity::Containers::MapGetValuePtr(_azeriteUnlockMappings, std::make_pair(proto->ID, itemContext)))
+        if (AzeriteUnlockMappingEntry const* azeriteUnlockMapping = Azgath::Containers::MapGetValuePtr(_azeriteUnlockMappings, std::make_pair(proto->ID, itemContext)))
         {
             switch (proto->InventoryType)
             {
@@ -2566,7 +2566,7 @@ void LoadAzeriteEmpoweredItemUnlockMappings(std::unordered_map<int32, std::vecto
                 if (!selector)
                     return;
 
-                if (std::vector<AzeriteUnlockMappingEntry const*> const* azeriteUnlockMappings = Trinity::Containers::MapGetValuePtr(azeriteUnlockMappingsBySet, selector->AzeriteUnlockMappingSet))
+                if (std::vector<AzeriteUnlockMappingEntry const*> const* azeriteUnlockMappings = Azgath::Containers::MapGetValuePtr(azeriteUnlockMappingsBySet, selector->AzeriteUnlockMappingSet))
                 {
                     AzeriteUnlockMappingEntry const* selectedAzeriteUnlockMapping = nullptr;
                     for (AzeriteUnlockMappingEntry const* azeriteUnlockMapping : *azeriteUnlockMappings)
@@ -2588,7 +2588,7 @@ void LoadAzeriteEmpoweredItemUnlockMappings(std::unordered_map<int32, std::vecto
 
 ItemChildEquipmentEntry const* DB2Manager::GetItemChildEquipment(uint32 itemId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_itemChildEquipment, itemId);
+    return Azgath::Containers::MapGetValuePtr(_itemChildEquipment, itemId);
 }
 
 ItemClassEntry const* DB2Manager::GetItemClassByOldEnum(uint32 itemClass) const
@@ -2603,7 +2603,7 @@ bool DB2Manager::HasItemCurrencyCost(uint32 itemId) const
 
 std::vector<ItemLimitCategoryConditionEntry const*> const* DB2Manager::GetItemLimitCategoryConditions(uint32 categoryId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_itemCategoryConditions, categoryId);
+    return Azgath::Containers::MapGetValuePtr(_itemCategoryConditions, categoryId);
 }
 
 uint32 DB2Manager::GetItemDisplayId(uint32 itemId, uint32 appearanceModId) const
@@ -2634,17 +2634,17 @@ ItemModifiedAppearanceEntry const* DB2Manager::GetItemModifiedAppearance(uint32 
 
 ItemModifiedAppearanceEntry const* DB2Manager::GetDefaultItemModifiedAppearance(uint32 itemId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_itemModifiedAppearancesByItem, itemId);
+    return Azgath::Containers::MapGetValuePtr(_itemModifiedAppearancesByItem, itemId);
 }
 
 std::vector<ItemSetSpellEntry const*> const* DB2Manager::GetItemSetSpells(uint32 itemSetId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_itemSetSpells, itemSetId);
+    return Azgath::Containers::MapGetValuePtr(_itemSetSpells, itemSetId);
 }
 
 std::vector<ItemSpecOverrideEntry const*> const* DB2Manager::GetItemSpecOverrides(uint32 itemId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_itemSpecOverrides, itemId);
+    return Azgath::Containers::MapGetValuePtr(_itemSpecOverrides, itemId);
 }
 
 JournalTierEntry const* DB2Manager::GetJournalTier(uint32 index) const
@@ -2759,12 +2759,12 @@ MapDifficultyEntry const* DB2Manager::GetDownscaledMapDifficultyData(uint32 mapI
 
 DB2Manager::MapDifficultyConditionsContainer const* DB2Manager::GetMapDifficultyConditions(uint32 mapDifficultyId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_mapDifficultyConditions, mapDifficultyId);
+    return Azgath::Containers::MapGetValuePtr(_mapDifficultyConditions, mapDifficultyId);
 }
 
 MountEntry const* DB2Manager::GetMount(uint32 spellId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_mountsBySpellId, spellId);
+    return Azgath::Containers::MapGetValuePtr(_mountsBySpellId, spellId);
 }
 
 MountEntry const* DB2Manager::GetMountById(uint32 id) const
@@ -2774,12 +2774,12 @@ MountEntry const* DB2Manager::GetMountById(uint32 id) const
 
 DB2Manager::MountTypeXCapabilitySet const* DB2Manager::GetMountCapabilities(uint32 mountType) const
 {
-    return Trinity::Containers::MapGetValuePtr(_mountCapabilitiesByType, mountType);
+    return Azgath::Containers::MapGetValuePtr(_mountCapabilitiesByType, mountType);
 }
 
 DB2Manager::MountXDisplayContainer const* DB2Manager::GetMountDisplays(uint32 mountId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_mountDisplays, mountId);
+    return Azgath::Containers::MapGetValuePtr(_mountDisplays, mountId);
 }
 
 std::string DB2Manager::GetNameGenEntry(uint8 race, uint8 gender) const
@@ -2792,18 +2792,18 @@ std::string DB2Manager::GetNameGenEntry(uint8 race, uint8 gender) const
     if (ritr->second[gender].empty())
         return "";
 
-    return Trinity::Containers::SelectRandomContainerElement(ritr->second[gender])->Name;
+    return Azgath::Containers::SelectRandomContainerElement(ritr->second[gender])->Name;
 }
 
 ResponseCodes DB2Manager::ValidateName(std::wstring const& name, LocaleConstant locale) const
 {
-    for (Trinity::wregex const& regex : _nameValidators[locale])
-        if (Trinity::regex_search(name, regex))
+    for (Azgath::wregex const& regex : _nameValidators[locale])
+        if (Azgath::regex_search(name, regex))
             return CHAR_NAME_PROFANE;
 
     // regexes at TOTAL_LOCALES are loaded from NamesReserved which is not locale specific
-    for (Trinity::wregex const& regex : _nameValidators[TOTAL_LOCALES])
-        if (Trinity::regex_search(name, regex))
+    for (Azgath::wregex const& regex : _nameValidators[TOTAL_LOCALES])
+        if (Azgath::regex_search(name, regex))
             return CHAR_NAME_RESERVED;
 
     return CHAR_NAME_SUCCESS;
@@ -2833,7 +2833,7 @@ int32 DB2Manager::GetNumTalentsAtLevel(uint32 level, Classes playerClass)
 
 ParagonReputationEntry const* DB2Manager::GetParagonReputation(uint32 factionId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_paragonReputations, factionId);
+    return Azgath::Containers::MapGetValuePtr(_paragonReputations, factionId);
 }
 
 PVPDifficultyEntry const* DB2Manager::GetBattlegroundBracketByLevel(uint32 mapid, uint32 level)
@@ -2898,7 +2898,7 @@ int32 DB2Manager::GetPvpTalentNumSlotsAtLevel(uint32 level, Classes class_) cons
 
 std::unordered_set<QuestLineXQuestEntry const*> const* DB2Manager::GetQuestsForQuestLine(uint32 questLineId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_questsByQuestLine, questLineId);
+    return Azgath::Containers::MapGetValuePtr(_questsByQuestLine, questLineId);
 }
 
 std::vector<QuestPackageItemEntry const*> const* DB2Manager::GetQuestPackageItems(uint32 questPackageID) const
@@ -2930,7 +2930,7 @@ uint32 DB2Manager::GetQuestUniqueBitFlag(uint32 questId)
 
 std::vector<uint32> const* DB2Manager::GetPhasesForGroup(uint32 group) const
 {
-    return Trinity::Containers::MapGetValuePtr(_phasesByGroup, group);
+    return Azgath::Containers::MapGetValuePtr(_phasesByGroup, group);
 }
 
 PowerTypeEntry const* DB2Manager::GetPowerTypeEntry(Powers power) const
@@ -2967,32 +2967,32 @@ uint8 DB2Manager::GetPvpItemLevelBonus(uint32 itemId) const
 
 std::vector<RewardPackXCurrencyTypeEntry const*> const* DB2Manager::GetRewardPackCurrencyTypesByRewardID(uint32 rewardPackID) const
 {
-    return Trinity::Containers::MapGetValuePtr(_rewardPackCurrencyTypes, rewardPackID);
+    return Azgath::Containers::MapGetValuePtr(_rewardPackCurrencyTypes, rewardPackID);
 }
 
 std::vector<RewardPackXItemEntry const*> const* DB2Manager::GetRewardPackItemsByRewardID(uint32 rewardPackID) const
 {
-    return Trinity::Containers::MapGetValuePtr(_rewardPackItems, rewardPackID);
+    return Azgath::Containers::MapGetValuePtr(_rewardPackItems, rewardPackID);
 }
 
 ShapeshiftFormModelData const* DB2Manager::GetShapeshiftFormModelData(uint8 race, uint8 gender, uint8 form) const
 {
-    return Trinity::Containers::MapGetValuePtr(_chrCustomizationChoicesForShapeshifts, { race, gender, form });
+    return Azgath::Containers::MapGetValuePtr(_chrCustomizationChoicesForShapeshifts, { race, gender, form });
 }
 
 std::vector<SkillLineEntry const*> const* DB2Manager::GetSkillLinesForParentSkill(uint32 parentSkillId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_skillLinesByParentSkillLine, parentSkillId);
+    return Azgath::Containers::MapGetValuePtr(_skillLinesByParentSkillLine, parentSkillId);
 }
 
 std::vector<SkillLineAbilityEntry const*> const* DB2Manager::GetSkillLineAbilitiesBySkill(uint32 skillId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_skillLineAbilitiesBySkillupSkill, skillId);
+    return Azgath::Containers::MapGetValuePtr(_skillLineAbilitiesBySkillupSkill, skillId);
 }
 
 SkillRaceClassInfoEntry const* DB2Manager::GetSkillRaceClassInfo(uint32 skill, uint8 race, uint8 class_) const
 {
-    for (auto&& [_, skllRaceClassInfo] : Trinity::Containers::MapEqualRange(_skillRaceClassInfoBySkill, skill))
+    for (auto&& [_, skllRaceClassInfo] : Azgath::Containers::MapEqualRange(_skillRaceClassInfoBySkill, skill))
     {
         if (!skllRaceClassInfo->RaceMask.IsEmpty() && !(skllRaceClassInfo->RaceMask.HasRace(race)))
             continue;
@@ -3008,7 +3008,7 @@ SkillRaceClassInfoEntry const* DB2Manager::GetSkillRaceClassInfo(uint32 skill, u
 std::vector<SkillRaceClassInfoEntry const*> DB2Manager::GetSkillRaceClassInfo(uint32 skill) const
 {
     std::vector<SkillRaceClassInfoEntry const*> result;
-    for (auto const& [_, skillRaceClassInfo] : Trinity::Containers::MapEqualRange(_skillRaceClassInfoBySkill, skill))
+    for (auto const& [_, skillRaceClassInfo] : Azgath::Containers::MapEqualRange(_skillRaceClassInfoBySkill, skill))
         result.push_back(skillRaceClassInfo);
 
     return result;
@@ -3016,12 +3016,12 @@ std::vector<SkillRaceClassInfoEntry const*> DB2Manager::GetSkillRaceClassInfo(ui
 
 SoulbindConduitRankEntry const* DB2Manager::GetSoulbindConduitRank(int32 soulbindConduitId, int32 rank) const
 {
-    return Trinity::Containers::MapGetValuePtr(_soulbindConduitRanks, { soulbindConduitId, rank });
+    return Azgath::Containers::MapGetValuePtr(_soulbindConduitRanks, { soulbindConduitId, rank });
 }
 
 std::vector<SpecializationSpellsEntry const*> const* DB2Manager::GetSpecializationSpells(uint32 specId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_specializationSpellsBySpec, specId);
+    return Azgath::Containers::MapGetValuePtr(_specializationSpellsBySpec, specId);
 }
 
 bool DB2Manager::IsSpecSetMember(int32 specSetId, uint32 specId) const
@@ -3045,7 +3045,7 @@ std::vector<SpellProcsPerMinuteModEntry const*> DB2Manager::GetSpellProcsPerMinu
 
 std::vector<SpellVisualMissileEntry const*> const* DB2Manager::GetSpellVisualMissiles(int32 spellVisualMissileSetId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_spellVisualMissilesBySet, spellVisualMissileSetId);
+    return Azgath::Containers::MapGetValuePtr(_spellVisualMissilesBySet, spellVisualMissileSetId);
 }
 
 std::vector<TalentEntry const*> const& DB2Manager::GetTalentsByPosition(uint32 class_, uint32 tier, uint32 column) const
@@ -3080,17 +3080,17 @@ bool DB2Manager::IsToyItem(uint32 toy) const
 
 TransmogIllusionEntry const* DB2Manager::GetTransmogIllusionForEnchantment(uint32 spellItemEnchantmentId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_transmogIllusionsByEnchantmentId, spellItemEnchantmentId);
+    return Azgath::Containers::MapGetValuePtr(_transmogIllusionsByEnchantmentId, spellItemEnchantmentId);
 }
 
 std::vector<TransmogSetEntry const*> const* DB2Manager::GetTransmogSetsForItemModifiedAppearance(uint32 itemModifiedAppearanceId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_transmogSetsByItemModifiedAppearance, itemModifiedAppearanceId);
+    return Azgath::Containers::MapGetValuePtr(_transmogSetsByItemModifiedAppearance, itemModifiedAppearanceId);
 }
 
 std::vector<TransmogSetItemEntry const*> const* DB2Manager::GetTransmogSetItems(uint32 transmogSetId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_transmogSetItemsByTransmogSet, transmogSetId);
+    return Azgath::Containers::MapGetValuePtr(_transmogSetItemsByTransmogSet, transmogSetId);
 }
 
 struct UiMapAssignmentStatus
@@ -3305,7 +3305,7 @@ static UiMapAssignmentEntry const* FindNearestMapAssignment(float x, float y, fl
     UiMapAssignmentStatus nearestMapAssignment;
     auto iterateUiMapAssignments = [&](std::unordered_multimap<int32, UiMapAssignmentEntry const*> const& assignments, int32 id)
     {
-        for (auto assignment : Trinity::Containers::MapEqualRange(assignments, id))
+        for (auto assignment : Azgath::Containers::MapEqualRange(assignments, id))
         {
             UiMapAssignmentStatus status;
             if (CheckUiMapAssignmentStatus(x, y, z, mapId, areaId, wmoDoodadPlacementId, wmoGroupId, assignment.second, &status))
@@ -3344,7 +3344,7 @@ static DBCPosition2D CalculateGlobalUiMapPosition(int32 uiMapID, DBCPosition2D u
         if (uiMap->Type <= UI_MAP_TYPE_CONTINENT)
             break;
 
-        UiMapBounds const* bounds = Trinity::Containers::MapGetValuePtr(_uiMapBounds, uiMap->ID);
+        UiMapBounds const* bounds = Azgath::Containers::MapGetValuePtr(_uiMapBounds, uiMap->ID);
         if (!bounds || !bounds->IsUiAssignment)
             break;
 
@@ -3405,7 +3405,7 @@ bool DB2Manager::Zone2MapCoordinates(uint32 areaId, float& x, float& y) const
     if (!areaEntry)
         return false;
 
-    for (auto assignment : Trinity::Containers::MapEqualRange(_uiMapAssignmentByArea[UI_MAP_SYSTEM_WORLD], areaId))
+    for (auto assignment : Azgath::Containers::MapEqualRange(_uiMapAssignmentByArea[UI_MAP_SYSTEM_WORLD], areaId))
     {
         if (assignment.second->MapID >= 0 && assignment.second->MapID != areaEntry->ContinentID)
             continue;
@@ -3438,7 +3438,7 @@ bool DB2Manager::IsUiMapPhase(uint32 phaseId) const
 
 WMOAreaTableEntry const* DB2Manager::GetWMOAreaTable(int32 rootId, int32 adtId, int32 groupId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_wmoAreaTableLookup, WMOAreaTableKey(int16(rootId), int8(adtId), groupId));
+    return Azgath::Containers::MapGetValuePtr(_wmoAreaTableLookup, WMOAreaTableKey(int16(rootId), int8(adtId), groupId));
 }
 
 bool ChrClassesXPowerTypesEntryComparator::Compare(ChrClassesXPowerTypesEntry const* left, ChrClassesXPowerTypesEntry const* right)

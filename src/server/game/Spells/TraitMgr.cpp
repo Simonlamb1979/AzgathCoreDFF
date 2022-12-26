@@ -137,10 +137,10 @@ void Load()
         Tree& tree = _traitTrees[traitTree->ID];
         tree.Data = traitTree;
 
-        if (std::vector<TraitCostEntry const*>* costs = Trinity::Containers::MapGetValuePtr(treeCosts, traitTree->ID))
+        if (std::vector<TraitCostEntry const*>* costs = Azgath::Containers::MapGetValuePtr(treeCosts, traitTree->ID))
             tree.Costs = std::move(*costs);
 
-        if (std::vector<TraitCurrencyEntry const*>* currencies = Trinity::Containers::MapGetValuePtr(treeCurrencies, traitTree->ID))
+        if (std::vector<TraitCurrencyEntry const*>* currencies = Azgath::Containers::MapGetValuePtr(treeCurrencies, traitTree->ID))
             tree.Currencies = std::move(*currencies);
 
         if (traitTree->TraitSystemID)
@@ -155,10 +155,10 @@ void Load()
         NodeGroup& nodeGroup = _traitGroups[traitNodeGroup->ID];
         nodeGroup.Data = traitNodeGroup;
 
-        if (std::vector<TraitCondEntry const*>* conditions = Trinity::Containers::MapGetValuePtr(nodeGroupConditions, traitNodeGroup->ID))
+        if (std::vector<TraitCondEntry const*>* conditions = Azgath::Containers::MapGetValuePtr(nodeGroupConditions, traitNodeGroup->ID))
             nodeGroup.Conditions = std::move(*conditions);
 
-        if (std::vector<TraitCostEntry const*>* costs = Trinity::Containers::MapGetValuePtr(nodeGroupCosts, traitNodeGroup->ID))
+        if (std::vector<TraitCostEntry const*>* costs = Azgath::Containers::MapGetValuePtr(nodeGroupCosts, traitNodeGroup->ID))
             nodeGroup.Costs = std::move(*costs);
     }
 
@@ -167,24 +167,24 @@ void Load()
         Node& node = _traitNodes[traitNode->ID];
         node.Data = traitNode;
 
-        if (Tree* tree = Trinity::Containers::MapGetValuePtr(_traitTrees, traitNode->TraitTreeID))
+        if (Tree* tree = Azgath::Containers::MapGetValuePtr(_traitTrees, traitNode->TraitTreeID))
             tree->Nodes.push_back(&node);
 
-        for (auto&& [_, traitNodeEntry] : Trinity::Containers::MapEqualRange(nodeEntries, traitNode->ID))
+        for (auto&& [_, traitNodeEntry] : Azgath::Containers::MapEqualRange(nodeEntries, traitNode->ID))
         {
             NodeEntry& entry = node.Entries.emplace_back();
             entry.Data = traitNodeEntry;
 
-            if (std::vector<TraitCondEntry const*>* conditions = Trinity::Containers::MapGetValuePtr(nodeEntryConditions, traitNodeEntry->ID))
+            if (std::vector<TraitCondEntry const*>* conditions = Azgath::Containers::MapGetValuePtr(nodeEntryConditions, traitNodeEntry->ID))
                 entry.Conditions = std::move(*conditions);
 
-            if (std::vector<TraitCostEntry const*>* costs = Trinity::Containers::MapGetValuePtr(nodeEntryCosts, traitNodeEntry->ID))
+            if (std::vector<TraitCostEntry const*>* costs = Azgath::Containers::MapGetValuePtr(nodeEntryCosts, traitNodeEntry->ID))
                 entry.Costs = std::move(*costs);
         }
 
-        for (auto&& [_, nodeGroupId] : Trinity::Containers::MapEqualRange(nodeGroups, traitNode->ID))
+        for (auto&& [_, nodeGroupId] : Azgath::Containers::MapEqualRange(nodeGroups, traitNode->ID))
         {
-            NodeGroup* nodeGroup = Trinity::Containers::MapGetValuePtr(_traitGroups, nodeGroupId);
+            NodeGroup* nodeGroup = Azgath::Containers::MapGetValuePtr(_traitGroups, nodeGroupId);
             if (!nodeGroup)
                 continue;
 
@@ -192,17 +192,17 @@ void Load()
             node.Groups.push_back(nodeGroup);
         }
 
-        if (std::vector<TraitCondEntry const*>* conditions = Trinity::Containers::MapGetValuePtr(nodeConditions, traitNode->ID))
+        if (std::vector<TraitCondEntry const*>* conditions = Azgath::Containers::MapGetValuePtr(nodeConditions, traitNode->ID))
             node.Conditions = std::move(*conditions);
 
-        if (std::vector<TraitCostEntry const*>* costs = Trinity::Containers::MapGetValuePtr(nodeCosts, traitNode->ID))
+        if (std::vector<TraitCostEntry const*>* costs = Azgath::Containers::MapGetValuePtr(nodeCosts, traitNode->ID))
             node.Costs = std::move(*costs);
     }
 
     for (TraitEdgeEntry const* traitEdgeEntry : sTraitEdgeStore)
     {
-        Node* left = Trinity::Containers::MapGetValuePtr(_traitNodes, traitEdgeEntry->LeftTraitNodeID);
-        Node* right = Trinity::Containers::MapGetValuePtr(_traitNodes, traitEdgeEntry->RightTraitNodeID);
+        Node* left = Azgath::Containers::MapGetValuePtr(_traitNodes, traitEdgeEntry->LeftTraitNodeID);
+        Node* right = Azgath::Containers::MapGetValuePtr(_traitNodes, traitEdgeEntry->RightTraitNodeID);
         if (!left || !right)
             continue;
 
@@ -211,7 +211,7 @@ void Load()
 
     for (SkillLineXTraitTreeEntry const* skillLineXTraitTreeEntry : sSkillLineXTraitTreeStore)
     {
-        Tree* tree = Trinity::Containers::MapGetValuePtr(_traitTrees, skillLineXTraitTreeEntry->TraitTreeID);
+        Tree* tree = Azgath::Containers::MapGetValuePtr(_traitTrees, skillLineXTraitTreeEntry->TraitTreeID);
         if (!tree)
             continue;
 
@@ -235,7 +235,7 @@ void Load()
 
     for (auto&& [traitSystemId, traitTreeIds] : traitTreesIdsByTraitSystem)
         for (int32 traitTreeId : traitTreeIds)
-            if (Tree* tree = Trinity::Containers::MapGetValuePtr(_traitTrees, traitTreeId))
+            if (Tree* tree = Azgath::Containers::MapGetValuePtr(_traitTrees, traitTreeId))
                 _traitTreesByTraitSystem[traitSystemId].push_back(tree);
 
     for (TraitCurrencySourceEntry const* traitCurrencySource : sTraitCurrencySourceStore)
@@ -250,7 +250,7 @@ void Load()
 
     for (TraitTreeLoadoutEntry const* traitTreeLoadout : sTraitTreeLoadoutStore)
     {
-        if (std::vector<TraitTreeLoadoutEntryEntry const*>* entries = Trinity::Containers::MapGetValuePtr(traitTreeLoadoutEntries, traitTreeLoadout->ID))
+        if (std::vector<TraitTreeLoadoutEntryEntry const*>* entries = Azgath::Containers::MapGetValuePtr(traitTreeLoadoutEntries, traitTreeLoadout->ID))
         {
             std::sort(entries->begin(), entries->end(), [](TraitTreeLoadoutEntryEntry const* left, TraitTreeLoadoutEntryEntry const* right)
             {
@@ -276,7 +276,7 @@ int32 GenerateNewTraitConfigId()
 
 TraitConfigType GetConfigTypeForTree(int32 traitTreeId)
 {
-    Tree const* tree = Trinity::Containers::MapGetValuePtr(_traitTrees, traitTreeId);
+    Tree const* tree = Azgath::Containers::MapGetValuePtr(_traitTrees, traitTreeId);
     if (!tree)
         return TraitConfigType::Invalid;
 
@@ -294,12 +294,12 @@ std::vector<Tree const*> const* GetTreesForConfig(WorldPackets::Traits::TraitCon
     {
         case TraitConfigType::Combat:
             if (ChrSpecializationEntry const* chrSpecializationEntry = sChrSpecializationStore.LookupEntry(traitConfig.ChrSpecializationID))
-                return Trinity::Containers::MapGetValuePtr(_traitTreesBySkillLine, _skillLinesByClass[chrSpecializationEntry->ClassID]);
+                return Azgath::Containers::MapGetValuePtr(_traitTreesBySkillLine, _skillLinesByClass[chrSpecializationEntry->ClassID]);
             break;
         case TraitConfigType::Profession:
-            return Trinity::Containers::MapGetValuePtr(_traitTreesBySkillLine, traitConfig.SkillLineID);
+            return Azgath::Containers::MapGetValuePtr(_traitTreesBySkillLine, traitConfig.SkillLineID);
         case TraitConfigType::Generic:
-            return Trinity::Containers::MapGetValuePtr(_traitTreesByTraitSystem, traitConfig.TraitSystemID);
+            return Azgath::Containers::MapGetValuePtr(_traitTreesByTraitSystem, traitConfig.TraitSystemID);
         default:
             break;
     }
@@ -311,11 +311,11 @@ bool HasEnoughCurrency(WorldPackets::Traits::TraitEntry const& entry, std::map<i
 {
     auto getCurrencyCount = [&](int32 currencyId)
     {
-        int32 const* count = Trinity::Containers::MapGetValuePtr(currencies, currencyId);
+        int32 const* count = Azgath::Containers::MapGetValuePtr(currencies, currencyId);
         return count ? *count : 0;
     };
 
-    Node const* node = Trinity::Containers::MapGetValuePtr(_traitNodes, entry.TraitNodeID);
+    Node const* node = Azgath::Containers::MapGetValuePtr(_traitNodes, entry.TraitNodeID);
     for (NodeGroup const* group : node->Groups)
         for (TraitCostEntry const* cost : group->Costs)
             if (getCurrencyCount(cost->TraitCurrencyID) < cost->Amount * entry.Rank)
@@ -331,7 +331,7 @@ bool HasEnoughCurrency(WorldPackets::Traits::TraitEntry const& entry, std::map<i
         if (getCurrencyCount(cost->TraitCurrencyID) < cost->Amount * entry.Rank)
             return false;
 
-    if (Tree const* tree = Trinity::Containers::MapGetValuePtr(_traitTrees, node->Data->TraitTreeID))
+    if (Tree const* tree = Azgath::Containers::MapGetValuePtr(_traitTrees, node->Data->TraitTreeID))
         for (TraitCostEntry const* cost : tree->Costs)
             if (getCurrencyCount(cost->TraitCurrencyID) < cost->Amount * entry.Rank)
                 return false;
@@ -341,7 +341,7 @@ bool HasEnoughCurrency(WorldPackets::Traits::TraitEntry const& entry, std::map<i
 
 void TakeCurrencyCost(WorldPackets::Traits::TraitEntry const& entry, std::map<int32, int32>& currencies)
 {
-    Node const* node = Trinity::Containers::MapGetValuePtr(_traitNodes, entry.TraitNodeID);
+    Node const* node = Azgath::Containers::MapGetValuePtr(_traitNodes, entry.TraitNodeID);
     for (NodeGroup const* group : node->Groups)
         for (TraitCostEntry const* cost : group->Costs)
             currencies[cost->TraitCurrencyID] -= cost->Amount * entry.Rank;
@@ -354,7 +354,7 @@ void TakeCurrencyCost(WorldPackets::Traits::TraitEntry const& entry, std::map<in
     for (TraitCostEntry const* cost : node->Costs)
         currencies[cost->TraitCurrencyID] -= cost->Amount * entry.Rank;
 
-    if (Tree const* tree = Trinity::Containers::MapGetValuePtr(_traitTrees, node->Data->TraitTreeID))
+    if (Tree const* tree = Azgath::Containers::MapGetValuePtr(_traitTrees, node->Data->TraitTreeID))
         for (TraitCostEntry const* cost : tree->Costs)
             currencies[cost->TraitCurrencyID] -= cost->Amount * entry.Rank;
 }
@@ -392,7 +392,7 @@ void FillOwnedCurrenciesMap(WorldPackets::Traits::TraitConfig const& traitConfig
                     currencies[currency->ID] += player->GetCurrency(currency->CurrencyTypesID);
                     break;
                 case TraitCurrencyType::TraitSourced:
-                    if (std::vector<TraitCurrencySourceEntry const*>* currencySources = Trinity::Containers::MapGetValuePtr(_traitCurrencySourcesByCurrency, currency->ID))
+                    if (std::vector<TraitCurrencySourceEntry const*>* currencySources = Azgath::Containers::MapGetValuePtr(_traitCurrencySourcesByCurrency, currency->ID))
                     {
                         for (TraitCurrencySourceEntry const* currencySource : *currencySources)
                         {
@@ -421,7 +421,7 @@ void FillOwnedCurrenciesMap(WorldPackets::Traits::TraitConfig const& traitConfig
 
 void FillSpentCurrenciesMap(WorldPackets::Traits::TraitEntry const& entry, std::map<int32, int32>& cachedCurrencies)
 {
-    Node const* node = Trinity::Containers::MapGetValuePtr(_traitNodes, entry.TraitNodeID);
+    Node const* node = Azgath::Containers::MapGetValuePtr(_traitNodes, entry.TraitNodeID);
     for (NodeGroup const* group : node->Groups)
         for (TraitCostEntry const* cost : group->Costs)
             cachedCurrencies[cost->TraitCurrencyID] += cost->Amount * entry.Rank;
@@ -434,7 +434,7 @@ void FillSpentCurrenciesMap(WorldPackets::Traits::TraitEntry const& entry, std::
     for (TraitCostEntry const* cost : node->Costs)
         cachedCurrencies[cost->TraitCurrencyID] += cost->Amount * entry.Rank;
 
-    if (Tree const* tree = Trinity::Containers::MapGetValuePtr(_traitTrees, node->Data->TraitTreeID))
+    if (Tree const* tree = Azgath::Containers::MapGetValuePtr(_traitTrees, node->Data->TraitTreeID))
         for (TraitCostEntry const* cost : tree->Costs)
             cachedCurrencies[cost->TraitCurrencyID] += cost->Amount * entry.Rank;
 }
@@ -535,7 +535,7 @@ std::vector<UF::TraitEntry> GetGrantedTraitEntriesForConfig(WorldPackets::Traits
 
 bool IsValidEntry(WorldPackets::Traits::TraitEntry const& traitEntry)
 {
-    Node const* node = Trinity::Containers::MapGetValuePtr(_traitNodes, traitEntry.TraitNodeID);
+    Node const* node = Azgath::Containers::MapGetValuePtr(_traitNodes, traitEntry.TraitNodeID);
     if (!node)
         return false;
 
@@ -592,7 +592,7 @@ TalentLearnResult ValidateConfig(WorldPackets::Traits::TraitConfig const& traitC
         if (!IsValidEntry(traitEntry))
             return TALENT_FAILED_UNKNOWN;
 
-        Node const* node = Trinity::Containers::MapGetValuePtr(_traitNodes, traitEntry.TraitNodeID);
+        Node const* node = Azgath::Containers::MapGetValuePtr(_traitNodes, traitEntry.TraitNodeID);
         if (node->Data->GetType() == TraitNodeType::Selection)
             if (getNodeEntryCount(traitEntry.TraitNodeID) != 1)
                 return TALENT_FAILED_UNKNOWN;
@@ -646,7 +646,7 @@ TalentLearnResult ValidateConfig(WorldPackets::Traits::TraitConfig const& traitC
         if (!spentAmount)
             continue;
 
-        int32* grantedCount = Trinity::Containers::MapGetValuePtr(grantedCurrencies, traitCurrencyId);
+        int32* grantedCount = Azgath::Containers::MapGetValuePtr(grantedCurrencies, traitCurrencyId);
         if (!grantedCount || *grantedCount < spentAmount)
             return TALENT_FAILED_NOT_ENOUGH_TALENTS_IN_PRIMARY_TREE;
 
@@ -659,7 +659,7 @@ TalentLearnResult ValidateConfig(WorldPackets::Traits::TraitConfig const& traitC
             if (!grantedAmount)
                 continue;
 
-            int32* spentAmount = Trinity::Containers::MapGetValuePtr(*spentCurrencies, traitCurrencyId);
+            int32* spentAmount = Azgath::Containers::MapGetValuePtr(*spentCurrencies, traitCurrencyId);
             if (!spentAmount || *spentAmount != grantedAmount)
                 return TALENT_FAILED_UNSPENT_TALENT_POINTS;
         }
@@ -670,7 +670,7 @@ TalentLearnResult ValidateConfig(WorldPackets::Traits::TraitConfig const& traitC
 
 std::vector<TraitDefinitionEffectPointsEntry const*> const* GetTraitDefinitionEffectPointModifiers(int32 traitDefinitionId)
 {
-    return Trinity::Containers::MapGetValuePtr(_traitDefinitionEffectPointModifiers, traitDefinitionId);
+    return Azgath::Containers::MapGetValuePtr(_traitDefinitionEffectPointModifiers, traitDefinitionId);
 }
 
 void InitializeStarterBuildTraitConfig(WorldPackets::Traits::TraitConfig& traitConfig, Player const* player)
@@ -691,7 +691,7 @@ void InitializeStarterBuildTraitConfig(WorldPackets::Traits::TraitConfig& traitC
     std::map<int32, int32> currencies;
     FillOwnedCurrenciesMap(traitConfig, player, currencies);
 
-    if (std::vector<TraitTreeLoadoutEntryEntry const*> const* loadoutEntries = Trinity::Containers::MapGetValuePtr(_traitTreeLoadoutsByChrSpecialization, traitConfig.ChrSpecializationID))
+    if (std::vector<TraitTreeLoadoutEntryEntry const*> const* loadoutEntries = Azgath::Containers::MapGetValuePtr(_traitTreeLoadoutsByChrSpecialization, traitConfig.ChrSpecializationID))
     {
         auto findEntry = [](WorldPackets::Traits::TraitConfig& config, int32 traitNodeId, int32 traitNodeEntryId) -> WorldPackets::Traits::TraitEntry*
         {
@@ -705,7 +705,7 @@ void InitializeStarterBuildTraitConfig(WorldPackets::Traits::TraitConfig& traitC
         for (TraitTreeLoadoutEntryEntry const* loadoutEntry : *loadoutEntries)
         {
             int32 addedRanks = loadoutEntry->NumPoints;
-            Node const* node = Trinity::Containers::MapGetValuePtr(_traitNodes, loadoutEntry->SelectedTraitNodeID);
+            Node const* node = Azgath::Containers::MapGetValuePtr(_traitNodes, loadoutEntry->SelectedTraitNodeID);
 
             WorldPackets::Traits::TraitEntry newEntry;
             newEntry.TraitNodeID = loadoutEntry->SelectedTraitNodeID;

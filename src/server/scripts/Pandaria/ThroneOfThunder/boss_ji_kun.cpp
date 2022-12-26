@@ -288,12 +288,12 @@ Unit* SelectRandomTargetWithGuidOnRange(Unit* FromWho, uint32 entry, float range
 
     if (player && !PlayerList.empty())
     {
-        if (Player* target = Trinity::Containers::SelectRandomContainerElement(PlayerList))
+        if (Player* target = Azgath::Containers::SelectRandomContainerElement(PlayerList))
             return target->ToUnit();
     }
     else if (!CreatureList.empty())
     {
-        if (Creature* target = Trinity::Containers::SelectRandomContainerElement(CreatureList))
+        if (Creature* target = Azgath::Containers::SelectRandomContainerElement(CreatureList))
             return target->ToUnit();
     }
 

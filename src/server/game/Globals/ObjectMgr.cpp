@@ -748,10 +748,10 @@ void ObjectMgr::LoadCreatureTemplateAddons()
         creatureAddon.meleeAnimKit              = fields[8].GetUInt16();
         creatureAddon.visibilityDistanceType    = VisibilityDistanceType(fields[9].GetUInt8());
 
-        for (std::string_view aura : Trinity::Tokenize(fields[10].GetStringView(), ' ', false))
+        for (std::string_view aura : Azgath::Tokenize(fields[10].GetStringView(), ' ', false))
         {
             SpellInfo const* spellInfo = nullptr;
-            if (Optional<uint32> spellId = Trinity::StringTo<uint32>(aura))
+            if (Optional<uint32> spellId = Azgath::StringTo<uint32>(aura))
                 spellInfo = sSpellMgr->GetSpellInfo(*spellId, DIFFICULTY_NONE);
 
             if (!spellInfo)
@@ -1317,10 +1317,10 @@ void ObjectMgr::LoadCreatureAddons()
         creatureAddon.meleeAnimKit              = fields[8].GetUInt16();
         creatureAddon.visibilityDistanceType    = VisibilityDistanceType(fields[9].GetUInt8());
 
-        for (std::string_view aura : Trinity::Tokenize(fields[10].GetStringView(), ' ', false))
+        for (std::string_view aura : Azgath::Tokenize(fields[10].GetStringView(), ' ', false))
         {
             SpellInfo const* spellInfo = nullptr;
-            if (Optional<uint32> spellId = Trinity::StringTo<uint32>(aura))
+            if (Optional<uint32> spellId = Azgath::StringTo<uint32>(aura))
                 spellInfo = sSpellMgr->GetSpellInfo(*spellId, DIFFICULTY_NONE);
 
             if (!spellInfo)
@@ -1495,7 +1495,7 @@ CreatureAddon const* ObjectMgr::GetCreatureTemplateAddon(uint32 entry) const
 
 CreatureMovementData const* ObjectMgr::GetCreatureMovementOverride(ObjectGuid::LowType spawnId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_creatureMovementOverrides, spawnId);
+    return Azgath::Containers::MapGetValuePtr(_creatureMovementOverrides, spawnId);
 }
 
 EquipmentInfo const* ObjectMgr::GetEquipmentInfo(uint32 entry, int8& id) const
@@ -1686,7 +1686,7 @@ CreatureModelInfo const* ObjectMgr::GetCreatureModelInfo(uint32 modelId) const
 
 CreatureSummonedData const* ObjectMgr::GetCreatureSummonedData(uint32 entryId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_creatureSummonedDataStore, entryId);
+    return Azgath::Containers::MapGetValuePtr(_creatureSummonedDataStore, entryId);
 }
 
 CreatureModel const* ObjectMgr::ChooseDisplayId(CreatureTemplate const* cinfo, CreatureData const* data /*= nullptr*/)
@@ -1888,7 +1888,7 @@ void ObjectMgr::LoadLinkedRespawn()
                 }
 
                 // they must have a possibility to meet (normal/heroic difficulty)
-                if (!Trinity::Containers::Intersects(master->spawnDifficulties.begin(), master->spawnDifficulties.end(), slave->spawnDifficulties.begin(), slave->spawnDifficulties.end()))
+                if (!Azgath::Containers::Intersects(master->spawnDifficulties.begin(), master->spawnDifficulties.end(), slave->spawnDifficulties.begin(), slave->spawnDifficulties.end()))
                 {
                     TC_LOG_ERROR("sql.sql", "LinkedRespawn: Creature '" UI64FMTD "' linking to Creature '" UI64FMTD "' with not corresponding spawnMask", guidLow, linkedGuidLow);
                     error = true;
@@ -1926,7 +1926,7 @@ void ObjectMgr::LoadLinkedRespawn()
                 }
 
                 // they must have a possibility to meet (normal/heroic difficulty)
-                if (!Trinity::Containers::Intersects(master->spawnDifficulties.begin(), master->spawnDifficulties.end(), slave->spawnDifficulties.begin(), slave->spawnDifficulties.end()))
+                if (!Azgath::Containers::Intersects(master->spawnDifficulties.begin(), master->spawnDifficulties.end(), slave->spawnDifficulties.begin(), slave->spawnDifficulties.end()))
                 {
                     TC_LOG_ERROR("sql.sql", "LinkedRespawn: Creature '" UI64FMTD "' linking to Gameobject '" UI64FMTD "' with not corresponding spawnMask", guidLow, linkedGuidLow);
                     error = true;
@@ -1964,7 +1964,7 @@ void ObjectMgr::LoadLinkedRespawn()
                 }
 
                 // they must have a possibility to meet (normal/heroic difficulty)
-                if (!Trinity::Containers::Intersects(master->spawnDifficulties.begin(), master->spawnDifficulties.end(), slave->spawnDifficulties.begin(), slave->spawnDifficulties.end()))
+                if (!Azgath::Containers::Intersects(master->spawnDifficulties.begin(), master->spawnDifficulties.end(), slave->spawnDifficulties.begin(), slave->spawnDifficulties.end()))
                 {
                     TC_LOG_ERROR("sql.sql", "LinkedRespawn: Gameobject '" UI64FMTD "' linking to Gameobject '" UI64FMTD "' with not corresponding spawnMask", guidLow, linkedGuidLow);
                     error = true;
@@ -2002,7 +2002,7 @@ void ObjectMgr::LoadLinkedRespawn()
                 }
 
                 // they must have a possibility to meet (normal/heroic difficulty)
-                if (!Trinity::Containers::Intersects(master->spawnDifficulties.begin(), master->spawnDifficulties.end(), slave->spawnDifficulties.begin(), slave->spawnDifficulties.end()))
+                if (!Azgath::Containers::Intersects(master->spawnDifficulties.begin(), master->spawnDifficulties.end(), slave->spawnDifficulties.begin(), slave->spawnDifficulties.end()))
                 {
                     TC_LOG_ERROR("sql.sql", "LinkedRespawn: Gameobject '" UI64FMTD "' linking to Creature '" UI64FMTD "' with not corresponding spawnMask", guidLow, linkedGuidLow);
                     error = true;
@@ -2057,7 +2057,7 @@ bool ObjectMgr::SetCreatureLinkedRespawn(ObjectGuid::LowType guidLow, ObjectGuid
     }
 
     // they must have a possibility to meet (normal/heroic difficulty)
-    if (!Trinity::Containers::Intersects(master->spawnDifficulties.begin(), master->spawnDifficulties.end(), slave->spawnDifficulties.begin(), slave->spawnDifficulties.end()))
+    if (!Azgath::Containers::Intersects(master->spawnDifficulties.begin(), master->spawnDifficulties.end(), slave->spawnDifficulties.begin(), slave->spawnDifficulties.end()))
     {
         TC_LOG_ERROR("sql.sql", "LinkedRespawn: Creature '" UI64FMTD "' linking to '" UI64FMTD "' with not corresponding spawnMask", guidLow, linkedGuidLow);
         return false;
@@ -2167,9 +2167,9 @@ inline std::vector<Difficulty> ParseSpawnDifficulties(std::string const& difficu
 {
     std::vector<Difficulty> difficulties;
     bool isTransportMap = sObjectMgr->IsTransportMap(mapId);
-    for (std::string_view token : Trinity::Tokenize(difficultyString, ',', false))
+    for (std::string_view token : Azgath::Tokenize(difficultyString, ',', false))
     {
-        Difficulty difficultyId = Difficulty(Trinity::StringTo<std::underlying_type_t<Difficulty>>(token).value_or(DIFFICULTY_NONE));
+        Difficulty difficultyId = Difficulty(Azgath::StringTo<std::underlying_type_t<Difficulty>>(token).value_or(DIFFICULTY_NONE));
         if (difficultyId && !sDifficultyStore.LookupEntry(difficultyId))
         {
             TC_LOG_ERROR("sql.sql", "Table `%s` has %s (GUID: " UI64FMTD ") with non invalid difficulty id %u, skipped.",
@@ -2276,7 +2276,7 @@ void ObjectMgr::LoadCreatures()
             {
                 if (vmgr->isMapLoadingEnabled() && !IsTransportMap(data.mapId))
                 {
-                    GridCoord gridCoord = Trinity::ComputeGridCoord(data.spawnPoint.GetPositionX(), data.spawnPoint.GetPositionY());
+                    GridCoord gridCoord = Azgath::ComputeGridCoord(data.spawnPoint.GetPositionX(), data.spawnPoint.GetPositionY());
                     int gx = (MAX_NUMBER_OF_GRIDS - 1) - gridCoord.x_coord;
                     int gy = (MAX_NUMBER_OF_GRIDS - 1) - gridCoord.y_coord;
 
@@ -2454,13 +2454,13 @@ void ObjectMgr::LoadCreatures()
 
 bool ObjectMgr::HasPersonalSpawns(uint32 mapid, Difficulty spawnMode, uint32 phaseId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_mapPersonalObjectGuidsStore, { mapid, spawnMode, phaseId }) != nullptr;
+    return Azgath::Containers::MapGetValuePtr(_mapPersonalObjectGuidsStore, { mapid, spawnMode, phaseId }) != nullptr;
 }
 
 CellObjectGuids const* ObjectMgr::GetCellPersonalObjectGuids(uint32 mapid, Difficulty spawnMode, uint32 phaseId, uint32 cell_id) const
 {
-    if (CellObjectGuidsMap const* guids = Trinity::Containers::MapGetValuePtr(_mapPersonalObjectGuidsStore, { mapid, spawnMode, phaseId }))
-        return Trinity::Containers::MapGetValuePtr(*guids, cell_id);
+    if (CellObjectGuidsMap const* guids = Azgath::Containers::MapGetValuePtr(_mapPersonalObjectGuidsStore, { mapid, spawnMode, phaseId }))
+        return Azgath::Containers::MapGetValuePtr(*guids, cell_id);
 
     return nullptr;
 }
@@ -2468,7 +2468,7 @@ CellObjectGuids const* ObjectMgr::GetCellPersonalObjectGuids(uint32 mapid, Diffi
 template<CellGuidSet CellObjectGuids::*guids>
 void ObjectMgr::AddSpawnDataToGrid(SpawnData const* data)
 {
-    uint32 cellId = Trinity::ComputeCellCoord(data->spawnPoint.GetPositionX(), data->spawnPoint.GetPositionY()).GetId();
+    uint32 cellId = Azgath::ComputeCellCoord(data->spawnPoint.GetPositionX(), data->spawnPoint.GetPositionY()).GetId();
     bool isPersonalPhase = PhasingHandler::IsPersonalPhase(data->phaseId);
     if (!isPersonalPhase)
     {
@@ -2485,7 +2485,7 @@ void ObjectMgr::AddSpawnDataToGrid(SpawnData const* data)
 template<CellGuidSet CellObjectGuids::*guids>
 void ObjectMgr::RemoveSpawnDataFromGrid(SpawnData const* data)
 {
-    uint32 cellId = Trinity::ComputeCellCoord(data->spawnPoint.GetPositionX(), data->spawnPoint.GetPositionY()).GetId();
+    uint32 cellId = Azgath::ComputeCellCoord(data->spawnPoint.GetPositionX(), data->spawnPoint.GetPositionY()).GetId();
     bool isPersonalPhase = PhasingHandler::IsPersonalPhase(data->phaseId);
     if (!isPersonalPhase)
     {
@@ -2597,7 +2597,7 @@ void ObjectMgr::LoadGameObjects()
             {
                 if (vmgr->isMapLoadingEnabled() && !IsTransportMap(data.mapId))
                 {
-                    GridCoord gridCoord = Trinity::ComputeGridCoord(data.spawnPoint.GetPositionX(), data.spawnPoint.GetPositionY());
+                    GridCoord gridCoord = Azgath::ComputeGridCoord(data.spawnPoint.GetPositionX(), data.spawnPoint.GetPositionY());
                     int gx = (MAX_NUMBER_OF_GRIDS - 1) - gridCoord.x_coord;
                     int gy = (MAX_NUMBER_OF_GRIDS - 1) - gridCoord.y_coord;
 
@@ -3381,7 +3381,7 @@ void ObjectMgr::LoadItemTemplates()
 
     // Load item effects (spells)
     for (ItemXItemEffectEntry const* effectEntry : sItemXItemEffectStore)
-        if (ItemTemplate* item = Trinity::Containers::MapGetValuePtr(_itemTemplateStore, effectEntry->ItemID))
+        if (ItemTemplate* item = Azgath::Containers::MapGetValuePtr(_itemTemplateStore, effectEntry->ItemID))
             if (ItemEffectEntry const* effect = sItemEffectStore.LookupEntry(effectEntry->ItemEffectID))
                 item->Effects.push_back(effect);
 
@@ -3455,7 +3455,7 @@ void ObjectMgr::LoadItemScriptNames()
 
 ItemTemplate const* ObjectMgr::GetItemTemplate(uint32 entry) const
 {
-    return Trinity::Containers::MapGetValuePtr(_itemTemplateStore, entry);
+    return Azgath::Containers::MapGetValuePtr(_itemTemplateStore, entry);
 }
 
 void ObjectMgr::LoadVehicleTemplateAccessories()
@@ -3749,7 +3749,7 @@ PetLevelInfo const* ObjectMgr::GetPetLevelInfo(uint32 creature_id, uint8 level) 
 
 void ObjectMgr::PlayerCreateInfoAddItemHelper(uint32 race_, uint32 class_, uint32 itemId, int32 count)
 {
-    std::unique_ptr<PlayerInfo>* playerInfo = Trinity::Containers::MapGetValuePtr(_playerInfo, { Races(race_), Classes(class_) });
+    std::unique_ptr<PlayerInfo>* playerInfo = Azgath::Containers::MapGetValuePtr(_playerInfo, { Races(race_), Classes(class_) });
     if (!playerInfo)
         return;
 
@@ -3918,7 +3918,7 @@ void ObjectMgr::LoadPlayerInfo()
             if (!characterLoadout->IsForNewCharacter())
                 continue;
 
-            std::vector<ItemTemplate const*> const* items = Trinity::Containers::MapGetValuePtr(itemsByCharacterLoadout, characterLoadout->ID);
+            std::vector<ItemTemplate const*> const* items = Azgath::Containers::MapGetValuePtr(itemsByCharacterLoadout, characterLoadout->ID);
             if (!items)
                 continue;
 
@@ -3927,7 +3927,7 @@ void ObjectMgr::LoadPlayerInfo()
                 if (!characterLoadout->RaceMask.HasRace(raceIndex))
                     continue;
 
-                if (auto const& playerInfo = Trinity::Containers::MapGetValuePtr(_playerInfo, { Races(raceIndex), Classes(characterLoadout->ChrClassID) }))
+                if (auto const& playerInfo = Azgath::Containers::MapGetValuePtr(_playerInfo, { Races(raceIndex), Classes(characterLoadout->ChrClassID) }))
                 {
                     playerInfo->get()->itemContext = ItemContext(characterLoadout->ItemContext);
 
@@ -4042,7 +4042,7 @@ void ObjectMgr::LoadPlayerInfo()
                     if (rcInfo->RaceMask.HasRace(raceIndex))
                         for (uint32 classIndex = CLASS_WARRIOR; classIndex < MAX_CLASSES; ++classIndex)
                             if (rcInfo->ClassMask == -1 || ((1 << (classIndex - 1)) & rcInfo->ClassMask))
-                                if (auto const& playerInfo = Trinity::Containers::MapGetValuePtr(_playerInfo, { Races(raceIndex), Classes(classIndex) }))
+                                if (auto const& playerInfo = Azgath::Containers::MapGetValuePtr(_playerInfo, { Races(raceIndex), Classes(classIndex) }))
                                     playerInfo->get()->skills.push_back(rcInfo);
 
         TC_LOG_INFO("server.loading", ">> Loaded player create skills in %u ms", GetMSTimeDiffToNow(oldMSTime));
@@ -4066,7 +4066,7 @@ void ObjectMgr::LoadPlayerInfo()
             do
             {
                 Field* fields = result->Fetch();
-                Trinity::RaceMask<uint64> raceMask = { fields[0].GetUInt64() };
+                Azgath::RaceMask<uint64> raceMask = { fields[0].GetUInt64() };
                 uint32 classMask = fields[1].GetUInt32();
                 uint32 spellId = fields[2].GetUInt32();
 
@@ -4090,7 +4090,7 @@ void ObjectMgr::LoadPlayerInfo()
                         {
                             if (classMask == 0 || ((1 << (classIndex - 1)) & classMask))
                             {
-                                if (auto const& playerInfo = Trinity::Containers::MapGetValuePtr(_playerInfo, { Races(raceIndex), Classes(classIndex) }))
+                                if (auto const& playerInfo = Azgath::Containers::MapGetValuePtr(_playerInfo, { Races(raceIndex), Classes(classIndex) }))
                                 {
                                     playerInfo->get()->customSpells.push_back(spellId);
                                     ++count;
@@ -4126,7 +4126,7 @@ void ObjectMgr::LoadPlayerInfo()
             do
             {
                 Field* fields       = result->Fetch();
-                Trinity::RaceMask<uint64> raceMask = { fields[0].GetUInt64() };
+                Azgath::RaceMask<uint64> raceMask = { fields[0].GetUInt64() };
                 uint32 classMask    = fields[1].GetUInt32();
                 uint32 spellId      = fields[2].GetUInt32();
                 int8 playerCreateMode = fields[3].GetInt8();
@@ -4157,7 +4157,7 @@ void ObjectMgr::LoadPlayerInfo()
                         {
                             if (classMask == 0 || ((1 << (classIndex - 1)) & classMask))
                             {
-                                if (auto const& playerInfo = Trinity::Containers::MapGetValuePtr(_playerInfo, { Races(raceIndex), Classes(classIndex) }))
+                                if (auto const& playerInfo = Azgath::Containers::MapGetValuePtr(_playerInfo, { Races(raceIndex), Classes(classIndex) }))
                                 {
                                     playerInfo->get()->castSpells[playerCreateMode].push_back(spellId);
                                     ++count;
@@ -4206,7 +4206,7 @@ void ObjectMgr::LoadPlayerInfo()
                     continue;
                 }
 
-                if (auto const& playerInfo = Trinity::Containers::MapGetValuePtr(_playerInfo, { Races(current_race), Classes(current_class) }))
+                if (auto const& playerInfo = Azgath::Containers::MapGetValuePtr(_playerInfo, { Races(current_race), Classes(current_class) }))
                     playerInfo->get()->action.push_back(PlayerCreateInfoAction(fields[2].GetUInt16(), fields[3].GetUInt32(), fields[4].GetUInt16()));
 
                 ++count;
@@ -4288,7 +4288,7 @@ void ObjectMgr::LoadPlayerInfo()
 
             for (std::size_t race = 0; race < raceStatModifiers.size(); ++race)
             {
-                if (auto const& playerInfo = Trinity::Containers::MapGetValuePtr(_playerInfo, { Races(race), Classes(current_class) }))
+                if (auto const& playerInfo = Azgath::Containers::MapGetValuePtr(_playerInfo, { Races(race), Classes(current_class) }))
                 {
                     if (!playerInfo->get()->levelInfo)
                         playerInfo->get()->levelInfo = std::make_unique<PlayerLevelInfo[]>(sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL));
@@ -4316,7 +4316,7 @@ void ObjectMgr::LoadPlayerInfo()
                 if (!sChrClassesStore.LookupEntry(class_))
                     continue;
 
-                auto const& playerInfo = Trinity::Containers::MapGetValuePtr(_playerInfo, { Races(race), Classes(class_) });
+                auto const& playerInfo = Azgath::Containers::MapGetValuePtr(_playerInfo, { Races(race), Classes(class_) });
                 if (!playerInfo)
                     continue;
 
@@ -4440,7 +4440,7 @@ void ObjectMgr::GetPlayerLevelInfo(uint32 race, uint32 class_, uint8 level, Play
     if (level < 1 || race >= MAX_RACES || class_ >= MAX_CLASSES)
         return;
 
-    auto const& pInfo = Trinity::Containers::MapGetValuePtr(_playerInfo, { Races(race), Classes(class_) });
+    auto const& pInfo = Azgath::Containers::MapGetValuePtr(_playerInfo, { Races(race), Classes(class_) });
     if (!pInfo)
         return;
 
@@ -4453,7 +4453,7 @@ void ObjectMgr::GetPlayerLevelInfo(uint32 race, uint32 class_, uint8 level, Play
 void ObjectMgr::BuildPlayerLevelInfo(uint8 race, uint8 _class, uint8 level, PlayerLevelInfo* info) const
 {
     // base data (last known level)
-    *info = ASSERT_NOTNULL(Trinity::Containers::MapGetValuePtr(_playerInfo, { Races(race), Classes(_class) }))->get()->levelInfo[sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL) - 1];
+    *info = ASSERT_NOTNULL(Azgath::Containers::MapGetValuePtr(_playerInfo, { Races(race), Classes(_class) }))->get()->levelInfo[sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL) - 1];
 
     // if conversion from uint32 to uint8 causes unexpected behaviour, change lvl to uint32
     for (uint8 lvl = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL) - 1; lvl < level; ++lvl)
@@ -5667,7 +5667,7 @@ void ObjectMgr::LoadScripts(ScriptsType type)
                     continue;
                 }
 
-                if (!Trinity::IsValidMapCoord(tmp.TeleportTo.DestX, tmp.TeleportTo.DestY, tmp.TeleportTo.DestZ, tmp.TeleportTo.Orientation))
+                if (!Azgath::IsValidMapCoord(tmp.TeleportTo.DestX, tmp.TeleportTo.DestY, tmp.TeleportTo.DestZ, tmp.TeleportTo.Orientation))
                 {
                     TC_LOG_ERROR("sql.sql", "Table `%s` has invalid coordinates (X: %f Y: %f Z: %f O: %f) in SCRIPT_COMMAND_TELEPORT_TO for script id %u",
                         tableName.c_str(), tmp.TeleportTo.DestX, tmp.TeleportTo.DestY, tmp.TeleportTo.DestZ, tmp.TeleportTo.Orientation, tmp.id);
@@ -5765,7 +5765,7 @@ void ObjectMgr::LoadScripts(ScriptsType type)
 
             case SCRIPT_COMMAND_TEMP_SUMMON_CREATURE:
             {
-                if (!Trinity::IsValidMapCoord(tmp.TempSummonCreature.PosX, tmp.TempSummonCreature.PosY, tmp.TempSummonCreature.PosZ, tmp.TempSummonCreature.Orientation))
+                if (!Azgath::IsValidMapCoord(tmp.TempSummonCreature.PosX, tmp.TempSummonCreature.PosY, tmp.TempSummonCreature.PosZ, tmp.TempSummonCreature.Orientation))
                 {
                     TC_LOG_ERROR("sql.sql", "Table `%s` has invalid coordinates (X: %f Y: %f Z: %f O: %f) in SCRIPT_COMMAND_TEMP_SUMMON_CREATURE for script id %u",
                         tableName.c_str(), tmp.TempSummonCreature.PosX, tmp.TempSummonCreature.PosY, tmp.TempSummonCreature.PosZ, tmp.TempSummonCreature.Orientation, tmp.id);
@@ -6651,7 +6651,7 @@ QuestGreeting const* ObjectMgr::GetQuestGreeting(TypeID type, uint32 id) const
     else
         return nullptr;
 
-    return Trinity::Containers::MapGetValuePtr(_questGreetingStore[typeIndex], id);
+    return Azgath::Containers::MapGetValuePtr(_questGreetingStore[typeIndex], id);
 }
 
 QuestGreetingLocale const* ObjectMgr::GetQuestGreetingLocale(TypeID type, uint32 id) const
@@ -6664,7 +6664,7 @@ QuestGreetingLocale const* ObjectMgr::GetQuestGreetingLocale(TypeID type, uint32
     else
         return nullptr;
 
-    return Trinity::Containers::MapGetValuePtr(_questGreetingLocaleStore[typeIndex], id);
+    return Azgath::Containers::MapGetValuePtr(_questGreetingLocaleStore[typeIndex], id);
 }
 
 void ObjectMgr::LoadQuestGreetings()
@@ -6898,7 +6898,7 @@ uint32 ObjectMgr::GetTaxiMountDisplayId(uint32 id, uint32 team, bool allowed_alt
 
 Quest const* ObjectMgr::GetQuestTemplate(uint32 quest_id) const
 {
-    return Trinity::Containers::MapGetValuePtr(_questTemplates, quest_id);
+    return Azgath::Containers::MapGetValuePtr(_questTemplates, quest_id);
 }
 
 void ObjectMgr::LoadGraveyardZones()
@@ -7151,10 +7151,10 @@ void ObjectMgr::LoadWorldSafeLocs()
 
 WorldSafeLocsEntry const* ObjectMgr::GetWorldSafeLoc(uint32 id) const
 {
-    return Trinity::Containers::MapGetValuePtr(_worldSafeLocs, id);
+    return Azgath::Containers::MapGetValuePtr(_worldSafeLocs, id);
 }
 
-Trinity::IteratorPair<std::unordered_map<uint32, WorldSafeLocsEntry>::const_iterator> ObjectMgr::GetWorldSafeLocs() const
+Azgath::IteratorPair<std::unordered_map<uint32, WorldSafeLocsEntry>::const_iterator> ObjectMgr::GetWorldSafeLocs() const
 {
     return std::make_pair(_worldSafeLocs.begin(), _worldSafeLocs.end());
 }
@@ -7169,7 +7169,7 @@ AreaTriggerStruct const* ObjectMgr::GetAreaTrigger(uint32 trigger) const
 
 AccessRequirement const* ObjectMgr::GetAccessRequirement(uint32 mapid, Difficulty difficulty) const
 {
-    return Trinity::Containers::MapGetValuePtr(_accessRequirementStore, MAKE_PAIR64(mapid, difficulty));
+    return Azgath::Containers::MapGetValuePtr(_accessRequirementStore, MAKE_PAIR64(mapid, difficulty));
 }
 
 bool ObjectMgr::AddGraveyardLink(uint32 id, uint32 zoneId, uint32 team, bool persist /*= true*/)
@@ -8397,7 +8397,7 @@ void ObjectMgr::LoadPointsOfInterest()
         pointOfInterest.Name            = fields[7].GetString();
         pointOfInterest.WMOGroupID      = fields[8].GetInt32();
 
-        if (!Trinity::IsValidMapCoord(pointOfInterest.Pos.GetPositionX(), pointOfInterest.Pos.GetPositionY(), pointOfInterest.Pos.GetPositionZ()))
+        if (!Azgath::IsValidMapCoord(pointOfInterest.Pos.GetPositionX(), pointOfInterest.Pos.GetPositionY(), pointOfInterest.Pos.GetPositionZ()))
         {
             TC_LOG_ERROR("sql.sql", "Table `points_of_interest` (ID: %u) have invalid coordinates (PositionX: %f PositionY: %f, PositionZ: %f), ignored.",
                 id, pointOfInterest.Pos.GetPositionX(), pointOfInterest.Pos.GetPositionY(), pointOfInterest.Pos.GetPositionZ());
@@ -8470,9 +8470,9 @@ void ObjectMgr::LoadQuestPOI()
         if (!GetQuestTemplate(questID))
             TC_LOG_ERROR("sql.sql", "`quest_poi` quest id (%u) Idx1 (%u) does not exist in `quest_template`", questID, idx1);
 
-        if (std::map<int32, std::vector<QuestPOIBlobPoint>>* blobs = Trinity::Containers::MapGetValuePtr(allPoints, questID))
+        if (std::map<int32, std::vector<QuestPOIBlobPoint>>* blobs = Azgath::Containers::MapGetValuePtr(allPoints, questID))
         {
-            if (std::vector<QuestPOIBlobPoint>* points = Trinity::Containers::MapGetValuePtr(*blobs, idx1))
+            if (std::vector<QuestPOIBlobPoint>* points = Azgath::Containers::MapGetValuePtr(*blobs, idx1))
             {
                 QuestPOIData& poiData = _questPOIStore[questID];
                 poiData.QuestID = questID;
@@ -9300,7 +9300,7 @@ void ObjectMgr::LoadMailLevelRewards()
         Field* fields = result->Fetch();
 
         uint8 level           = fields[0].GetUInt8();
-        Trinity::RaceMask<uint64> raceMask = { fields[1].GetUInt64() };
+        Azgath::RaceMask<uint64> raceMask = { fields[1].GetUInt64() };
         uint32 mailTemplateId = fields[2].GetUInt32();
         uint32 senderEntry    = fields[3].GetUInt32();
 
@@ -9437,7 +9437,7 @@ void ObjectMgr::LoadTrainers()
             if (!IsValidLocale(locale) || locale == LOCALE_enUS)
                 continue;
 
-            if (Trainer::Trainer* trainer = Trinity::Containers::MapGetValuePtr(_trainers, trainerId))
+            if (Trainer::Trainer* trainer = Azgath::Containers::MapGetValuePtr(_trainers, trainerId))
                 trainer->AddGreetingLocale(locale, fields[2].GetString());
             else
                 TC_LOG_ERROR("sql.sql", "Table `trainer_locale` references non-existing trainer (TrainerId: %u) for locale %s, ignoring",
@@ -9480,7 +9480,7 @@ void ObjectMgr::LoadCreatureTrainers()
 
             if (gossipMenuId || gossipOptionId)
             {
-                Trinity::IteratorPair<GossipMenuItemsContainer::const_iterator> gossipMenuItems = GetGossipMenuItemsMapBounds(gossipMenuId);
+                Azgath::IteratorPair<GossipMenuItemsContainer::const_iterator> gossipMenuItems = GetGossipMenuItemsMapBounds(gossipMenuId);
                 auto gossipOptionItr = std::find_if(gossipMenuItems.begin(), gossipMenuItems.end(), [gossipOptionId](std::pair<uint32 const, GossipMenuItems> const& entry)
                 {
                     return entry.second.OrderIndex == gossipOptionId;
@@ -9531,8 +9531,8 @@ uint32 ObjectMgr::LoadReferenceVendor(int32 vendor, int32 item, std::set<uint32>
             vItem.PlayerConditionId = fields[6].GetUInt32();
             vItem.IgnoreFiltering   = fields[7].GetBool();
 
-            for (std::string_view token : Trinity::Tokenize(fields[5].GetStringView(), ' ', false))
-                if (Optional<int32> bonusListID = Trinity::StringTo<int32>(token))
+            for (std::string_view token : Azgath::Tokenize(fields[5].GetStringView(), ' ', false))
+                if (Optional<int32> bonusListID = Azgath::StringTo<int32>(token))
                     vItem.BonusListIDs.push_back(*bonusListID);
 
             if (!IsVendorItemValid(vendor, vItem, nullptr, skip_vendors))
@@ -9588,8 +9588,8 @@ void ObjectMgr::LoadVendors()
             vItem.PlayerConditionId = fields[7].GetUInt32();
             vItem.IgnoreFiltering   = fields[8].GetBool();
 
-            for (std::string_view token : Trinity::Tokenize(fields[6].GetStringView(), ' ', false))
-                if (Optional<int32> bonusListID = Trinity::StringTo<int32>(token))
+            for (std::string_view token : Azgath::Tokenize(fields[6].GetStringView(), ' ', false))
+                if (Optional<int32> bonusListID = Azgath::StringTo<int32>(token))
                     vItem.BonusListIDs.push_back(*bonusListID);
 
             if (!IsVendorItemValid(entry, vItem, nullptr, &skip_vendors))
@@ -9743,7 +9743,7 @@ void ObjectMgr::LoadGossipMenuItems()
                 gMenuItem.GossipNpcOptionID.reset();
             }
         }
-        else if (int32 const* npcOptionId = Trinity::Containers::MapGetValuePtr(optionToNpcOption, gMenuItem.GossipOptionID))
+        else if (int32 const* npcOptionId = Azgath::Containers::MapGetValuePtr(optionToNpcOption, gMenuItem.GossipOptionID))
             gMenuItem.GossipNpcOptionID = *npcOptionId;
 
         if (gMenuItem.BoxBroadcastTextID)
@@ -9816,7 +9816,7 @@ void ObjectMgr::LoadGossipMenuAddon()
 
 Trainer::Trainer const* ObjectMgr::GetTrainer(uint32 trainerId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_trainers, trainerId);
+    return Azgath::Containers::MapGetValuePtr(_trainers, trainerId);
 }
 
 uint32 ObjectMgr::GetCreatureTrainerForGossipOption(uint32 creatureId, uint32 gossipMenuId, uint32 gossipOptionId) const
@@ -10515,7 +10515,7 @@ void ObjectMgr::LoadAreaPhases()
                 if (!parentAreaId)
                     break;
 
-                if (std::vector<PhaseAreaInfo>* parentAreaPhases = Trinity::Containers::MapGetValuePtr(_phaseInfoByArea, parentAreaId))
+                if (std::vector<PhaseAreaInfo>* parentAreaPhases = Azgath::Containers::MapGetValuePtr(_phaseInfoByArea, parentAreaId))
                     for (PhaseAreaInfo& parentAreaPhase : *parentAreaPhases)
                         if (parentAreaPhase.PhaseInfo->Id == phase.PhaseInfo->Id)
                             parentAreaPhase.SubAreaExclusions.insert(itr->first);
@@ -10537,22 +10537,22 @@ bool PhaseInfoStruct::IsAllowedInArea(uint32 areaId) const
 
 PhaseInfoStruct const* ObjectMgr::GetPhaseInfo(uint32 phaseId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_phaseInfoById, phaseId);
+    return Azgath::Containers::MapGetValuePtr(_phaseInfoById, phaseId);
 }
 
 std::vector<PhaseAreaInfo> const* ObjectMgr::GetPhasesForArea(uint32 areaId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_phaseInfoByArea, areaId);
+    return Azgath::Containers::MapGetValuePtr(_phaseInfoByArea, areaId);
 }
 
 TerrainSwapInfo const* ObjectMgr::GetTerrainSwapInfo(uint32 terrainSwapId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_terrainSwapInfoById, terrainSwapId);
+    return Azgath::Containers::MapGetValuePtr(_terrainSwapInfoById, terrainSwapId);
 }
 
 GameObjectTemplate const* ObjectMgr::GetGameObjectTemplate(uint32 entry) const
 {
-    return Trinity::Containers::MapGetValuePtr(_gameObjectTemplateStore, entry);
+    return Azgath::Containers::MapGetValuePtr(_gameObjectTemplateStore, entry);
 }
 
 GameObjectTemplateAddon const* ObjectMgr::GetGameObjectTemplateAddon(uint32 entry) const
@@ -10566,22 +10566,22 @@ GameObjectTemplateAddon const* ObjectMgr::GetGameObjectTemplateAddon(uint32 entr
 
 GameObjectOverride const* ObjectMgr::GetGameObjectOverride(ObjectGuid::LowType spawnId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_gameObjectOverrideStore, spawnId);
+    return Azgath::Containers::MapGetValuePtr(_gameObjectOverrideStore, spawnId);
 }
 
 CreatureTemplate const* ObjectMgr::GetCreatureTemplate(uint32 entry) const
 {
-    return Trinity::Containers::MapGetValuePtr(_creatureTemplateStore, entry);
+    return Azgath::Containers::MapGetValuePtr(_creatureTemplateStore, entry);
 }
 
 QuestPOIData const* ObjectMgr::GetQuestPOIData(int32 questId)
 {
-    return Trinity::Containers::MapGetValuePtr(_questPOIStore, questId);
+    return Azgath::Containers::MapGetValuePtr(_questPOIStore, questId);
 }
 
 VehicleTemplate const* ObjectMgr::GetVehicleTemplate(Vehicle* veh) const
 {
-    return Trinity::Containers::MapGetValuePtr(_vehicleTemplateStore, veh->GetCreatureEntry());
+    return Azgath::Containers::MapGetValuePtr(_vehicleTemplateStore, veh->GetCreatureEntry());
 }
 
 VehicleAccessoryList const* ObjectMgr::GetVehicleAccessoryList(Vehicle* veh) const
@@ -10615,7 +10615,7 @@ PlayerInfo const* ObjectMgr::GetPlayerInfo(uint32 race, uint32 class_) const
         return nullptr;
     if (class_ >= MAX_CLASSES)
         return nullptr;
-    auto const& info = Trinity::Containers::MapGetValuePtr(_playerInfo, { Races(race), Classes(class_) });
+    auto const& info = Azgath::Containers::MapGetValuePtr(_playerInfo, { Races(race), Classes(class_) });
     if (!info)
         return nullptr;
     return info->get();
@@ -10839,12 +10839,12 @@ ClassAvailability const* ObjectMgr::GetClassExpansionRequirementFallback(uint8 c
 
 PlayerChoice const* ObjectMgr::GetPlayerChoice(int32 choiceId) const
 {
-    return Trinity::Containers::MapGetValuePtr(_playerChoices, choiceId);
+    return Azgath::Containers::MapGetValuePtr(_playerChoices, choiceId);
 }
 
 JumpChargeParams const* ObjectMgr::GetJumpChargeParams(int32 id) const
 {
-    return Trinity::Containers::MapGetValuePtr(_jumpChargeParams, id);
+    return Azgath::Containers::MapGetValuePtr(_jumpChargeParams, id);
 }
 
 void ObjectMgr::LoadGameObjectQuestItems()
@@ -10948,7 +10948,7 @@ void ObjectMgr::InitializeQueriesData(QueryDataGroup mask)
         return;
     }
 
-    Trinity::ThreadPool pool;
+    Azgath::ThreadPool pool;
 
     // Initialize Query data for creatures
     if (mask & QUERY_DATA_CREATURES)
@@ -11067,7 +11067,7 @@ void ObjectMgr::LoadPlayerChoices()
             int32 choiceId      = fields[0].GetInt32();
             int32 responseId    = fields[1].GetInt32();
 
-            PlayerChoice* choice = Trinity::Containers::MapGetValuePtr(_playerChoices, choiceId);
+            PlayerChoice* choice = Azgath::Containers::MapGetValuePtr(_playerChoices, choiceId);
             if (!choice)
             {
                 TC_LOG_ERROR("sql.sql", "Table `playerchoice_response` references non-existing ChoiceId: %d (ResponseId: %d), skipped", choiceId, responseId);
@@ -11109,7 +11109,7 @@ void ObjectMgr::LoadPlayerChoices()
             int32 choiceId      = fields[0].GetInt32();
             int32 responseId    = fields[1].GetInt32();
 
-            PlayerChoice* choice = Trinity::Containers::MapGetValuePtr(_playerChoices, choiceId);
+            PlayerChoice* choice = Azgath::Containers::MapGetValuePtr(_playerChoices, choiceId);
             if (!choice)
             {
                 TC_LOG_ERROR("sql.sql", "Table `playerchoice_response_reward` references non-existing ChoiceId: %d (ResponseId: %d), skipped", choiceId, responseId);
@@ -11170,12 +11170,12 @@ void ObjectMgr::LoadPlayerChoices()
             int32 responseId = fields[1].GetInt32();
             uint32 itemId = fields[2].GetUInt32();
             std::vector<int32> bonusListIds;
-            for (std::string_view token : Trinity::Tokenize(fields[3].GetStringView(), ' ', false))
-                if (Optional<int32> bonusListID = Trinity::StringTo<int32>(token))
+            for (std::string_view token : Azgath::Tokenize(fields[3].GetStringView(), ' ', false))
+                if (Optional<int32> bonusListID = Azgath::StringTo<int32>(token))
                     bonusListIds.push_back(*bonusListID);
             int32 quantity = fields[4].GetInt32();
 
-            PlayerChoice* choice = Trinity::Containers::MapGetValuePtr(_playerChoices, choiceId);
+            PlayerChoice* choice = Azgath::Containers::MapGetValuePtr(_playerChoices, choiceId);
             if (!choice)
             {
                 TC_LOG_ERROR("sql.sql", "Table `playerchoice_response_reward_item` references non-existing ChoiceId: %d (ResponseId: %d), skipped", choiceId, responseId);
@@ -11221,7 +11221,7 @@ void ObjectMgr::LoadPlayerChoices()
             uint32 currencyId = fields[2].GetUInt32();
             int32 quantity = fields[3].GetInt32();
 
-            PlayerChoice* choice = Trinity::Containers::MapGetValuePtr(_playerChoices, choiceId);
+            PlayerChoice* choice = Azgath::Containers::MapGetValuePtr(_playerChoices, choiceId);
             if (!choice)
             {
                 TC_LOG_ERROR("sql.sql", "Table `playerchoice_response_reward_currency` references non-existing ChoiceId: %d (ResponseId: %d), skipped", choiceId, responseId);
@@ -11267,7 +11267,7 @@ void ObjectMgr::LoadPlayerChoices()
             uint32 factionId = fields[2].GetUInt32();
             int32 quantity = fields[3].GetInt32();
 
-            PlayerChoice* choice = Trinity::Containers::MapGetValuePtr(_playerChoices, choiceId);
+            PlayerChoice* choice = Azgath::Containers::MapGetValuePtr(_playerChoices, choiceId);
             if (!choice)
             {
                 TC_LOG_ERROR("sql.sql", "Table `playerchoice_response_reward_faction` references non-existing ChoiceId: %d (ResponseId: %d), skipped", choiceId, responseId);
@@ -11312,12 +11312,12 @@ void ObjectMgr::LoadPlayerChoices()
             int32 responseId = fields[1].GetInt32();
             uint32 itemId = fields[2].GetUInt32();
             std::vector<int32> bonusListIds;
-            for (std::string_view token : Trinity::Tokenize(fields[3].GetStringView(), ' ', false))
-                if (Optional<int32> bonusListID = Trinity::StringTo<int32>(token))
+            for (std::string_view token : Azgath::Tokenize(fields[3].GetStringView(), ' ', false))
+                if (Optional<int32> bonusListID = Azgath::StringTo<int32>(token))
                     bonusListIds.push_back(*bonusListID);
             int32 quantity = fields[4].GetInt32();
 
-            PlayerChoice* choice = Trinity::Containers::MapGetValuePtr(_playerChoices, choiceId);
+            PlayerChoice* choice = Azgath::Containers::MapGetValuePtr(_playerChoices, choiceId);
             if (!choice)
             {
                 TC_LOG_ERROR("sql.sql", "Table `playerchoice_response_reward_item_choice` references non-existing ChoiceId: %d (ResponseId: %d), skipped", choiceId, responseId);
@@ -11360,7 +11360,7 @@ void ObjectMgr::LoadPlayerChoices()
             int32 choiceId = fields[0].GetInt32();
             int32 responseId = fields[1].GetInt32();
 
-            PlayerChoice* choice = Trinity::Containers::MapGetValuePtr(_playerChoices, choiceId);
+            PlayerChoice* choice = Azgath::Containers::MapGetValuePtr(_playerChoices, choiceId);
             if (!choice)
             {
                 TC_LOG_ERROR("sql.sql", "Table `playerchoice_response_maw_power` references non-existing ChoiceId: %d (ResponseId: %d), skipped", choiceId, responseId);

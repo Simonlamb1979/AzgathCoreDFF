@@ -198,7 +198,7 @@ public:
                 return go->isSpawned() || !go->HasFlag(GO_FLAG_INTERACT_COND);
             });
 
-            tubbersInRange.sort(Trinity::ObjectDistanceOrderPred(me));
+            tubbersInRange.sort(Azgath::ObjectDistanceOrderPred(me));
 
             GameObject* nearestTubber = tubbersInRange.front();
             if (!nearestTubber)

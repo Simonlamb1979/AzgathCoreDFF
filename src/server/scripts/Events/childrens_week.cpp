@@ -1056,7 +1056,7 @@ class npc_cw_area_trigger : public CreatureScript
                                                         EMOTE_ONESHOT_SALUTE,
                                                         EMOTE_ONESHOT_DANCE
                                                     };
-                                                samuro->HandleEmoteCommand(Trinity::Containers::SelectRandomContainerElement(emotes));
+                                                samuro->HandleEmoteCommand(Azgath::Containers::SelectRandomContainerElement(emotes));
                                             }
                                     }
                                     break;

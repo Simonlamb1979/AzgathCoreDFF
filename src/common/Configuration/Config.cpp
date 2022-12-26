@@ -223,7 +223,7 @@ T ConfigMgr::GetValueDefault(std::string const& name, T def, bool quiet) const
         Optional<std::string> envVar = EnvVarForIniKey(name);
         if (envVar)
         {
-            Optional<T> castedVar = Trinity::StringTo<T>(*envVar);
+            Optional<T> castedVar = Azgath::StringTo<T>(*envVar);
             if (!castedVar)
             {
                 TC_LOG_ERROR("server.loading", "Bad value defined for name %s in environment variables, going to use default instead", name.c_str());
@@ -293,7 +293,7 @@ bool ConfigMgr::GetBoolDefault(std::string const& name, bool def, bool quiet) co
 {
     std::string val = GetValueDefault(name, std::string(def ? "1" : "0"), quiet);
     val.erase(std::remove(val.begin(), val.end(), '"'), val.end());
-    Optional<bool> boolVal = Trinity::StringTo<bool>(val);
+    Optional<bool> boolVal = Azgath::StringTo<bool>(val);
     if (boolVal)
         return *boolVal;
     else

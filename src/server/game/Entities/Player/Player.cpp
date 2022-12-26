@@ -490,7 +490,7 @@ bool Player::Create(ObjectGuid::LowType guidlow, WorldPackets::Character::Charac
 
     SetWatchedFactionIndex(-1);
 
-    SetCustomizations(Trinity::Containers::MakeIteratorPair(createInfo->Customizations.begin(), createInfo->Customizations.end()));
+    SetCustomizations(Azgath::Containers::MakeIteratorPair(createInfo->Customizations.begin(), createInfo->Customizations.end()));
     SetRestState(REST_TYPE_XP, (GetSession()->IsARecruiter() || GetSession()->GetRecruiterId() != 0) ? REST_STATE_RAF_LINKED : REST_STATE_NOT_RAF_LINKED);
     SetRestState(REST_TYPE_HONOR, REST_STATE_NOT_RAF_LINKED);
     SetNativeGender(Gender(createInfo->Sex));
@@ -2794,13 +2794,13 @@ void Player::AddStoredAuraTeleportLocation(uint32 spellId)
 
 void Player::RemoveStoredAuraTeleportLocation(uint32 spellId)
 {
-    if (StoredAuraTeleportLocation* storedLocation = Trinity::Containers::MapGetValuePtr(m_storedAuraTeleportLocations, spellId))
+    if (StoredAuraTeleportLocation* storedLocation = Azgath::Containers::MapGetValuePtr(m_storedAuraTeleportLocations, spellId))
         storedLocation->State = StoredAuraTeleportLocation::DELETED;
 }
 
 WorldLocation const* Player::GetStoredAuraTeleportLocation(uint32 spellId) const
 {
-    if (StoredAuraTeleportLocation const* auraLocation = Trinity::Containers::MapGetValuePtr(m_storedAuraTeleportLocations, spellId))
+    if (StoredAuraTeleportLocation const* auraLocation = Azgath::Containers::MapGetValuePtr(m_storedAuraTeleportLocations, spellId))
         return &auraLocation->Loc;
 
     return nullptr;
@@ -3900,7 +3900,7 @@ void Player::DeleteFromDB(ObjectGuid playerguid, uint32 accountId, bool updateRe
                     {
                         Field* fields = resultItems->Fetch();
                         uint32 mailId = fields[44].GetUInt32();
-                        if (Item* mailItem = _LoadMailedItem(playerguid, nullptr, mailId, nullptr, fields, Trinity::Containers::MapGetValuePtr(additionalData, fields[0].GetUInt64())))
+                        if (Item* mailItem = _LoadMailedItem(playerguid, nullptr, mailId, nullptr, fields, Azgath::Containers::MapGetValuePtr(additionalData, fields[0].GetUInt64())))
                             itemsByMail[mailId].push_back(mailItem);
 
                     } while (resultItems->NextRow());
@@ -4535,7 +4535,7 @@ Corpse* Player::CreateCorpse()
     corpse->SetRace(GetRace());
     corpse->SetSex(GetNativeGender());
     corpse->SetClass(GetClass());
-    corpse->SetCustomizations(Trinity::Containers::MakeIteratorPair(m_playerData->Customizations.begin(), m_playerData->Customizations.end()));
+    corpse->SetCustomizations(Azgath::Containers::MakeIteratorPair(m_playerData->Customizations.begin(), m_playerData->Customizations.end()));
     corpse->ReplaceAllFlags(flags);
     corpse->SetDisplayId(GetNativeDisplayId());
     corpse->SetFactionTemplate(sChrRacesStore.AssertEntry(GetRace())->FactionID);
@@ -6216,8 +6216,8 @@ void Player::SendMessageToSetInRange(WorldPacket const* data, float dist, bool s
     if (self)
         SendDirectMessage(data);
 
-    Trinity::PacketSenderRef sender(data);
-    Trinity::MessageDistDeliverer<Trinity::PacketSenderRef> notifier(this, sender, dist);
+    Azgath::PacketSenderRef sender(data);
+    Azgath::MessageDistDeliverer<Azgath::PacketSenderRef> notifier(this, sender, dist);
     Cell::VisitWorldObjects(this, notifier, dist);
 }
 
@@ -6226,8 +6226,8 @@ void Player::SendMessageToSetInRange(WorldPacket const* data, float dist, bool s
     if (self)
         SendDirectMessage(data);
 
-    Trinity::PacketSenderRef sender(data);
-    Trinity::MessageDistDeliverer<Trinity::PacketSenderRef> notifier(this, sender, dist, own_team_only);
+    Azgath::PacketSenderRef sender(data);
+    Azgath::MessageDistDeliverer<Azgath::PacketSenderRef> notifier(this, sender, dist, own_team_only);
     Cell::VisitWorldObjects(this, notifier, dist);
 }
 
@@ -6238,8 +6238,8 @@ void Player::SendMessageToSet(WorldPacket const* data, Player const* skipped_rcv
 
     // we use World::GetMaxVisibleDistance() because i cannot see why not use a distance
     // update: replaced by GetMap()->GetVisibilityDistance()
-    Trinity::PacketSenderRef sender(data);
-    Trinity::MessageDistDeliverer<Trinity::PacketSenderRef> notifier(this, sender, GetVisibilityRange(), false, skipped_rcvr);
+    Azgath::PacketSenderRef sender(data);
+    Azgath::MessageDistDeliverer<Azgath::PacketSenderRef> notifier(this, sender, GetVisibilityRange(), false, skipped_rcvr);
     Cell::VisitWorldObjects(this, notifier, GetVisibilityRange());
 }
 
@@ -6438,7 +6438,7 @@ int32 Player::CalculateReputationGain(ReputationSource source, uint32 creatureOr
             break;
     }
 
-    if (rate != 1.0f && creatureOrQuestLevel < Trinity::XP::GetGrayLevel(GetLevel()))
+    if (rate != 1.0f && creatureOrQuestLevel < Azgath::XP::GetGrayLevel(GetLevel()))
         percent *= rate;
 
     if (percent <= 0.0f)
@@ -6664,7 +6664,7 @@ bool Player::RewardHonor(Unit* victim, uint32 groupsize, int32 honor, bool pvpto
                 return false;
 
             uint8 k_level = GetLevel();
-            uint8 k_grey = Trinity::XP::GetGrayLevel(k_level);
+            uint8 k_grey = Azgath::XP::GetGrayLevel(k_level);
             uint8 v_level = victim->GetLevelForTarget(this);
 
             if (v_level <= k_grey)
@@ -6692,7 +6692,7 @@ bool Player::RewardHonor(Unit* victim, uint32 groupsize, int32 honor, bool pvpto
             else
                 victim_guid.Clear();                     // Don't show HK: <rank> message, only log.
 
-            honor_f = std::ceil(Trinity::Honor::hk_honor_at_level_f(k_level) * (v_level - k_grey) / (k_level - k_grey));
+            honor_f = std::ceil(Azgath::Honor::hk_honor_at_level_f(k_level) * (v_level - k_grey) / (k_level - k_grey));
 
             // count the number of playerkills in one day
             ApplyModUpdateFieldValue(m_values.ModifyValue(&Player::m_activePlayerData).ModifyValue(&UF::ActivePlayerData::TodayHonorableKills), 1, true);
@@ -13700,7 +13700,7 @@ void Player::PrepareGossipMenu(WorldObject* source, uint32 menuId, bool showQues
 
     menu->GetGossipMenu().SetMenuId(menuId);
 
-    Trinity::IteratorPair menuItemBounds = sObjectMgr->GetGossipMenuItemsMapBounds(menuId);
+    Azgath::IteratorPair menuItemBounds = sObjectMgr->GetGossipMenuItemsMapBounds(menuId);
 
     if (source->GetTypeId() == TYPEID_UNIT)
     {
@@ -14763,7 +14763,7 @@ void Player::CompleteQuest(uint32 quest_id)
     {
         SetQuestStatus(quest_id, QUEST_STATUS_COMPLETE);
 
-        if (QuestStatusData const* questStatus = Trinity::Containers::MapGetValuePtr(m_QuestStatus, quest_id))
+        if (QuestStatusData const* questStatus = Azgath::Containers::MapGetValuePtr(m_QuestStatus, quest_id))
             SetQuestSlotState(questStatus->Slot, QUEST_STATE_COMPLETE);
 
         if (Quest const* qInfo = sObjectMgr->GetQuestTemplate(quest_id))
@@ -16154,7 +16154,7 @@ void Player::AreaExploredOrEventHappens(uint32 questId)
 {
     if (questId)
     {
-        if (QuestStatusData* status = Trinity::Containers::MapGetValuePtr(m_QuestStatus, questId))
+        if (QuestStatusData* status = Azgath::Containers::MapGetValuePtr(m_QuestStatus, questId))
         {
             // Dont complete failed quest
             if (!status->Explored && status->Status != QUEST_STATUS_FAILED)
@@ -16195,7 +16195,7 @@ void Player::ItemAddedQuestCheck(uint32 entry, uint32 count)
 
 void Player::ItemRemovedQuestCheck(uint32 entry, uint32 /*count*/)
 {
-    for (QuestObjectiveStatusMap::value_type const& objectiveItr : Trinity::Containers::MapEqualRange(m_questObjectiveStatus, { QUEST_OBJECTIVE_ITEM, entry }))
+    for (QuestObjectiveStatusMap::value_type const& objectiveItr : Azgath::Containers::MapEqualRange(m_questObjectiveStatus, { QUEST_OBJECTIVE_ITEM, entry }))
     {
         uint32 questId = objectiveItr.second.QuestStatusItr->first;
         Quest const* quest = sObjectMgr->GetQuestTemplate(questId);
@@ -16289,7 +16289,7 @@ void Player::UpdateQuestObjectiveProgress(QuestObjectiveType objectiveType, int3
 {
     bool anyObjectiveChangedCompletionState = false;
 
-    for (QuestObjectiveStatusMap::value_type const& objectiveItr : Trinity::Containers::MapEqualRange(m_questObjectiveStatus, { objectiveType, objectId }))
+    for (QuestObjectiveStatusMap::value_type const& objectiveItr : Azgath::Containers::MapEqualRange(m_questObjectiveStatus, { objectiveType, objectId }))
     {
         uint32 questId = objectiveItr.second.QuestStatusItr->first;
         Quest const* quest = sObjectMgr->GetQuestTemplate(questId);
@@ -16408,7 +16408,7 @@ void Player::UpdateQuestObjectiveProgress(QuestObjectiveType objectiveType, int3
 bool Player::HasQuestForItem(uint32 itemid) const
 {
     // Search incomplete objective first
-    for (QuestObjectiveStatusMap::value_type const& objectiveItr : Trinity::Containers::MapEqualRange(m_questObjectiveStatus, { QUEST_OBJECTIVE_ITEM, itemid }))
+    for (QuestObjectiveStatusMap::value_type const& objectiveItr : Azgath::Containers::MapEqualRange(m_questObjectiveStatus, { QUEST_OBJECTIVE_ITEM, itemid }))
     {
         Quest const* qInfo = ASSERT_NOTNULL(sObjectMgr->GetQuestTemplate(objectiveItr.second.QuestStatusItr->first));
         QuestObjective const& objective = *objectiveItr.second.Objective;
@@ -17273,15 +17273,15 @@ bool Player::LoadFromDB(ObjectGuid guid, CharacterDatabaseQueryHolder const& hol
     SetLevel(fields.level, false);
     SetXP(fields.xp);
 
-    std::vector<std::string_view> exploredZones = Trinity::Tokenize(fields.exploredZones, ' ', false);
+    std::vector<std::string_view> exploredZones = Azgath::Tokenize(fields.exploredZones, ' ', false);
     for (std::size_t i = 0; i < exploredZones.size() && i / 2 < PLAYER_EXPLORED_ZONES_SIZE; ++i)
         SetUpdateFieldFlagValue(m_values.ModifyValue(&Player::m_activePlayerData).ModifyValue(&UF::ActivePlayerData::ExploredZones, i / 2),
-            Trinity::StringTo<uint64>(exploredZones[i]).value_or(UI64LIT(0)) << (32 * (i % 2)));
+            Azgath::StringTo<uint64>(exploredZones[i]).value_or(UI64LIT(0)) << (32 * (i % 2)));
 
-    std::vector<std::string_view> knownTitles = Trinity::Tokenize(fields.knownTitles, ' ', false);
+    std::vector<std::string_view> knownTitles = Azgath::Tokenize(fields.knownTitles, ' ', false);
     for (std::size_t i = 0; i < knownTitles.size(); ++i)
         SetUpdateFieldFlagValue(m_values.ModifyValue(&Player::m_activePlayerData).ModifyValue(&UF::ActivePlayerData::KnownTitles, i / 2),
-            Trinity::StringTo<uint64>(knownTitles[i]).value_or(UI64LIT(0)) << (32 * (i % 2)));
+            Azgath::StringTo<uint64>(knownTitles[i]).value_or(UI64LIT(0)) << (32 * (i % 2)));
 
     SetObjectScale(1.0f);
     SetHoverHeight(1.0f);
@@ -17306,7 +17306,7 @@ bool Player::LoadFromDB(ObjectGuid guid, CharacterDatabaseQueryHolder const& hol
         } while (customizationsResult->NextRow());
     }
 
-    SetCustomizations(Trinity::Containers::MakeIteratorPair(customizations.begin(), customizations.end()), false);
+    SetCustomizations(Azgath::Containers::MakeIteratorPair(customizations.begin(), customizations.end()), false);
     SetInventorySlotCount(fields.inventorySlots);
     SetBankBagSlotCount(fields.bankSlots);
     SetNativeGender(fields.gender);
@@ -17459,7 +17459,7 @@ bool Player::LoadFromDB(ObjectGuid guid, CharacterDatabaseQueryHolder const& hol
             m_movementInfo.transport.pos.Relocate(x, y, z, o);
             transport->CalculatePassengerPosition(x, y, z, &o);
 
-            if (!Trinity::IsValidMapCoord(x, y, z, o) ||
+            if (!Azgath::IsValidMapCoord(x, y, z, o) ||
                 // transport size limited
                 std::fabs(m_movementInfo.transport.pos.GetPositionX()) > 250.0f ||
                 std::fabs(m_movementInfo.transport.pos.GetPositionY()) > 250.0f ||
@@ -18253,7 +18253,7 @@ void Player::_LoadInventory(PreparedQueryResult result, PreparedQueryResult arti
             Field* fields = result->Fetch();
             if (Item* item = _LoadItem(trans, zoneId, timeDiff, fields))
             {
-                if (ItemAdditionalLoadInfo* addionalDataPtr = Trinity::Containers::MapGetValuePtr(additionalData, fields[0].GetUInt64()))
+                if (ItemAdditionalLoadInfo* addionalDataPtr = Azgath::Containers::MapGetValuePtr(additionalData, fields[0].GetUInt64()))
                 {
                     if (item->GetTemplate()->GetArtifactID() && addionalDataPtr->Artifact)
                         item->LoadArtifactData(this, addionalDataPtr->Artifact->Xp, addionalDataPtr->Artifact->ArtifactAppearanceId,
@@ -18416,8 +18416,8 @@ void Player::_LoadVoidStorage(PreparedQueryResult result)
         uint32 artifactKnowledgeLevel = fields[6].GetUInt32();
         ItemContext context = ItemContext(fields[7].GetUInt8());
         std::vector<int32> bonusListIDs;
-        for (std::string_view bonusListIDtoken : Trinity::Tokenize(fields[8].GetStringView(), ' ', false))
-            if (Optional<int32> bonusListID = Trinity::StringTo<int32>(bonusListIDtoken))
+        for (std::string_view bonusListIDtoken : Azgath::Tokenize(fields[8].GetStringView(), ' ', false))
+            if (Optional<int32> bonusListID = Azgath::StringTo<int32>(bonusListIDtoken))
                 bonusListIDs.push_back(*bonusListID);
 
         if (!itemId)
@@ -18521,8 +18521,8 @@ Item* Player::_LoadItem(CharacterDatabaseTransaction trans, uint32 zoneId, uint3
                 if (PreparedQueryResult result = CharacterDatabase.Query(stmt))
                 {
                     GuidSet looters;
-                    for (std::string_view guidStr : Trinity::Tokenize((*result)[0].GetStringView(), ' ', false))
-                        looters.insert(ObjectGuid::Create<HighGuid::Player>(Trinity::StringTo<uint64>(guidStr).value_or(UI64LIT(0))));
+                    for (std::string_view guidStr : Azgath::Tokenize((*result)[0].GetStringView(), ' ', false))
+                        looters.insert(ObjectGuid::Create<HighGuid::Player>(Azgath::StringTo<uint64>(guidStr).value_or(UI64LIT(0))));
 
                     if (looters.size() > 1 && item->GetTemplate()->GetMaxStackSize() == 1 && item->IsSoulBound())
                     {
@@ -18701,7 +18701,7 @@ void Player::_LoadMail(PreparedQueryResult mailsResult, PreparedQueryResult mail
         {
             Field* fields = mailItemsResult->Fetch();
             uint32 mailId = fields[52].GetUInt32();
-            _LoadMailedItem(GetGUID(), this, mailId, mailById[mailId], fields, Trinity::Containers::MapGetValuePtr(additionalData, fields[0].GetUInt64()));
+            _LoadMailedItem(GetGUID(), this, mailId, mailById[mailId], fields, Azgath::Containers::MapGetValuePtr(additionalData, fields[0].GetUInt64()));
         } while (mailItemsResult->NextRow());
     }
 
@@ -19785,7 +19785,7 @@ void Player::SaveGoldToDB(CharacterDatabaseTransaction trans) const
 }
 
 template<typename iterator>
-void SavePlayerCustomizations(CharacterDatabaseTransaction trans, ObjectGuid::LowType guid, Trinity::IteratorPair<iterator> customizations)
+void SavePlayerCustomizations(CharacterDatabaseTransaction trans, ObjectGuid::LowType guid, Azgath::IteratorPair<iterator> customizations)
 {
     CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_CHARACTER_CUSTOMIZATIONS);
     stmt->setUInt64(0, guid);
@@ -19802,7 +19802,7 @@ void SavePlayerCustomizations(CharacterDatabaseTransaction trans, ObjectGuid::Lo
 }
 
 void Player::SaveCustomizations(CharacterDatabaseTransaction trans, ObjectGuid::LowType guid,
-    Trinity::IteratorPair<UF::ChrCustomizationChoice const*> customizations)
+    Azgath::IteratorPair<UF::ChrCustomizationChoice const*> customizations)
 {
     SavePlayerCustomizations(trans, guid, customizations);
 }
@@ -19814,7 +19814,7 @@ void Player::_SaveCustomizations(CharacterDatabaseTransaction trans)
 
     m_customizationsChanged = false;
 
-    SavePlayerCustomizations(trans, GetGUID().GetCounter(), Trinity::Containers::MakeIteratorPair(m_playerData->Customizations.begin(), m_playerData->Customizations.end()));
+    SavePlayerCustomizations(trans, GetGUID().GetCounter(), Azgath::Containers::MakeIteratorPair(m_playerData->Customizations.begin(), m_playerData->Customizations.end()));
 }
 
 void Player::_SaveActions(CharacterDatabaseTransaction trans)
@@ -20853,7 +20853,7 @@ void Player::SetContestedPvP(Player* attackedPlayer)
         AddUnitState(UNIT_STATE_ATTACK_PLAYER);
         SetPlayerFlag(PLAYER_FLAGS_CONTESTED_PVP);
         // call MoveInLineOfSight for nearby contested guards
-        Trinity::AIRelocationNotifier notifier(*this);
+        Azgath::AIRelocationNotifier notifier(*this);
         Cell::VisitWorldObjects(this, notifier, GetVisibilityRange());
     }
     for (Unit* unit : m_Controlled)
@@ -20861,7 +20861,7 @@ void Player::SetContestedPvP(Player* attackedPlayer)
         if (!unit->HasUnitState(UNIT_STATE_ATTACK_PLAYER))
         {
             unit->AddUnitState(UNIT_STATE_ATTACK_PLAYER);
-            Trinity::AIRelocationNotifier notifier(*unit);
+            Azgath::AIRelocationNotifier notifier(*unit);
             Cell::VisitWorldObjects(this, notifier, GetVisibilityRange());
         }
     }
@@ -21117,14 +21117,14 @@ void Player::Say(std::string_view text, Language language, WorldObject const* /*
 
 void Player::SendChatMessageToSetInRange(ChatMsg chatMsg, Language language, std::string&& text, float range)
 {
-    Trinity::CustomChatTextBuilder builder(this, chatMsg, std::move(text), language, this);
-    Trinity::LocalizedDo<Trinity::CustomChatTextBuilder> localizer(builder);
+    Azgath::CustomChatTextBuilder builder(this, chatMsg, std::move(text), language, this);
+    Azgath::LocalizedDo<Azgath::CustomChatTextBuilder> localizer(builder);
 
     // Send to self
     localizer(this);
 
     // Send to players
-    Trinity::MessageDistDeliverer<Trinity::LocalizedDo<Trinity::CustomChatTextBuilder>> notifier(this, localizer, range);
+    Azgath::MessageDistDeliverer<Azgath::LocalizedDo<Azgath::CustomChatTextBuilder>> notifier(this, localizer, range);
     Cell::VisitWorldObjects(this, notifier, range);
 }
 
@@ -23184,7 +23184,7 @@ inline void BeforeVisibilityDestroy<Creature>(Creature* t, Player* p)
         t->ToPet()->Remove(PET_SAVE_NOT_IN_SLOT, true);
 }
 
-void Player::UpdateVisibilityOf(Trinity::IteratorPair<WorldObject**> targets)
+void Player::UpdateVisibilityOf(Azgath::IteratorPair<WorldObject**> targets)
 {
     if (targets.begin() == targets.end())
         return;
@@ -23392,7 +23392,7 @@ void Player::UpdateObjectVisibility(bool forced)
 void Player::UpdateVisibilityForPlayer()
 {
     // updates visibility of all objects around point of view for current player
-    Trinity::VisibleNotifier notifier(*this);
+    Azgath::VisibleNotifier notifier(*this);
     Cell::VisitAllObjects(m_seer, notifier, GetSightRange());
     notifier.SendToSelf();   // send gathered data
 }
@@ -24389,7 +24389,7 @@ bool Player::IsSpellFitByClassAndRace(uint32 spell_id) const
 
 bool Player::HasQuestForGO(int32 GOId) const
 {
-    for (QuestObjectiveStatusMap::value_type const& objectiveItr : Trinity::Containers::MapEqualRange(m_questObjectiveStatus, { QUEST_OBJECTIVE_GAMEOBJECT, GOId }))
+    for (QuestObjectiveStatusMap::value_type const& objectiveItr : Azgath::Containers::MapEqualRange(m_questObjectiveStatus, { QUEST_OBJECTIVE_GAMEOBJECT, GOId }))
     {
         Quest const* qInfo = ASSERT_NOTNULL(sObjectMgr->GetQuestTemplate(objectiveItr.second.QuestStatusItr->first));
         QuestObjective const& objective = *objectiveItr.second.Objective;
@@ -24774,7 +24774,7 @@ void Player::InitializeSelfResurrectionSpells()
 bool Player::isHonorOrXPTarget(Unit const* victim) const
 {
     uint8 v_level = victim->GetLevelForTarget(this);
-    uint8 k_grey  = Trinity::XP::GetGrayLevel(GetLevel());
+    uint8 k_grey  = Azgath::XP::GetGrayLevel(GetLevel());
 
     // Victim level less gray level
     if (v_level < k_grey && !sWorld->getIntConfig(CONFIG_MIN_CREATURE_SCALED_XP_RATIO))
@@ -25408,7 +25408,7 @@ bool Player::CanCaptureTowerPoint() const
             IsAlive());                                     // live player
 }
 
-int64 Player::GetBarberShopCost(Trinity::IteratorPair<UF::ChrCustomizationChoice const*> newCustomizations) const
+int64 Player::GetBarberShopCost(Azgath::IteratorPair<UF::ChrCustomizationChoice const*> newCustomizations) const
 {
     if (HasAuraType(SPELL_AURA_REMOVE_BARBER_SHOP_COST))
         return 0;
@@ -26756,7 +26756,7 @@ void Player::_LoadTraits(PreparedQueryResult configsResult, PreparedQueryResult 
 
             traitConfig.Name = fields[7].GetString();
 
-            for (auto&& [_, traitEntry] : Trinity::Containers::MapEqualRange(traitEntriesByConfig, traitConfig.ID))
+            for (auto&& [_, traitEntry] : Azgath::Containers::MapEqualRange(traitEntriesByConfig, traitConfig.ID))
                 traitConfig.Entries.emplace_back() = traitEntry;
 
             if (TraitMgr::ValidateConfig(traitConfig, this) != TALENT_LEARN_OK)
@@ -28151,7 +28151,7 @@ void Player::SendPlayerChoice(ObjectGuid sender, int32 choiceId)
         playerChoiceResponse.Confirmation = playerChoiceResponseTemplate.Confirmation;
         if (playerChoiceLocale)
         {
-            if (PlayerChoiceResponseLocale const* playerChoiceResponseLocale = Trinity::Containers::MapGetValuePtr(playerChoiceLocale->Responses, playerChoiceResponseTemplate.ResponseId))
+            if (PlayerChoiceResponseLocale const* playerChoiceResponseLocale = Azgath::Containers::MapGetValuePtr(playerChoiceLocale->Responses, playerChoiceResponseTemplate.ResponseId))
             {
                 ObjectMgr::GetLocaleString(playerChoiceResponseLocale->Answer, locale, playerChoiceResponse.Answer);
                 ObjectMgr::GetLocaleString(playerChoiceResponseLocale->Header, locale, playerChoiceResponse.Header);

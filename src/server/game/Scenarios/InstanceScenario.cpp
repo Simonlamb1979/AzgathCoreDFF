@@ -66,7 +66,7 @@ void InstanceScenario::LoadInstanceData()
             for (Criteria const* criteria : killCreatureCriteria)
             {
                 // count creatures in despawned spawn groups
-                if (uint64* progress = Trinity::Containers::MapGetValuePtr(despawnedCreatureCountsById, criteria->Entry->Asset.CreatureID))
+                if (uint64* progress = Azgath::Containers::MapGetValuePtr(despawnedCreatureCountsById, criteria->Entry->Asset.CreatureID))
                 {
                     SetCriteriaProgress(criteria, *progress, nullptr, PROGRESS_SET);
 
@@ -103,7 +103,7 @@ void InstanceScenario::LoadInstanceData()
 
 std::string InstanceScenario::GetOwnerInfo() const
 {
-    return Trinity::StringFormat("Instance ID %u", _map->GetInstanceId());
+    return Azgath::StringFormat("Instance ID %u", _map->GetInstanceId());
 }
 
 void InstanceScenario::SendPacket(WorldPacket const* data) const

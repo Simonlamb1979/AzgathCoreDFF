@@ -49,7 +49,7 @@ namespace boost
     }
 }
 
-namespace Trinity
+namespace Azgath
 {
     namespace Asio
     {

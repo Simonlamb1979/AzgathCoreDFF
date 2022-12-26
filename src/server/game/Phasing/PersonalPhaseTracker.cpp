@@ -49,7 +49,7 @@ void PlayerPersonalPhasesTracker::OnOwnerPhasesChanged(WorldObject const* owner)
 
     // loop over all owner phases. If any exist and marked for deletion - reset delete
     for (PhaseShift::PhaseRef const& phaseRef : phaseShift.GetPhases())
-        if (PersonalPhaseSpawns* spawns = Trinity::Containers::MapGetValuePtr(_spawns, phaseRef.Id))
+        if (PersonalPhaseSpawns* spawns = Azgath::Containers::MapGetValuePtr(_spawns, phaseRef.Id))
             spawns->DurationRemaining.reset();
 }
 
@@ -79,7 +79,7 @@ void PlayerPersonalPhasesTracker::Update(Map* map, uint32 diff)
 
 bool PlayerPersonalPhasesTracker::IsGridLoadedForPhase(uint32 gridId, uint32 phaseId) const
 {
-    if (PersonalPhaseSpawns const* spawns = Trinity::Containers::MapGetValuePtr(_spawns, phaseId))
+    if (PersonalPhaseSpawns const* spawns = Azgath::Containers::MapGetValuePtr(_spawns, phaseId))
         return spawns->Grids.find(gridId) != spawns->Grids.cend();
 
     return false;
@@ -170,13 +170,13 @@ void MultiPersonalPhaseTracker::RegisterTrackedObject(uint32 phaseId, ObjectGuid
 
 void MultiPersonalPhaseTracker::UnregisterTrackedObject(WorldObject* object)
 {
-    if (PlayerPersonalPhasesTracker* playerTracker = Trinity::Containers::MapGetValuePtr(_playerData, object->GetPhaseShift().GetPersonalGuid()))
+    if (PlayerPersonalPhasesTracker* playerTracker = Azgath::Containers::MapGetValuePtr(_playerData, object->GetPhaseShift().GetPersonalGuid()))
         playerTracker->UnregisterTrackedObject(object);
 }
 
 void MultiPersonalPhaseTracker::OnOwnerPhaseChanged(WorldObject const* phaseOwner, NGridType* grid, Map* map, Cell const& cell)
 {
-    if (PlayerPersonalPhasesTracker* playerTracker = Trinity::Containers::MapGetValuePtr(_playerData, phaseOwner->GetGUID()))
+    if (PlayerPersonalPhasesTracker* playerTracker = Azgath::Containers::MapGetValuePtr(_playerData, phaseOwner->GetGUID()))
         playerTracker->OnOwnerPhasesChanged(phaseOwner);
 
     if (grid)
@@ -185,7 +185,7 @@ void MultiPersonalPhaseTracker::OnOwnerPhaseChanged(WorldObject const* phaseOwne
 
 void MultiPersonalPhaseTracker::MarkAllPhasesForDeletion(ObjectGuid const& phaseOwner)
 {
-    if (PlayerPersonalPhasesTracker* playerTracker = Trinity::Containers::MapGetValuePtr(_playerData, phaseOwner))
+    if (PlayerPersonalPhasesTracker* playerTracker = Azgath::Containers::MapGetValuePtr(_playerData, phaseOwner))
         playerTracker->MarkAllPhasesForDeletion();
 }
 

@@ -44,11 +44,11 @@ RealmList* RealmList::Instance()
 }
 
 // Load the realm list from the database
-void RealmList::Initialize(Trinity::Asio::IoContext& ioContext, uint32 updateInterval)
+void RealmList::Initialize(Azgath::Asio::IoContext& ioContext, uint32 updateInterval)
 {
     _updateInterval = updateInterval;
-    _updateTimer = std::make_unique<Trinity::Asio::DeadlineTimer>(ioContext);
-    _resolver = std::make_unique<Trinity::Asio::Resolver>(ioContext);
+    _updateTimer = std::make_unique<Azgath::Asio::DeadlineTimer>(ioContext);
+    _resolver = std::make_unique<Azgath::Asio::Resolver>(ioContext);
 
     LoadBuildInfo();
     // Get the content of the realmlist table in the database
@@ -399,7 +399,7 @@ uint32 RealmList::JoinRealm(uint32 realmAddress, uint32 build, boost::asio::ip::
         if (compress(compressed.data() + 4, &compressedLength, reinterpret_cast<uint8 const*>(json.c_str()), uLong(json.length() + 1)) != Z_OK)
             return ERROR_UTIL_SERVER_FAILED_TO_SERIALIZE_RESPONSE;
 
-        std::array<uint8, 32> serverSecret = Trinity::Crypto::GetRandomBytes<32>();
+        std::array<uint8, 32> serverSecret = Azgath::Crypto::GetRandomBytes<32>();
 
         std::array<uint8, 64> keyData;
         memcpy(&keyData[0], clientSecret.data(), 32);

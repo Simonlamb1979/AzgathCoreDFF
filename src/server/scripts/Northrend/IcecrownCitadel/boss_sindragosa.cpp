@@ -1118,7 +1118,7 @@ class spell_sindragosa_unchained_magic : public SpellScript
         bool const is25ManRaid = GetCaster()->GetMap()->Is25ManRaid();
         if (!healers.empty())
         {
-            Trinity::Containers::RandomResize(healers, size_t(is25ManRaid ? 3 : 1));
+            Azgath::Containers::RandomResize(healers, size_t(is25ManRaid ? 3 : 1));
             while (!healers.empty())
             {
                 targets.push_back(healers.back());
@@ -1127,7 +1127,7 @@ class spell_sindragosa_unchained_magic : public SpellScript
         }
         if (!casters.empty())
         {
-            Trinity::Containers::RandomShuffle(casters);
+            Azgath::Containers::RandomShuffle(casters);
             size_t const maxSize = is25ManRaid ? 6 : 2;
             while (!casters.empty() && targets.size() < maxSize)
             {
@@ -1383,11 +1383,11 @@ class spell_frostwarden_handler_order_whelp : public SpellScript
 
     void FilterTargets(std::list<WorldObject*>& targets)
     {
-        targets.remove_if(Trinity::ObjectTypeIdCheck(TYPEID_PLAYER, false));
+        targets.remove_if(Azgath::ObjectTypeIdCheck(TYPEID_PLAYER, false));
         if (targets.empty())
             return;
 
-        WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+        WorldObject* target = Azgath::Containers::SelectRandomContainerElement(targets);
         targets.clear();
         targets.push_back(target);
     }
@@ -1404,7 +1404,7 @@ class spell_frostwarden_handler_order_whelp : public SpellScript
         if (unitList.empty())
             return;
 
-        Trinity::Containers::SelectRandomContainerElement(unitList)->CastSpell(GetHitUnit(), uint32(GetEffectValue()), true);
+        Azgath::Containers::SelectRandomContainerElement(unitList)->CastSpell(GetHitUnit(), uint32(GetEffectValue()), true);
     }
 
     void Register() override

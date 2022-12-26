@@ -146,7 +146,7 @@ namespace MMAP
             mapID = (*itr).m_mapId;
 
             files.clear();
-            getDirContents(files, "vmaps", Trinity::StringFormat("%04u_*.vmtile", mapID));
+            getDirContents(files, "vmaps", Azgath::StringFormat("%04u_*.vmtile", mapID));
             for (uint32 i = 0; i < files.size(); ++i)
             {
                 tileX = uint32(atoi(files[i].substr(8, 2).c_str()));
@@ -158,7 +158,7 @@ namespace MMAP
             }
 
             files.clear();
-            getDirContents(files, "maps", Trinity::StringFormat("%04u*", mapID));
+            getDirContents(files, "maps", Azgath::StringFormat("%04u*", mapID));
             for (uint32 i = 0; i < files.size(); ++i)
             {
                 tileY = uint32(atoi(files[i].substr(5, 2).c_str()));
@@ -603,7 +603,7 @@ namespace MMAP
         dtNavMesh* navMesh)
     {
         // console output
-        std::string tileString = Trinity::StringFormat("[Map %04u] [%02i,%02i]: ", mapID, tileX, tileY);
+        std::string tileString = Azgath::StringFormat("[Map %04u] [%02i,%02i]: ", mapID, tileX, tileY);
         printf("%s Building movemap tiles...\n", tileString.c_str());
 
         IntermediateValues iv;
@@ -991,7 +991,7 @@ namespace MMAP
     /**************************************************************************/
     bool MapBuilder::isTransportMap(uint32 mapID) const
     {
-        if (MapEntry const* map = Trinity::Containers::MapGetValuePtr(sMapStore, mapID))
+        if (MapEntry const* map = Azgath::Containers::MapGetValuePtr(sMapStore, mapID))
             return map->MapType == 3;
 
         return false;
@@ -999,7 +999,7 @@ namespace MMAP
 
     bool MapBuilder::isDevMap(uint32 mapID) const
     {
-        if (MapEntry const* map = Trinity::Containers::MapGetValuePtr(sMapStore, mapID))
+        if (MapEntry const* map = Azgath::Containers::MapGetValuePtr(sMapStore, mapID))
             return (map->Flags & 0x2) != 0;
 
         return false;
@@ -1007,7 +1007,7 @@ namespace MMAP
 
     bool MapBuilder::isBattlegroundMap(uint32 mapID) const
     {
-        if (MapEntry const* map = Trinity::Containers::MapGetValuePtr(sMapStore, mapID))
+        if (MapEntry const* map = Azgath::Containers::MapGetValuePtr(sMapStore, mapID))
             return map->InstanceType == 3;
 
         return false;

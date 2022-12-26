@@ -34,7 +34,7 @@ EndScriptData */
 #include "World.h"
 #include "WorldSession.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class gm_commandscript : public CommandScript
 {

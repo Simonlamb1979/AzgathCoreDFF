@@ -534,8 +534,8 @@ class npc_simon_bunny : public CreatureScript
                 me->SetObjectScale(large ? 2.0f : 1.0f);
 
                 std::list<WorldObject*> ClusterList;
-                Trinity::AllWorldObjectsInRange objects(me, searchDistance);
-                Trinity::WorldObjectListSearcher<Trinity::AllWorldObjectsInRange> searcher(me, ClusterList, objects);
+                Azgath::AllWorldObjectsInRange objects(me, searchDistance);
+                Azgath::WorldObjectListSearcher<Azgath::AllWorldObjectsInRange> searcher(me, ClusterList, objects);
                 Cell::VisitAllObjects(me, searcher, searchDistance);
 
                 for (std::list<WorldObject*>::const_iterator i = ClusterList.begin(); i != ClusterList.end(); ++i)

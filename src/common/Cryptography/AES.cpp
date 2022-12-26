@@ -19,25 +19,25 @@
 #include "Errors.h"
 #include <limits>
 
-Trinity::Crypto::AES::AES(bool encrypting) : _ctx(EVP_CIPHER_CTX_new()), _encrypting(encrypting)
+Azgath::Crypto::AES::AES(bool encrypting) : _ctx(EVP_CIPHER_CTX_new()), _encrypting(encrypting)
 {
     EVP_CIPHER_CTX_init(_ctx);
     int status = EVP_CipherInit_ex(_ctx, EVP_aes_128_gcm(), nullptr, nullptr, nullptr, _encrypting ? 1 : 0);
     ASSERT(status);
 }
 
-Trinity::Crypto::AES::~AES()
+Azgath::Crypto::AES::~AES()
 {
     EVP_CIPHER_CTX_free(_ctx);
 }
 
-void Trinity::Crypto::AES::Init(Key const& key)
+void Azgath::Crypto::AES::Init(Key const& key)
 {
     int status = EVP_CipherInit_ex(_ctx, nullptr, nullptr, key.data(), nullptr, -1);
     ASSERT(status);
 }
 
-bool Trinity::Crypto::AES::Process(IV const& iv, uint8* data, size_t length, Tag& tag)
+bool Azgath::Crypto::AES::Process(IV const& iv, uint8* data, size_t length, Tag& tag)
 {
     ASSERT(length <= static_cast<size_t>(std::numeric_limits<int>::max()));
     int len = static_cast<int>(length);
@@ -64,7 +64,7 @@ bool Trinity::Crypto::AES::Process(IV const& iv, uint8* data, size_t length, Tag
     return true;
 }
 
-bool Trinity::Crypto::AES::ProcessNoIntegrityCheck(IV const& iv, uint8* data, size_t partialLength)
+bool Azgath::Crypto::AES::ProcessNoIntegrityCheck(IV const& iv, uint8* data, size_t partialLength)
 {
     ASSERT(!_encrypting, "Partial encryption is not allowed");
     ASSERT(partialLength <= static_cast<size_t>(std::numeric_limits<int>::max()));

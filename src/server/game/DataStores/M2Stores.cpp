@@ -181,7 +181,7 @@ TC_GAME_API void LoadM2Cameras(std::string const& dataPath)
     uint32 oldMSTime = getMSTime();
     for (CinematicCameraEntry const* cameraEntry : sCinematicCameraStore)
     {
-        boost::filesystem::path filename = camerasPath / Trinity::StringFormat("FILE%08X.xxx", cameraEntry->FileDataID);
+        boost::filesystem::path filename = camerasPath / Azgath::StringFormat("FILE%08X.xxx", cameraEntry->FileDataID);
 
         // Convert to native format
         filename.make_preferred();
@@ -266,5 +266,5 @@ TC_GAME_API void LoadM2Cameras(std::string const& dataPath)
 
 std::vector<FlyByCamera> const* GetFlyByCameras(uint32 cinematicCameraId)
 {
-    return Trinity::Containers::MapGetValuePtr(sFlyByCameraStore, cinematicCameraId);
+    return Azgath::Containers::MapGetValuePtr(sFlyByCameraStore, cinematicCameraId);
 }

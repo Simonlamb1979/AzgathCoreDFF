@@ -37,7 +37,7 @@ EndScriptData */
 #include "TerrainMgr.h"
 #include "WorldSession.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class tele_commandscript : public CommandScript
 {

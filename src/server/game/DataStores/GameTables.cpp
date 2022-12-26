@@ -44,18 +44,18 @@ inline uint32 LoadGameTable(std::vector<std::string>& errors, GameTable<T>& stor
     std::ifstream stream(path.string());
     if (!stream)
     {
-        errors.push_back(Trinity::StringFormat("GameTable file %s cannot be opened.", path.string().c_str()));
+        errors.push_back(Azgath::StringFormat("GameTable file %s cannot be opened.", path.string().c_str()));
         return 0;
     }
 
     std::string headers;
     if (!std::getline(stream, headers))
     {
-        errors.push_back(Trinity::StringFormat("GameTable file %s is empty.", path.string().c_str()));
+        errors.push_back(Azgath::StringFormat("GameTable file %s is empty.", path.string().c_str()));
         return 0;
     }
 
-    std::vector<std::string_view> columnDefs = Trinity::Tokenize(headers, '\t', false);
+    std::vector<std::string_view> columnDefs = Azgath::Tokenize(headers, '\t', false);
 
     ASSERT(columnDefs.size() - 1 == sizeof(T) / sizeof(float),
         "GameTable '%s' has different count of columns " SZFMTD " than expected by size of C++ structure (" SZFMTD ").",
@@ -67,7 +67,7 @@ inline uint32 LoadGameTable(std::vector<std::string>& errors, GameTable<T>& stor
     std::string line;
     while (std::getline(stream, line))
     {
-        std::vector<std::string_view> values = Trinity::Tokenize(line, '\t', true);
+        std::vector<std::string_view> values = Azgath::Tokenize(line, '\t', true);
         if (values.empty())
             break;
 

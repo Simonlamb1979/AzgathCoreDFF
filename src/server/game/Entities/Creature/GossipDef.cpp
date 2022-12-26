@@ -53,7 +53,7 @@ uint32 GossipMenu::AddMenuItem(int32 gossipOptionId, int32 orderIndex, GossipOpt
         if (_menuId)
         {
             // set baseline orderIndex as higher than whatever exists in db
-            Trinity::IteratorPair bounds = sObjectMgr->GetGossipMenuItemsMapBounds(_menuId);
+            Azgath::IteratorPair bounds = sObjectMgr->GetGossipMenuItemsMapBounds(_menuId);
             auto itr = std::max_element(bounds.begin(), bounds.end(), [](GossipMenuItemsContainer::value_type const& a, GossipMenuItemsContainer::value_type const& b)
             {
                 return a.second.OrderIndex < b.second.OrderIndex;
@@ -111,7 +111,7 @@ uint32 GossipMenu::AddMenuItem(int32 gossipOptionId, int32 orderIndex, GossipOpt
 void GossipMenu::AddMenuItem(uint32 menuId, uint32 menuItemId, uint32 sender, uint32 action)
 {
     /// Find items for given menu id.
-    Trinity::IteratorPair bounds = sObjectMgr->GetGossipMenuItemsMapBounds(menuId);
+    Azgath::IteratorPair bounds = sObjectMgr->GetGossipMenuItemsMapBounds(menuId);
 
     /// Find the one with the given menu item id.
     auto itr = std::find_if(bounds.begin(), bounds.end(), [menuItemId](std::pair<uint32 const, GossipMenuItems> const& itemPair)
@@ -255,7 +255,7 @@ void PlayerMenu::SendGossipMenu(uint32 titleTextId, ObjectGuid objectGUID)
         packet.FriendshipFactionID = addon->FriendshipFactionID;
 
     if (NpcText const* text = sObjectMgr->GetNpcText(titleTextId))
-        packet.TextID = Trinity::Containers::SelectRandomWeightedContainerElement(text->Data, [](NpcTextData const& data) { return data.Probability; })->BroadcastTextID;
+        packet.TextID = Azgath::Containers::SelectRandomWeightedContainerElement(text->Data, [](NpcTextData const& data) { return data.Probability; })->BroadcastTextID;
 
     packet.GossipOptions.reserve(_gossipMenu.GetMenuItems().size());
     for (GossipMenuItem const& item : _gossipMenu.GetMenuItems())

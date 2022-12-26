@@ -37,7 +37,7 @@ public:
     void operator()(Player const* player) const
     {
         LocaleConstant loc_idx = player->GetSession()->GetSessionDbLocaleIndex();
-        Trinity::ChatPacketSender* sender;
+        Azgath::ChatPacketSender* sender;
 
         // create if not cached yet
         if (!_cache[loc_idx])
@@ -66,7 +66,7 @@ public:
     }
 
 private:
-    mutable std::array<std::unique_ptr<Trinity::ChatPacketSender>, TOTAL_LOCALES> _cache;
+    mutable std::array<std::unique_ptr<Azgath::ChatPacketSender>, TOTAL_LOCALES> _cache;
     Builder const& _builder;
     ChatMsg _msgType;
 };
@@ -157,7 +157,7 @@ void CreatureTextMgr::SendChatPacket(WorldObject* source, Builder const& builder
     }
 
     float dist = GetRangeForChatType(msgType);
-    Trinity::PlayerDistWorker<CreatureTextLocalizer<Builder>> worker(source, dist, localizer);
+    Azgath::PlayerDistWorker<CreatureTextLocalizer<Builder>> worker(source, dist, localizer);
     Cell::VisitWorldObjects(source, worker, dist);
 }
 

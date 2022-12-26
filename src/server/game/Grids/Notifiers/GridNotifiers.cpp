@@ -24,7 +24,7 @@
 #include "UpdateData.h"
 #include "WorldPacket.h"
 
-using namespace Trinity;
+using namespace Azgath;
 
 void VisibleNotifier::SendToSelf()
 {

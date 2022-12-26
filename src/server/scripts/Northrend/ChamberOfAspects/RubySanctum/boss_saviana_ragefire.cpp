@@ -221,7 +221,7 @@ class spell_saviana_conflagration_init : public SpellScript
         targets.remove_if(ConflagrationTargetSelector());
         uint8 maxSize = uint8(GetCaster()->GetMap()->Is25ManRaid() ? 6 : 3);
         if (targets.size() > maxSize)
-            Trinity::Containers::RandomResize(targets, maxSize);
+            Azgath::Containers::RandomResize(targets, maxSize);
     }
 
     void HandleDummy(SpellEffIndex effIndex)

@@ -571,8 +571,8 @@ public:
         {
             float radius = 50.0f;
             std::list<Player*> players;
-            Trinity::AnyPlayerInObjectRangeCheck checker(me, radius);
-            Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(me, players, checker);
+            Azgath::AnyPlayerInObjectRangeCheck checker(me, radius);
+            Azgath::PlayerListSearcher<Azgath::AnyPlayerInObjectRangeCheck> searcher(me, players, checker);
             Cell::VisitWorldObjects(me, searcher, radius);
 
             for (std::list<Player*>::const_iterator itr = players.begin(); itr != players.end(); ++itr)

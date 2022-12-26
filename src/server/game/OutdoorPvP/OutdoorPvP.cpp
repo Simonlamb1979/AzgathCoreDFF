@@ -36,11 +36,11 @@ class DefenseMessageBuilder
         DefenseMessageBuilder(uint32 zoneId, uint32 id)
             : _zoneId(zoneId), _id(id) { }
 
-        Trinity::PacketSenderOwning<WorldPackets::Chat::DefenseMessage>* operator()(LocaleConstant locale) const
+        Azgath::PacketSenderOwning<WorldPackets::Chat::DefenseMessage>* operator()(LocaleConstant locale) const
         {
             std::string text = sOutdoorPvPMgr->GetDefenseMessage(_zoneId, _id, locale);
 
-            Trinity::PacketSenderOwning<WorldPackets::Chat::DefenseMessage>* defenseMessage = new Trinity::PacketSenderOwning<WorldPackets::Chat::DefenseMessage>();
+            Azgath::PacketSenderOwning<WorldPackets::Chat::DefenseMessage>* defenseMessage = new Azgath::PacketSenderOwning<WorldPackets::Chat::DefenseMessage>();
             defenseMessage->Data.ZoneID = _zoneId;
             defenseMessage->Data.MessageText = text;
             defenseMessage->Data.Write();
@@ -164,8 +164,8 @@ bool OPvPCapturePoint::Update(uint32 diff)
     }
 
     std::list<Player*> players;
-    Trinity::AnyPlayerInObjectRangeCheck checker(m_capturePoint, radius);
-    Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(m_capturePoint, players, checker);
+    Azgath::AnyPlayerInObjectRangeCheck checker(m_capturePoint, radius);
+    Azgath::PlayerListSearcher<Azgath::AnyPlayerInObjectRangeCheck> searcher(m_capturePoint, players, checker);
     Cell::VisitWorldObjects(m_capturePoint, searcher, radius);
 
     for (std::list<Player*>::iterator itr = players.begin(); itr != players.end(); ++itr)
@@ -472,7 +472,7 @@ void OutdoorPvP::OnGameObjectRemove(GameObject* go)
 void OutdoorPvP::SendDefenseMessage(uint32 zoneId, uint32 id)
 {
     DefenseMessageBuilder builder(zoneId, id);
-    Trinity::LocalizedDo<DefenseMessageBuilder> localizer(builder);
+    Azgath::LocalizedDo<DefenseMessageBuilder> localizer(builder);
     BroadcastWorker(localizer, zoneId);
 }
 

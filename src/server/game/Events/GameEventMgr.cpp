@@ -852,8 +852,8 @@ void GameEventMgr::LoadFromDB()
                 vItem.PlayerConditionId = fields[8].GetUInt32();
                 vItem.IgnoreFiltering   = fields[9].GetBool();
 
-                for (std::string_view token : Trinity::Tokenize(fields[7].GetStringView(), ' ', false))
-                    if (Optional<int32> bonusListID = Trinity::StringTo<int32>(token))
+                for (std::string_view token : Azgath::Tokenize(fields[7].GetStringView(), ' ', false))
+                    if (Optional<int32> bonusListID = Azgath::StringTo<int32>(token))
                         vItem.BonusListIDs.push_back(*bonusListID);
 
                 // check validity with event's npcflag

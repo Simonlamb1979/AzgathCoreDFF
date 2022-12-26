@@ -627,7 +627,7 @@ void GameObject::RemoveFromWorld()
         WorldObject::RemoveFromWorld();
 
         if (m_spawnId)
-            Trinity::Containers::MultimapErasePair(GetMap()->GetGameObjectBySpawnIdStore(), m_spawnId, this);
+            Azgath::Containers::MultimapErasePair(GetMap()->GetGameObjectBySpawnIdStore(), m_spawnId, this);
         GetMap()->GetObjectsStore().Remove<GameObject>(GetGUID());
     }
 }
@@ -1117,16 +1117,16 @@ void GameObject::Update(uint32 diff)
                     if (GetOwner())
                     {
                         // Hunter trap: Search units which are unfriendly to the trap's owner
-                        Trinity::NearestAttackableNoTotemUnitInObjectRangeCheck checker(this, radius);
-                        Trinity::UnitLastSearcher<Trinity::NearestAttackableNoTotemUnitInObjectRangeCheck> searcher(this, target, checker);
+                        Azgath::NearestAttackableNoTotemUnitInObjectRangeCheck checker(this, radius);
+                        Azgath::UnitLastSearcher<Azgath::NearestAttackableNoTotemUnitInObjectRangeCheck> searcher(this, target, checker);
                         Cell::VisitAllObjects(this, searcher, radius);
                     }
                     else
                     {
                         // Environmental trap: Any player
                         Player* player = nullptr;
-                        Trinity::AnyPlayerInObjectRangeCheck checker(this, radius);
-                        Trinity::PlayerSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(this, player, checker);
+                        Azgath::AnyPlayerInObjectRangeCheck checker(this, radius);
+                        Azgath::PlayerSearcher<Azgath::AnyPlayerInObjectRangeCheck> searcher(this, player, checker);
                         Cell::VisitWorldObjects(this, searcher, radius);
                         target = player;
                     }
@@ -1672,7 +1672,7 @@ bool GameObject::LoadFromDB(ObjectGuid::LowType spawnId, Map* map, bool addToMap
         {
             // despawn all active objects, and remove their respawns
             std::vector<GameObject*> toUnload;
-            for (auto const& pair : Trinity::Containers::MapEqualRange(map->GetGameObjectBySpawnIdStore(), spawnId))
+            for (auto const& pair : Azgath::Containers::MapEqualRange(map->GetGameObjectBySpawnIdStore(), spawnId))
                 toUnload.push_back(pair.second);
             for (GameObject* obj : toUnload)
                 map->AddObjectToRemoveList(obj);
@@ -1788,7 +1788,7 @@ void GameObject::SaveRespawnTime(uint32 forceDelay)
         }
 
         uint32 thisRespawnTime = forceDelay ? GameTime::GetGameTime() + forceDelay : m_respawnTime;
-        GetMap()->SaveRespawnTime(SPAWN_TYPE_GAMEOBJECT, m_spawnId, GetEntry(), thisRespawnTime, Trinity::ComputeGridCoord(GetPositionX(), GetPositionY()).GetId());
+        GetMap()->SaveRespawnTime(SPAWN_TYPE_GAMEOBJECT, m_spawnId, GetEntry(), thisRespawnTime, Azgath::ComputeGridCoord(GetPositionX(), GetPositionY()).GetId());
     }
 }
 
@@ -1842,7 +1842,7 @@ bool GameObject::IsInvisibleDueToDespawn(WorldObject const* seer) const
         return true;
 
     if (m_perPlayerState)
-        if (PerPlayerState const* state = Trinity::Containers::MapGetValuePtr(*m_perPlayerState, seer->GetGUID()))
+        if (PerPlayerState const* state = Azgath::Containers::MapGetValuePtr(*m_perPlayerState, seer->GetGUID()))
             if (state->Despawned)
                 return true;
 
@@ -1965,8 +1965,8 @@ void GameObject::TriggeringLinkedGameObject(uint32 trapEntry, Unit* target)
 GameObject* GameObject::LookupFishingHoleAround(float range)
 {
     GameObject* ok = nullptr;
-    Trinity::NearestGameObjectFishingHole u_check(*this, range);
-    Trinity::GameObjectSearcher<Trinity::NearestGameObjectFishingHole> checker(this, ok, u_check);
+    Azgath::NearestGameObjectFishingHole u_check(*this, range);
+    Azgath::GameObjectSearcher<Azgath::NearestGameObjectFishingHole> checker(this, ok, u_check);
     Cell::VisitGridObjects(this, checker, range);
     return ok;
 }
@@ -2671,7 +2671,7 @@ void GameObject::Use(Unit* user)
                 if (info->ritual.casterTargetSpell && info->ritual.casterTargetSpell != 1) // No idea why this field is a bool in some cases
                     for (uint32 i = 0; i < info->ritual.casterTargetSpellTargets; i++)
                         // m_unique_users can contain only player GUIDs
-                        if (Player* target = ObjectAccessor::GetPlayer(*this, Trinity::Containers::SelectRandomContainerElement(m_unique_users)))
+                        if (Player* target = ObjectAccessor::GetPlayer(*this, Azgath::Containers::SelectRandomContainerElement(m_unique_users)))
                             spellCaster->CastSpell(target, info->ritual.casterTargetSpell, true);
 
                 // finish owners spell
@@ -3401,7 +3401,7 @@ void GameObject::SetGoState(GOState state)
 GOState GameObject::GetGoStateFor(ObjectGuid const& viewer) const
 {
     if (m_perPlayerState)
-        if (PerPlayerState const* state = Trinity::Containers::MapGetValuePtr(*m_perPlayerState, viewer))
+        if (PerPlayerState const* state = Azgath::Containers::MapGetValuePtr(*m_perPlayerState, viewer))
             if (state->State)
                 return *state->State;
 
@@ -3506,7 +3506,7 @@ Loot* GameObject::GetLootForPlayer(Player const* player) const
     if (m_personalLoot.empty())
         return m_loot.get();
 
-    if (std::unique_ptr<Loot> const* loot = Trinity::Containers::MapGetValuePtr(m_personalLoot, player->GetGUID()))
+    if (std::unique_ptr<Loot> const* loot = Azgath::Containers::MapGetValuePtr(m_personalLoot, player->GetGUID()))
         return loot->get();
 
     return nullptr;

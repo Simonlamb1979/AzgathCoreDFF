@@ -492,7 +492,7 @@ class spell_gen_battleground_mercenary_shapeshift : public AuraScript
 
     static Races GetReplacementRace(Races nativeRace, Classes playerClass)
     {
-        if (OtherFactionRacePriorityList const* otherRaces = Trinity::Containers::MapGetValuePtr(RaceInfo, nativeRace))
+        if (OtherFactionRacePriorityList const* otherRaces = Azgath::Containers::MapGetValuePtr(RaceInfo, nativeRace))
             for (Races race : *otherRaces)
                 if (sObjectMgr->GetPlayerInfo(race, playerClass))
                     return race;
@@ -502,7 +502,7 @@ class spell_gen_battleground_mercenary_shapeshift : public AuraScript
 
     static uint32 GetDisplayIdForRace(Races race, Gender gender)
     {
-        if (std::array<uint32, 2> const* displayIds = Trinity::Containers::MapGetValuePtr(RaceDisplayIds, race))
+        if (std::array<uint32, 2> const* displayIds = Azgath::Containers::MapGetValuePtr(RaceDisplayIds, race))
             return (*displayIds)[gender];
 
         return 0;
@@ -814,8 +814,8 @@ class spell_gen_cannibalize : public SpellScript
         float max_range = GetSpellInfo()->GetMaxRange(false);
         WorldObject* result = nullptr;
         // search for nearby enemy corpse in range
-        Trinity::AnyDeadUnitSpellTargetInRangeCheck check(caster, max_range, GetSpellInfo(), TARGET_CHECK_ENEMY, TARGET_OBJECT_TYPE_CORPSE_ENEMY);
-        Trinity::WorldObjectSearcher<Trinity::AnyDeadUnitSpellTargetInRangeCheck> searcher(caster, result, check);
+        Azgath::AnyDeadUnitSpellTargetInRangeCheck check(caster, max_range, GetSpellInfo(), TARGET_CHECK_ENEMY, TARGET_OBJECT_TYPE_CORPSE_ENEMY);
+        Azgath::WorldObjectSearcher<Azgath::AnyDeadUnitSpellTargetInRangeCheck> searcher(caster, result, check);
         Cell::VisitWorldObjects(caster, searcher, max_range);
         if (!result)
             Cell::VisitGridObjects(caster, searcher, max_range);
@@ -3166,7 +3166,7 @@ class spell_gen_replenishment : public SpellScript
 
         if (targets.size() > maxTargets)
         {
-            targets.sort(Trinity::PowerPctOrderPred(POWER_MANA));
+            targets.sort(Azgath::PowerPctOrderPred(POWER_MANA));
             targets.resize(maxTargets);
         }
     }
@@ -3359,7 +3359,7 @@ class spell_gen_spectator_cheer_trigger : public SpellScript
     void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         if (roll_chance_i(40))
-            GetCaster()->HandleEmoteCommand(Trinity::Containers::SelectRandomContainerElement(EmoteArray));
+            GetCaster()->HandleEmoteCommand(Azgath::Containers::SelectRandomContainerElement(EmoteArray));
     }
 
     void Register() override
@@ -4492,7 +4492,7 @@ class spell_corrupting_plague_aura : public AuraScript
 
         std::list<Creature*> targets;
         CorruptingPlagueSearcher creature_check(owner, 15.0f);
-        Trinity::CreatureListSearcher<CorruptingPlagueSearcher> creature_searcher(owner, targets, creature_check);
+        Azgath::CreatureListSearcher<CorruptingPlagueSearcher> creature_searcher(owner, targets, creature_check);
         Cell::VisitGridObjects(owner, creature_searcher, 15.0f);
 
         if (!targets.empty())
@@ -4550,7 +4550,7 @@ class spell_stasis_field_aura : public AuraScript
 
         std::list<Creature*> targets;
         StasisFieldSearcher creature_check(owner, 15.0f);
-        Trinity::CreatureListSearcher<StasisFieldSearcher> creature_searcher(owner, targets, creature_check);
+        Azgath::CreatureListSearcher<StasisFieldSearcher> creature_searcher(owner, targets, creature_check);
         Cell::VisitGridObjects(owner, creature_searcher, 15.0f);
 
         if (!targets.empty())
@@ -5151,7 +5151,7 @@ class spell_gen_ancestral_call : public SpellScript
     void HandleOnCast()
     {
         Unit* caster = GetCaster();
-        uint32 spellId = Trinity::Containers::SelectRandomContainerElement(AncestralCallBuffs);
+        uint32 spellId = Azgath::Containers::SelectRandomContainerElement(AncestralCallBuffs);
 
         caster->CastSpell(caster, spellId, true);
     }

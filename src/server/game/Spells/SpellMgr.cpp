@@ -291,9 +291,9 @@ uint32 SpellMgr::GetSpellWithRank(uint32 spell_id, uint32 rank, bool strict) con
     return spell_id;
 }
 
-Trinity::IteratorPair<SpellRequiredMap::const_iterator> SpellMgr::GetSpellsRequiredForSpellBounds(uint32 spell_id) const
+Azgath::IteratorPair<SpellRequiredMap::const_iterator> SpellMgr::GetSpellsRequiredForSpellBounds(uint32 spell_id) const
 {
-    return Trinity::Containers::MapEqualRange(mSpellReq, spell_id);
+    return Azgath::Containers::MapEqualRange(mSpellReq, spell_id);
 }
 
 SpellsRequiringSpellMapBounds SpellMgr::GetSpellsRequiringSpellBounds(uint32 spell_id) const
@@ -489,7 +489,7 @@ SpellGroupStackRule SpellMgr::GetSpellGroupStackRule(SpellGroup group) const
 
 SpellProcEntry const* SpellMgr::GetSpellProcEntry(SpellInfo const* spellInfo) const
 {
-    SpellProcEntry const* procEntry = Trinity::Containers::MapGetValuePtr(mSpellProcMap, { spellInfo->Id, spellInfo->Difficulty });
+    SpellProcEntry const* procEntry = Azgath::Containers::MapGetValuePtr(mSpellProcMap, { spellInfo->Id, spellInfo->Difficulty });
     if (procEntry)
         return procEntry;
 
@@ -497,7 +497,7 @@ SpellProcEntry const* SpellMgr::GetSpellProcEntry(SpellInfo const* spellInfo) co
     {
         do
         {
-            procEntry = Trinity::Containers::MapGetValuePtr(mSpellProcMap, { spellInfo->Id, Difficulty(difficulty->FallbackDifficultyID) });
+            procEntry = Azgath::Containers::MapGetValuePtr(mSpellProcMap, { spellInfo->Id, Difficulty(difficulty->FallbackDifficultyID) });
             if (procEntry)
                 return procEntry;
 
@@ -627,7 +627,7 @@ bool SpellMgr::IsArenaAllowedEnchancment(uint32 ench_id) const
 
 std::vector<int32> const* SpellMgr::GetSpellLinked(int32 spell_id) const
 {
-    return Trinity::Containers::MapGetValuePtr(mSpellLinkedMap, spell_id);
+    return Azgath::Containers::MapGetValuePtr(mSpellLinkedMap, spell_id);
 }
 
 PetLevelupSpellSet const* SpellMgr::GetPetLevelupSpellList(uint32 petFamily) const
@@ -695,7 +695,7 @@ SpellInfo const* SpellMgr::GetSpellInfo(uint32 spellId, Difficulty difficulty) c
 
 auto _GetSpellInfo(uint32 spellId)
 {
-    return Trinity::Containers::MakeIteratorPair(mSpellInfoMap.get<SpellIdIndex>().equal_range(spellId));
+    return Azgath::Containers::MakeIteratorPair(mSpellInfoMap.get<SpellIdIndex>().equal_range(spellId));
 }
 
 void SpellMgr::ForEachSpellInfo(std::function<void(SpellInfo const*)> callback)
@@ -2454,7 +2454,7 @@ void SpellMgr::LoadSpellInfoStore()
         if (effect->Effect == SPELL_EFFECT_SUMMON)
             if (SummonPropertiesEntry const* summonProperties = sSummonPropertiesStore.LookupEntry(effect->EffectMiscValue[1]))
                 if (summonProperties->Slot == SUMMON_SLOT_MINIPET && summonProperties->GetFlags().HasFlag(SummonPropertiesFlags::SummonFromBattlePetJournal))
-                    if (BattlePetSpeciesEntry const* battlePetSpecies = Trinity::Containers::MapGetValuePtr(battlePetSpeciesByCreature, effect->EffectMiscValue[0]))
+                    if (BattlePetSpeciesEntry const* battlePetSpecies = Azgath::Containers::MapGetValuePtr(battlePetSpeciesByCreature, effect->EffectMiscValue[0]))
                         BattlePets::BattlePetMgr::AddBattlePetSpeciesBySpell(effect->SpellID, battlePetSpecies);
 
         if (effect->Effect == SPELL_EFFECT_LANGUAGE)
@@ -2549,7 +2549,7 @@ void SpellMgr::LoadSpellInfoStore()
         {
             do
             {
-                if (SpellInfoLoadHelper const* fallbackData = Trinity::Containers::MapGetValuePtr(loadData, { data.first.first, Difficulty(difficultyEntry->FallbackDifficultyID) }))
+                if (SpellInfoLoadHelper const* fallbackData = Azgath::Containers::MapGetValuePtr(loadData, { data.first.first, Difficulty(difficultyEntry->FallbackDifficultyID) }))
                 {
                     if (!data.second.AuraOptions)
                         data.second.AuraOptions = fallbackData->AuraOptions;

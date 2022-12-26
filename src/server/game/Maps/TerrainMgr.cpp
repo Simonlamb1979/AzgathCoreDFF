@@ -48,7 +48,7 @@ char const* TerrainInfo::GetMapName() const
 
 void TerrainInfo::DiscoverGridMapFiles()
 {
-    std::string tileListName = Trinity::StringFormat("%smaps/%04u.tilelist", sWorld->GetDataPath().c_str(), GetId());
+    std::string tileListName = Azgath::StringFormat("%smaps/%04u.tilelist", sWorld->GetDataPath().c_str(), GetId());
     // tile list is optional
     if (FILE* tileList = fopen(tileListName.c_str(), "rb"))
     {
@@ -78,7 +78,7 @@ void TerrainInfo::DiscoverGridMapFiles()
 
 bool TerrainInfo::ExistMap(uint32 mapid, int32 gx, int32 gy, bool log /*= true*/)
 {
-    std::string fileName = Trinity::StringFormat("%smaps/%04u_%02u_%02u.map", sWorld->GetDataPath().c_str(), mapid, gx, gy);
+    std::string fileName = Azgath::StringFormat("%smaps/%04u_%02u_%02u.map", sWorld->GetDataPath().c_str(), mapid, gx, gy);
 
     bool ret = false;
     FILE* file = fopen(fileName.c_str(), "rb");
@@ -187,7 +187,7 @@ void TerrainInfo::LoadMap(int32 gx, int32 gy)
         return;
 
     // map file name
-    std::string fileName = Trinity::StringFormat("%smaps/%04u_%02u_%02u.map", sWorld->GetDataPath().c_str(), GetId(), gx, gy);
+    std::string fileName = Azgath::StringFormat("%smaps/%04u_%02u_%02u.map", sWorld->GetDataPath().c_str(), GetId(), gx, gy);
     TC_LOG_DEBUG("maps", "Loading map %s", fileName.c_str());
     // loading data
     std::unique_ptr<GridMap> gridMap = std::make_unique<GridMap>();
@@ -830,7 +830,7 @@ std::shared_ptr<TerrainInfo> TerrainMgr::LoadTerrainImpl(uint32 mapId)
 
 bool TerrainMgr::ExistMapAndVMap(uint32 mapid, float x, float y)
 {
-    GridCoord p = Trinity::ComputeGridCoord(x, y);
+    GridCoord p = Azgath::ComputeGridCoord(x, y);
 
     int32 gx = (MAX_NUMBER_OF_GRIDS - 1) - p.x_coord;
     int32 gy = (MAX_NUMBER_OF_GRIDS - 1) - p.y_coord;

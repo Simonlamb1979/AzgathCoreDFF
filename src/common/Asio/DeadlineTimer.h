@@ -20,7 +20,7 @@
 
 #include <boost/asio/deadline_timer.hpp>
 
-namespace Trinity
+namespace Azgath
 {
     namespace Asio
     {

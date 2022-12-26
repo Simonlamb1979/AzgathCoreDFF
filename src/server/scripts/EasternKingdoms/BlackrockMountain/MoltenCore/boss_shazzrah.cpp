@@ -123,7 +123,7 @@ class spell_shazzrah_gate_dummy : public SpellScript
         if (targets.empty())
             return;
 
-        WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+        WorldObject* target = Azgath::Containers::SelectRandomContainerElement(targets);
         targets.clear();
         targets.push_back(target);
     }

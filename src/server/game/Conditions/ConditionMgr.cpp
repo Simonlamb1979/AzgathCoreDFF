@@ -313,7 +313,7 @@ bool Condition::Meets(ConditionSourceInfo& sourceInfo) const
         case CONDITION_RACE:
         {
             if (Unit const* unit = object->ToUnit())
-                condMeets = Trinity::RaceMask<uint32>{ ConditionValue1 }.HasRace(unit->GetRace());
+                condMeets = Azgath::RaceMask<uint32>{ ConditionValue1 }.HasRace(unit->GetRace());
             break;
         }
         case CONDITION_GENDER:
@@ -1191,7 +1191,7 @@ bool ConditionMgr::IsSpellUsedInSpellClickConditions(uint32 spellId) const
 
 ConditionContainer const* ConditionMgr::GetConditionsForAreaTrigger(uint32 areaTriggerId, bool isServerSide) const
 {
-    return Trinity::Containers::MapGetValuePtr(AreaTriggerConditionContainerStore, { areaTriggerId, isServerSide });
+    return Azgath::Containers::MapGetValuePtr(AreaTriggerConditionContainerStore, { areaTriggerId, isServerSide });
 }
 
 bool ConditionMgr::IsObjectMeetingTrainerSpellConditions(uint32 trainerId, uint32 spellId, Player* player) const
@@ -1211,7 +1211,7 @@ bool ConditionMgr::IsObjectMeetingTrainerSpellConditions(uint32 trainerId, uint3
 
 bool ConditionMgr::IsObjectMeetingVisibilityByObjectIdConditions(uint32 objectType, uint32 entry, WorldObject const* seer) const
 {
-    if (ConditionContainer const* conditions = Trinity::Containers::MapGetValuePtr(ObjectVisibilityConditionStore, { objectType, entry }))
+    if (ConditionContainer const* conditions = Azgath::Containers::MapGetValuePtr(ObjectVisibilityConditionStore, { objectType, entry }))
     {
         TC_LOG_DEBUG("condition", "IsObjectMeetingVisibilityByObjectIdConditions: found conditions for objectType %u entry %u", objectType, entry);
         return IsObjectMeetToConditions(seer, *conditions);
@@ -1544,7 +1544,7 @@ bool ConditionMgr::addToGossipMenus(Condition* cond) const
 
 bool ConditionMgr::addToGossipMenuItems(Condition* cond) const
 {
-    Trinity::IteratorPair pMenuItemBounds = sObjectMgr->GetGossipMenuItemsMapBoundsNonConst(cond->SourceGroup);
+    Azgath::IteratorPair pMenuItemBounds = sObjectMgr->GetGossipMenuItemsMapBoundsNonConst(cond->SourceGroup);
     for (auto& [_, gossipMenuItem] : pMenuItemBounds)
     {
         if (gossipMenuItem.MenuID == cond->SourceGroup && gossipMenuItem.OrderIndex == uint32(cond->SourceEntry))
@@ -2337,7 +2337,7 @@ bool ConditionMgr::isConditionTypeValid(Condition* cond) const
         }
         case CONDITION_RACE:
         {
-            Trinity::RaceMask<uint64> invalidRaceMask = Trinity::RaceMask<uint64>{ cond->ConditionValue1 } & ~RACEMASK_ALL_PLAYABLE;
+            Azgath::RaceMask<uint64> invalidRaceMask = Azgath::RaceMask<uint64>{ cond->ConditionValue1 } & ~RACEMASK_ALL_PLAYABLE;
             if (!invalidRaceMask.IsEmpty()) // uint32 works thanks to weird index remapping in racemask
             {
                 TC_LOG_ERROR("sql.sql", "%s has non existing racemask (" UI64FMTD "), skipped.", cond->ToString(true).c_str(), invalidRaceMask.RawValue);
@@ -2411,7 +2411,7 @@ bool ConditionMgr::isConditionTypeValid(Condition* cond) const
         }
         case CONDITION_OBJECT_ENTRY_GUID_LEGACY:
             cond->ConditionType = CONDITION_OBJECT_ENTRY_GUID;
-            cond->ConditionValue1 = Trinity::Legacy::ConvertLegacyTypeID(Trinity::Legacy::TypeID(cond->ConditionValue1));
+            cond->ConditionValue1 = Azgath::Legacy::ConvertLegacyTypeID(Azgath::Legacy::TypeID(cond->ConditionValue1));
             [[fallthrough]];
         case CONDITION_OBJECT_ENTRY_GUID:
         {
@@ -2478,7 +2478,7 @@ bool ConditionMgr::isConditionTypeValid(Condition* cond) const
         }
         case CONDITION_TYPE_MASK_LEGACY:
             cond->ConditionType = CONDITION_TYPE_MASK;
-            cond->ConditionValue1 = Trinity::Legacy::ConvertLegacyTypeMask(cond->ConditionValue1);
+            cond->ConditionValue1 = Azgath::Legacy::ConvertLegacyTypeMask(cond->ConditionValue1);
             [[fallthrough]];
         case CONDITION_TYPE_MASK:
         {
@@ -3396,7 +3396,7 @@ bool ConditionMgr::IsPlayerMeetingCondition(Player const* player, PlayerConditio
 ByteBuffer HexToBytes(const std::string& hex)
 {
     ByteBuffer buffer(hex.length() / 2, ByteBuffer::Resize{});
-    Trinity::Impl::HexStrToByteArray(hex, buffer.contents(), buffer.size());
+    Azgath::Impl::HexStrToByteArray(hex, buffer.contents(), buffer.size());
     return buffer;
 }
 

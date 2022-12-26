@@ -30,7 +30,7 @@ EndScriptData */
 #include "Player.h"
 #include "RBAC.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class achievement_commandscript : public CommandScript
 {

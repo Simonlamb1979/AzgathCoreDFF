@@ -67,7 +67,7 @@ namespace
     }
 }
 
-namespace Trinity
+namespace Azgath
 {
 
 void Assert(char const* file, int line, char const* function, std::string debugInfo, char const* message)
@@ -152,7 +152,7 @@ void AbortHandler(int sigval)
     Crash(formattedMessage.c_str());
 }
 
-} // namespace Trinity
+} // namespace Azgath
 
 std::string GetDebugInfo()
 {

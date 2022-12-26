@@ -60,7 +60,7 @@ EndScriptData */
 #include <set>
 #include <sstream>
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class debug_commandscript : public CommandScript
 {
@@ -1036,8 +1036,8 @@ public:
         else
         {
             Creature* passenger = nullptr;
-            Trinity::AllCreaturesOfEntryInRange check(handler->GetPlayer(), entry, 20.0f);
-            Trinity::CreatureSearcher<Trinity::AllCreaturesOfEntryInRange> searcher(handler->GetPlayer(), passenger, check);
+            Azgath::AllCreaturesOfEntryInRange check(handler->GetPlayer(), entry, 20.0f);
+            Azgath::CreatureSearcher<Azgath::AllCreaturesOfEntryInRange> searcher(handler->GetPlayer(), passenger, check);
             Cell::VisitAllObjects(handler->GetPlayer(), searcher, 30.0f);
             if (!passenger || passenger == target)
                 return false;

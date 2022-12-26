@@ -119,8 +119,8 @@ class TC_GAME_API Warden
         std::array<uint8, 16> _inputKey = {};
         std::array<uint8, 16> _outputKey = {};
         std::array<uint8, 16> _seed = {};
-        Trinity::Crypto::ARC4 _inputCrypto;
-        Trinity::Crypto::ARC4 _outputCrypto;
+        Azgath::Crypto::ARC4 _inputCrypto;
+        Azgath::Crypto::ARC4 _outputCrypto;
         uint32 _checkTimer;                          // Timer for sending check requests
         uint32 _clientResponseTimer;                 // Timer for client response delay
         bool _dataSent;

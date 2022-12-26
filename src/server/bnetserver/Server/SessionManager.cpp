@@ -20,7 +20,7 @@
 #include "SRP6.h"
 #include "Util.h"
 
-bool Battlenet::SessionManager::StartNetwork(Trinity::Asio::IoContext& ioContext, std::string const& bindIp, uint16 port, int threadCount)
+bool Battlenet::SessionManager::StartNetwork(Azgath::Asio::IoContext& ioContext, std::string const& bindIp, uint16 port, int threadCount)
 {
     if (!BaseSocketMgr::StartNetwork(ioContext, bindIp, port, threadCount))
         return false;

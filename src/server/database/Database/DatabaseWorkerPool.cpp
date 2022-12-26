@@ -477,7 +477,7 @@ char const* DatabaseWorkerPool<T>::GetDatabaseName() const
 template <class T>
 void DatabaseWorkerPool<T>::Execute(char const* sql)
 {
-    if (Trinity::IsFormatEmptyOrNull(sql))
+    if (Azgath::IsFormatEmptyOrNull(sql))
         return;
 
     BasicStatementTask* task = new BasicStatementTask(sql);
@@ -494,7 +494,7 @@ void DatabaseWorkerPool<T>::Execute(PreparedStatement<T>* stmt)
 template <class T>
 void DatabaseWorkerPool<T>::DirectExecute(char const* sql)
 {
-    if (Trinity::IsFormatEmptyOrNull(sql))
+    if (Azgath::IsFormatEmptyOrNull(sql))
         return;
 
     T* connection = GetFreeConnection();

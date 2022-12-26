@@ -25,7 +25,7 @@
 #include <iterator>
 #include <vector>
 
-namespace Trinity::Impl
+namespace Azgath::Impl
 {
     struct CryptoGenericsImpl
     {
@@ -33,7 +33,7 @@ namespace Trinity::Impl
         static typename Cipher::IV GenerateRandomIV()
         {
             typename Cipher::IV iv;
-            Trinity::Crypto::GetRandomBytes(iv);
+            Azgath::Crypto::GetRandomBytes(iv);
             return iv;
         }
 
@@ -56,7 +56,7 @@ namespace Trinity::Impl
     };
 }
 
-namespace Trinity::Crypto
+namespace Azgath::Crypto
 {
     template <typename Cipher>
     void AEEncryptWithRandomIV(std::vector<uint8>& data, typename Cipher::Key const& key)
@@ -64,7 +64,7 @@ namespace Trinity::Crypto
         using IV = typename Cipher::IV;
         using Tag = typename Cipher::Tag;
         // select random IV
-        IV iv = Trinity::Impl::CryptoGenericsImpl::GenerateRandomIV<Cipher>();
+        IV iv = Azgath::Impl::CryptoGenericsImpl::GenerateRandomIV<Cipher>();
         Tag tag;
 
         // encrypt data
@@ -74,8 +74,8 @@ namespace Trinity::Crypto
         ASSERT(success);
 
         // append trailing IV and tag
-        Trinity::Impl::CryptoGenericsImpl::AppendToBack(data, iv);
-        Trinity::Impl::CryptoGenericsImpl::AppendToBack(data, tag);
+        Azgath::Impl::CryptoGenericsImpl::AppendToBack(data, iv);
+        Azgath::Impl::CryptoGenericsImpl::AppendToBack(data, tag);
     }
 
     template <typename Cipher>
@@ -92,8 +92,8 @@ namespace Trinity::Crypto
         // extract trailing IV and tag
         IV iv;
         Tag tag;
-        Trinity::Impl::CryptoGenericsImpl::SplitFromBack(data, tag);
-        Trinity::Impl::CryptoGenericsImpl::SplitFromBack(data, iv);
+        Azgath::Impl::CryptoGenericsImpl::SplitFromBack(data, tag);
+        Azgath::Impl::CryptoGenericsImpl::SplitFromBack(data, iv);
 
         // decrypt data
         Cipher cipher(false);

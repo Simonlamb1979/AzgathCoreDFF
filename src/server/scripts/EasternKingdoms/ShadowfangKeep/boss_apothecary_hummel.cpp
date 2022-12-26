@@ -377,7 +377,7 @@ class spell_apothecary_lingering_fumes : public SpellScript
         if (triggers.empty())
             return;
 
-        Creature* trigger = Trinity::Containers::SelectRandomContainerElement(triggers);
+        Creature* trigger = Azgath::Containers::SelectRandomContainerElement(triggers);
         caster->GetMotionMaster()->MovePoint(0, trigger->GetPosition());
 
     }
@@ -402,11 +402,11 @@ class spell_apothecary_validate_area : public SpellScript
 
     void FilterTargets(std::list<WorldObject*>& targets)
     {
-        targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_BUNNY_LOCKDOWN));
+        targets.remove_if(Azgath::UnitAuraCheck(true, SPELL_BUNNY_LOCKDOWN));
         if (targets.empty())
             return;
 
-        WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+        WorldObject* target = Azgath::Containers::SelectRandomContainerElement(targets);
         targets.clear();
         targets.push_back(target);
     }

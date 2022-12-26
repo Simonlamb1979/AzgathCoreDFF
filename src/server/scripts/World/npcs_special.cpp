@@ -474,8 +474,8 @@ public:
         {
             // Returns true if no nearby player has aura "Test Ribbon Pole Channel".
             std::list<Player*> players;
-            Trinity::UnitAuraCheck check(true, SPELL_RIBBON_DANCE_COSMETIC);
-            Trinity::PlayerListSearcher<Trinity::UnitAuraCheck> searcher(me, players, check);
+            Azgath::UnitAuraCheck check(true, SPELL_RIBBON_DANCE_COSMETIC);
+            Azgath::PlayerListSearcher<Azgath::UnitAuraCheck> searcher(me, players, check);
             Cell::VisitWorldObjects(me, searcher, 10.0f);
 
             return players.empty();
@@ -1509,7 +1509,7 @@ struct npc_brewfest_reveler_2 : ScriptedAI
                 {
                     // Turn to random brewfest reveler within set range
                     if (!_revelerGuids.empty())
-                        if (Creature* creature = ObjectAccessor::GetCreature(*me, Trinity::Containers::SelectRandomContainerElement(_revelerGuids)))
+                        if (Creature* creature = ObjectAccessor::GetCreature(*me, Azgath::Containers::SelectRandomContainerElement(_revelerGuids)))
                             me->SetFacingToObject(creature);
 
                     _events.ScheduleEvent(EVENT_EMOTE, 2s, 6s);
@@ -1519,7 +1519,7 @@ struct npc_brewfest_reveler_2 : ScriptedAI
                     // Play random emote or dance
                     if (roll_chance_i(50))
                     {
-                        me->HandleEmoteCommand(Trinity::Containers::SelectRandomContainerElement(BrewfestRandomEmote));
+                        me->HandleEmoteCommand(Azgath::Containers::SelectRandomContainerElement(BrewfestRandomEmote));
                         _events.ScheduleEvent(EVENT_NEXT, 4s, 6s);
                     }
                     else

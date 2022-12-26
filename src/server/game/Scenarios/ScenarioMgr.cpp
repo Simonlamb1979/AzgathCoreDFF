@@ -197,9 +197,9 @@ void ScenarioMgr::LoadScenarioPOI()
         if (!sCriteriaMgr->GetCriteriaTree(criteriaTreeID))
             TC_LOG_ERROR("sql.sql", "`scenario_poi` CriteriaTreeID (%u) Idx1 (%u) does not correspond to a valid criteria tree", criteriaTreeID, idx1);
 
-        if (std::map<int32, std::vector<ScenarioPOIPoint>>* blobs = Trinity::Containers::MapGetValuePtr(allPoints, criteriaTreeID))
+        if (std::map<int32, std::vector<ScenarioPOIPoint>>* blobs = Azgath::Containers::MapGetValuePtr(allPoints, criteriaTreeID))
         {
-            if (std::vector<ScenarioPOIPoint>* points = Trinity::Containers::MapGetValuePtr(*blobs, idx1))
+            if (std::vector<ScenarioPOIPoint>* points = Azgath::Containers::MapGetValuePtr(*blobs, idx1))
             {
                 _scenarioPOIStore[criteriaTreeID].emplace_back(blobIndex, mapID, uiMapID, priority, flags, worldEffectID, playerConditionID, navigationPlayerConditionID, std::move(*points));
                 ++count;

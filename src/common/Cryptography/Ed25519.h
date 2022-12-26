@@ -26,7 +26,7 @@
 
 class BigNumber;
 
-namespace Trinity::Crypto
+namespace Azgath::Crypto
 {
 class TC_COMMON_API Ed25519
 {

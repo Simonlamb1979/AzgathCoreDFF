@@ -225,7 +225,7 @@ bool ExtractSingleWmo(std::string& fname)
     //printf("root has %d groups\n", froot->nGroups);
     for (std::size_t i = 0; i < froot.groupFileDataIDs.size(); ++i)
     {
-        std::string s = Trinity::StringFormat("FILE%08X.xxx", froot.groupFileDataIDs[i]);
+        std::string s = Azgath::StringFormat("FILE%08X.xxx", froot.groupFileDataIDs[i]);
         WMOGroup fgroup(s);
         if (!fgroup.open(&froot))
         {
@@ -280,7 +280,7 @@ void ParsMapFiles()
             if (!fileDataId)
                 return nullptr;
 
-            std::string description = Trinity::StringFormat("WDT for map %u - %s (FileDataID %u)", mapId, mapEntryItr->Name.c_str(), fileDataId);
+            std::string description = Azgath::StringFormat("WDT for map %u - %s (FileDataID %u)", mapId, mapEntryItr->Name.c_str(), fileDataId);
             std::string directory = mapEntryItr->Directory;
             itr = wdts.emplace(std::piecewise_construct, std::forward_as_tuple(mapId), std::forward_as_tuple(fileDataId, description, std::move(directory), maps_that_are_parents.count(mapId) > 0)).first;
             if (!itr->second.init(mapId))
@@ -445,7 +445,7 @@ static bool RetardCheck()
 
 int main(int argc, char ** argv)
 {
-    Trinity::Banner::Show("VMAP data extractor", [](char const* text) { printf("%s\n", text); }, nullptr);
+    Azgath::Banner::Show("VMAP data extractor", [](char const* text) { printf("%s\n", text); }, nullptr);
 
     bool success = true;
 

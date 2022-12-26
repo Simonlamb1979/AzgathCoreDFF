@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 
-namespace Trinity
+namespace Azgath
 {
 namespace Impl
 {

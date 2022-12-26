@@ -86,7 +86,7 @@ bool Corpse::Create(ObjectGuid::LowType guidlow, Player* owner)
     SetObjectScale(1.0f);
     SetOwnerGUID(owner->GetGUID());
 
-    _cellCoord = Trinity::ComputeCellCoord(GetPositionX(), GetPositionY());
+    _cellCoord = Azgath::ComputeCellCoord(GetPositionX(), GetPositionY());
 
     PhasingHandler::InheritPhaseShift(this, owner);
 
@@ -193,10 +193,10 @@ bool Corpse::LoadCorpseFromDB(ObjectGuid::LowType guid, Field* fields)
 
     SetObjectScale(1.0f);
     SetDisplayId(fields[5].GetUInt32());
-    std::vector<std::string_view> items = Trinity::Tokenize(fields[6].GetStringView(), ' ', false);
+    std::vector<std::string_view> items = Azgath::Tokenize(fields[6].GetStringView(), ' ', false);
     if (items.size() == m_corpseData->Items.size())
         for (size_t index = 0; index < m_corpseData->Items.size(); ++index)
-            SetItem(index, Trinity::StringTo<uint32>(items[index]).value_or(0));
+            SetItem(index, Azgath::StringTo<uint32>(items[index]).value_or(0));
 
     SetRace(fields[7].GetUInt8());
     SetClass(fields[8].GetUInt8());
@@ -222,7 +222,7 @@ bool Corpse::LoadCorpseFromDB(ObjectGuid::LowType guid, Field* fields)
         return false;
     }
 
-    _cellCoord = Trinity::ComputeCellCoord(GetPositionX(), GetPositionY());
+    _cellCoord = Azgath::ComputeCellCoord(GetPositionX(), GetPositionY());
     return true;
 }
 

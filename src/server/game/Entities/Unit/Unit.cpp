@@ -1536,7 +1536,7 @@ void Unit::DealMeleeDamage(CalcDamageInfo* damageInfo, bool durabilityLoss)
     }
 }
 
-void Unit::HandleEmoteCommand(Emote emoteId, Player* target /*=nullptr*/, Trinity::IteratorPair<int32 const*> spellVisualKitIds /*= {}*/, int32 sequenceVariation /*= 0*/)
+void Unit::HandleEmoteCommand(Emote emoteId, Player* target /*=nullptr*/, Azgath::IteratorPair<int32 const*> spellVisualKitIds /*= {}*/, int32 sequenceVariation /*= 0*/)
 {
     WorldPackets::Chat::Emote packet;
     packet.Guid = GetGUID();
@@ -1759,7 +1759,7 @@ void Unit::HandleEmoteCommand(Emote emoteId, Player* target /*=nullptr*/, Trinit
     // We're going to call functions which can modify content of the list during iteration over it's elements
     // Let's copy the list so we can prevent iterator invalidation
     AuraEffectList vSchoolAbsorbCopy(damageInfo.GetVictim()->GetAuraEffectsByType(SPELL_AURA_SCHOOL_ABSORB));
-    vSchoolAbsorbCopy.sort(Trinity::AbsorbAuraOrderPred());
+    vSchoolAbsorbCopy.sort(Azgath::AbsorbAuraOrderPred());
 
     // absorb without mana cost
     for (AuraEffectList::iterator itr = vSchoolAbsorbCopy.begin(); (itr != vSchoolAbsorbCopy.end()) && (damageInfo.GetDamage() > 0); ++itr)
@@ -4365,7 +4365,7 @@ AuraApplication * Unit::GetAuraApplication(uint32 spellId, ObjectGuid casterGUID
 
 AuraApplication* Unit::GetAuraApplication(uint32 spellId, std::function<bool(AuraApplication const*)> const& predicate) const
 {
-    for (AuraApplicationMap::value_type const& pair : Trinity::Containers::MapEqualRange(m_appliedAuras, spellId))
+    for (AuraApplicationMap::value_type const& pair : Azgath::Containers::MapEqualRange(m_appliedAuras, spellId))
         if (predicate(pair.second))
             return pair.second;
 
@@ -4374,7 +4374,7 @@ AuraApplication* Unit::GetAuraApplication(uint32 spellId, std::function<bool(Aur
 
 AuraApplication* Unit::GetAuraApplication(uint32 spellId, std::function<bool(Aura const*)> const& predicate) const
 {
-    for (AuraApplicationMap::value_type const& pair : Trinity::Containers::MapEqualRange(m_appliedAuras, spellId))
+    for (AuraApplicationMap::value_type const& pair : Azgath::Containers::MapEqualRange(m_appliedAuras, spellId))
         if (predicate(pair.second->GetBase()))
             return pair.second;
 
@@ -7212,7 +7212,7 @@ bool Unit::IsImmunedToSpell(SpellInfo const* spellInfo, WorldObject const* caste
 
     auto hasImmunity = [requireImmunityPurgesEffectAttribute](SpellImmuneContainer const& container, uint32 key)
     {
-        Trinity::IteratorPair<SpellImmuneContainer::const_iterator> range = Trinity::Containers::MapEqualRange(container, key);
+        Azgath::IteratorPair<SpellImmuneContainer::const_iterator> range = Azgath::Containers::MapEqualRange(container, key);
         if (!requireImmunityPurgesEffectAttribute)
             return range.begin() != range.end();
 
@@ -7336,7 +7336,7 @@ bool Unit::IsImmunedToSpellEffect(SpellInfo const* spellInfo, SpellEffectInfo co
 
     auto hasImmunity = [requireImmunityPurgesEffectAttribute](SpellImmuneContainer const& container, uint32 key)
     {
-        Trinity::IteratorPair<SpellImmuneContainer::const_iterator> range = Trinity::Containers::MapEqualRange(container, key);
+        Azgath::IteratorPair<SpellImmuneContainer::const_iterator> range = Azgath::Containers::MapEqualRange(container, key);
         if (!requireImmunityPurgesEffectAttribute)
             return range.begin() != range.end();
 
@@ -9680,15 +9680,15 @@ void CharmInfo::LoadPetActionBar(const std::string& data)
 {
     InitPetActionBar();
 
-    std::vector<std::string_view> tokens = Trinity::Tokenize(data, ' ', false);
+    std::vector<std::string_view> tokens = Azgath::Tokenize(data, ' ', false);
     if (tokens.size() != (ACTION_BAR_INDEX_END-ACTION_BAR_INDEX_START) * 2)
         return;                                             // non critical, will reset to default
 
     auto iter = tokens.begin();
     for (uint8 index = ACTION_BAR_INDEX_START; index < ACTION_BAR_INDEX_END; ++index)
     {
-        Optional<uint8> type = Trinity::StringTo<uint8>(*(iter++));
-        Optional<uint32> action = Trinity::StringTo<uint32>(*(iter++));
+        Optional<uint8> type = Azgath::StringTo<uint8>(*(iter++));
+        Optional<uint32> action = Azgath::StringTo<uint32>(*(iter++));
 
         if (!type || !action)
             continue;
@@ -10255,8 +10255,8 @@ void Unit::UpdateReactives(uint32 p_time)
 Unit* Unit::SelectNearbyTarget(Unit* exclude, float dist) const
 {
     std::list<Unit*> targets;
-    Trinity::AnyUnfriendlyUnitInObjectRangeCheck u_check(this, this, dist);
-    Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(this, targets, u_check);
+    Azgath::AnyUnfriendlyUnitInObjectRangeCheck u_check(this, this, dist);
+    Azgath::UnitListSearcher<Azgath::AnyUnfriendlyUnitInObjectRangeCheck> searcher(this, targets, u_check);
     Cell::VisitAllObjects(this, searcher, dist);
 
     // remove current target
@@ -10280,7 +10280,7 @@ Unit* Unit::SelectNearbyTarget(Unit* exclude, float dist) const
         return nullptr;
 
     // select random
-    return Trinity::Containers::SelectRandomContainerElement(targets);
+    return Azgath::Containers::SelectRandomContainerElement(targets);
 }
 
 uint32 Unit::GetBaseAttackTime(WeaponAttackType att) const
@@ -10692,7 +10692,7 @@ void Unit::SetMeleeAnimKitId(uint16 animKitId)
             }
         }
 
-        KillRewarder(Trinity::IteratorPair(tappers.data(), tappers.data() + tappers.size()), victim, false).Reward();
+        KillRewarder(Azgath::IteratorPair(tappers.data(), tappers.data() + tappers.size()), victim, false).Reward();
     }
 
     // Do KILL and KILLED procs. KILL proc is called only for the unit who landed the killing blow (and its owner - for pets and totems) regardless of who tapped the victim
@@ -11744,7 +11744,7 @@ void Unit::UpdateObjectVisibility(bool forced)
     {
         WorldObject::UpdateObjectVisibility(true);
         // call MoveInLineOfSight for nearby creatures
-        Trinity::AIRelocationNotifier notifier(*this);
+        Azgath::AIRelocationNotifier notifier(*this);
         Cell::VisitAllObjects(this, notifier, GetVisibilityRange());
     }
 }
@@ -11867,7 +11867,7 @@ uint32 Unit::GetModelForForm(ShapeshiftForm form, uint32 spellId) const
                 }
 
                 if (!displayIds.empty())
-                    return Trinity::Containers::SelectRandomContainerElement(displayIds);
+                    return Azgath::Containers::SelectRandomContainerElement(displayIds);
             }
             else
             {
@@ -12309,7 +12309,7 @@ void Unit::SendTeleportPacket(Position const& pos)
 bool Unit::UpdatePosition(float x, float y, float z, float orientation, bool teleport)
 {
     // prevent crash when a bad coord is sent by the client
-    if (!Trinity::IsValidMapCoord(x, y, z, orientation))
+    if (!Azgath::IsValidMapCoord(x, y, z, orientation))
     {
         TC_LOG_DEBUG("entities.unit", "Unit::UpdatePosition(%f, %f, %f) .. bad coordinates!", x, y, z);
         return false;
@@ -13397,9 +13397,9 @@ bool Unit::IsHighestExclusiveAuraEffect(SpellInfo const* spellInfo, AuraType aur
 
 void Unit::Talk(std::string_view text, ChatMsg msgType, Language language, float textRange, WorldObject const* target)
 {
-    Trinity::CustomChatTextBuilder builder(this, msgType, text, language, target);
-    Trinity::LocalizedDo<Trinity::CustomChatTextBuilder> localizer(builder);
-    Trinity::PlayerDistWorker<Trinity::LocalizedDo<Trinity::CustomChatTextBuilder> > worker(this, textRange, localizer);
+    Azgath::CustomChatTextBuilder builder(this, msgType, text, language, target);
+    Azgath::LocalizedDo<Azgath::CustomChatTextBuilder> localizer(builder);
+    Azgath::PlayerDistWorker<Azgath::LocalizedDo<Azgath::CustomChatTextBuilder> > worker(this, textRange, localizer);
     Cell::VisitWorldObjects(this, worker, textRange);
 }
 
@@ -13464,9 +13464,9 @@ void Unit::Talk(uint32 textId, ChatMsg msgType, float textRange, WorldObject con
         return;
     }
 
-    Trinity::BroadcastTextBuilder builder(this, msgType, textId, GetGender(), target);
-    Trinity::LocalizedDo<Trinity::BroadcastTextBuilder> localizer(builder);
-    Trinity::PlayerDistWorker<Trinity::LocalizedDo<Trinity::BroadcastTextBuilder> > worker(this, textRange, localizer);
+    Azgath::BroadcastTextBuilder builder(this, msgType, textId, GetGender(), target);
+    Azgath::LocalizedDo<Azgath::BroadcastTextBuilder> localizer(builder);
+    Azgath::PlayerDistWorker<Azgath::LocalizedDo<Azgath::BroadcastTextBuilder> > worker(this, textRange, localizer);
     Cell::VisitWorldObjects(this, worker, textRange);
 }
 

@@ -86,7 +86,7 @@ void AreaTrigger::RemoveFromWorld()
         WorldObject::RemoveFromWorld();
 
         if (_spawnId)
-            Trinity::Containers::MultimapErasePair(GetMap()->GetAreaTriggerBySpawnIdStore(), _spawnId, this);
+            Azgath::Containers::MultimapErasePair(GetMap()->GetAreaTriggerBySpawnIdStore(), _spawnId, this);
         GetMap()->GetObjectsStore().Remove<AreaTrigger>(GetGUID());
     }
 }
@@ -403,15 +403,15 @@ void AreaTrigger::UpdateTargetList()
 
 void AreaTrigger::SearchUnits(std::vector<Unit*>& targetList, float radius, bool check3D)
 {
-    Trinity::AnyUnitInObjectRangeCheck check(this, radius, check3D);
+    Azgath::AnyUnitInObjectRangeCheck check(this, radius, check3D);
     if (IsServerSide())
     {
-        Trinity::PlayerListSearcher<Trinity::AnyUnitInObjectRangeCheck> searcher(this, targetList, check);
+        Azgath::PlayerListSearcher<Azgath::AnyUnitInObjectRangeCheck> searcher(this, targetList, check);
         Cell::VisitWorldObjects(this, searcher, GetMaxSearchRadius());
     }
     else
     {
-        Trinity::UnitListSearcher<Trinity::AnyUnitInObjectRangeCheck> searcher(this, targetList, check);
+        Azgath::UnitListSearcher<Azgath::AnyUnitInObjectRangeCheck> searcher(this, targetList, check);
         Cell::VisitAllObjects(this, searcher, GetMaxSearchRadius());
     }
 }

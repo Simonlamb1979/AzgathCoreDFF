@@ -24,7 +24,7 @@
 #include "WorldSession.h"
 #include <cstdarg>
 
-namespace Trinity
+namespace Azgath
 {
 ChatPacketSender::ChatPacketSender(ChatMsg chatType, ::Language language, WorldObject const* sender, WorldObject const* receiver,
     std::string message, uint32 achievementId /*= 0*/, LocaleConstant locale /*= LOCALE_enUS*/)

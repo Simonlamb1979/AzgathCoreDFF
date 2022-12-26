@@ -594,7 +594,7 @@ struct boss_headless_horseman : public ScriptedAI
                     _events.Repeat(30s);
                     break;
                 case EVENT_RANDOM_LAUGH:
-                    DoPlaySoundToSet(me, Trinity::Containers::SelectRandomContainerElement(HeadlessHorsemanRandomLaughSound));
+                    DoPlaySoundToSet(me, Azgath::Containers::SelectRandomContainerElement(HeadlessHorsemanRandomLaughSound));
                     _events.Repeat(30s, 60s);
                     break;
                 default:

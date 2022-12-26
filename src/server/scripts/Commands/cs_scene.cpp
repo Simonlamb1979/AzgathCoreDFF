@@ -25,7 +25,7 @@
 #include "RBAC.h"
 #include "WorldSession.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class scene_commandscript : public CommandScript
 {

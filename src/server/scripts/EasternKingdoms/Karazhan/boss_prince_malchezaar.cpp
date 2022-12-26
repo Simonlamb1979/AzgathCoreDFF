@@ -369,7 +369,7 @@ public:
                 pos = me->GetRandomNearPosition(60);
             else
             {
-                point = Trinity::Containers::SelectRandomContainerElement(positions);
+                point = Azgath::Containers::SelectRandomContainerElement(positions);
                 pos.Relocate(point->x, point->y, INFERNAL_Z, frand(0.0f, float(M_PI * 2)));
             }
 

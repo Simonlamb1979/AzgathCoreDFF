@@ -3650,17 +3650,17 @@ void Spell::EffectForceDeselect()
     float dist = unitCaster->GetVisibilityRange();
 
     // clear focus
-    Trinity::PacketSenderOwning<WorldPackets::Combat::BreakTarget> breakTarget;
+    Azgath::PacketSenderOwning<WorldPackets::Combat::BreakTarget> breakTarget;
     breakTarget.Data.UnitGUID = m_caster->GetGUID();
     breakTarget.Data.Write();
-    Trinity::MessageDistDelivererToHostile<Trinity::PacketSenderOwning<WorldPackets::Combat::BreakTarget>> notifierBreak(unitCaster, breakTarget, dist);
+    Azgath::MessageDistDelivererToHostile<Azgath::PacketSenderOwning<WorldPackets::Combat::BreakTarget>> notifierBreak(unitCaster, breakTarget, dist);
     Cell::VisitWorldObjects(m_caster, notifierBreak, dist);
 
     // and selection
-    Trinity::PacketSenderOwning<WorldPackets::Spells::ClearTarget> clearTarget;
+    Azgath::PacketSenderOwning<WorldPackets::Spells::ClearTarget> clearTarget;
     clearTarget.Data.Guid = m_caster->GetGUID();
     clearTarget.Data.Write();
-    Trinity::MessageDistDelivererToHostile<Trinity::PacketSenderOwning<WorldPackets::Spells::ClearTarget>> notifierClear(unitCaster, clearTarget, dist);
+    Azgath::MessageDistDelivererToHostile<Azgath::PacketSenderOwning<WorldPackets::Spells::ClearTarget>> notifierClear(unitCaster, clearTarget, dist);
     Cell::VisitWorldObjects(m_caster, notifierClear, dist);
 
     // we should also force pets to remove us from current target
@@ -5272,8 +5272,8 @@ void Spell::EffectCancelConversation()
         return;
 
     std::vector<WorldObject*> objs;
-    Trinity::ObjectEntryAndPrivateOwnerIfExistsCheck check(unitTarget->GetGUID(), effectInfo->MiscValue);
-    Trinity::WorldObjectListSearcher<Trinity::ObjectEntryAndPrivateOwnerIfExistsCheck> checker(unitTarget, objs, check, GRID_MAP_TYPE_MASK_CONVERSATION);
+    Azgath::ObjectEntryAndPrivateOwnerIfExistsCheck check(unitTarget->GetGUID(), effectInfo->MiscValue);
+    Azgath::WorldObjectListSearcher<Azgath::ObjectEntryAndPrivateOwnerIfExistsCheck> checker(unitTarget, objs, check, GRID_MAP_TYPE_MASK_CONVERSATION);
     Cell::VisitGridObjects(unitTarget, checker, 100.0f);
 
     for (WorldObject* obj : objs)

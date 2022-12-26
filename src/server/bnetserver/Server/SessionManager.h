@@ -30,7 +30,7 @@ namespace Battlenet
     public:
         static SessionManager& Instance();
 
-        bool StartNetwork(Trinity::Asio::IoContext& ioContext, std::string const& bindIp, uint16 port, int threadCount = 1) override;
+        bool StartNetwork(Azgath::Asio::IoContext& ioContext, std::string const& bindIp, uint16 port, int threadCount = 1) override;
 
     protected:
         NetworkThread<Session>* CreateThreads() const override;

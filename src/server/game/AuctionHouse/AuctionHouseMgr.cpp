@@ -58,10 +58,10 @@ AuctionsBucketKey::AuctionsBucketKey(WorldPackets::AuctionHouse::AuctionBucketKe
 std::size_t AuctionsBucketKey::Hash(AuctionsBucketKey const& key)
 {
     std::size_t hashVal = 0;
-    Trinity::hash_combine(hashVal, std::hash<uint32>()(key.ItemId));
-    Trinity::hash_combine(hashVal, std::hash<uint16>()(key.ItemLevel));
-    Trinity::hash_combine(hashVal, std::hash<uint16>()(key.BattlePetSpeciesId));
-    Trinity::hash_combine(hashVal, std::hash<uint16>()(key.SuffixItemNameDescriptionId));
+    Azgath::hash_combine(hashVal, std::hash<uint32>()(key.ItemId));
+    Azgath::hash_combine(hashVal, std::hash<uint16>()(key.ItemLevel));
+    Azgath::hash_combine(hashVal, std::hash<uint16>()(key.BattlePetSpeciesId));
+    Azgath::hash_combine(hashVal, std::hash<uint16>()(key.SuffixItemNameDescriptionId));
     return hashVal;
 }
 
@@ -383,7 +383,7 @@ public:
         }
     }
 
-    Trinity::IteratorPair<typename std::vector<T const*>::const_iterator> GetResultRange() const
+    Azgath::IteratorPair<typename std::vector<T const*>::const_iterator> GetResultRange() const
     {
         return std::make_pair(_items.begin() + _offset, _items.end());
     }
@@ -455,7 +455,7 @@ AuctionHouseObject* AuctionHouseMgr::GetAuctionsById(uint32 auctionHouseId)
 
 Item* AuctionHouseMgr::GetAItem(ObjectGuid itemGuid)
 {
-    return Trinity::Containers::MapGetValuePtr(_itemsByGuid, itemGuid);
+    return Azgath::Containers::MapGetValuePtr(_itemsByGuid, itemGuid);
 }
 
 uint64 AuctionHouseMgr::GetCommodityAuctionDeposit(ItemTemplate const* item, Minutes time, uint32 quantity)
@@ -507,17 +507,17 @@ std::string AuctionHouseMgr::BuildAuctionMailSubject(uint32 itemId, AuctionMailT
 
 std::string AuctionHouseMgr::BuildAuctionWonMailBody(ObjectGuid guid, uint64 bid, uint64 buyout)
 {
-    return Trinity::StringFormat("%s:" UI64FMTD ":" UI64FMTD ":0", guid.ToString().c_str(), bid, buyout);
+    return Azgath::StringFormat("%s:" UI64FMTD ":" UI64FMTD ":0", guid.ToString().c_str(), bid, buyout);
 }
 
 std::string AuctionHouseMgr::BuildAuctionSoldMailBody(ObjectGuid guid, uint64 bid, uint64 buyout, uint32 deposit, uint64 consignment)
 {
-    return Trinity::StringFormat("%s:" UI64FMTD ":" UI64FMTD ":%u:" UI64FMTD ":0", guid.ToString().c_str(), bid, buyout, deposit, consignment);
+    return Azgath::StringFormat("%s:" UI64FMTD ":" UI64FMTD ":%u:" UI64FMTD ":0", guid.ToString().c_str(), bid, buyout, deposit, consignment);
 }
 
 std::string AuctionHouseMgr::BuildAuctionInvoiceMailBody(ObjectGuid guid, uint64 bid, uint64 buyout, uint32 deposit, uint64 consignment, uint32 moneyDelay, uint32 eta)
 {
-    return Trinity::StringFormat("%s:" UI64FMTD ":" UI64FMTD ":%u:" UI64FMTD ":%u:%u:0", guid.ToString().c_str(), bid, buyout, deposit, consignment, moneyDelay, eta);
+    return Azgath::StringFormat("%s:" UI64FMTD ":" UI64FMTD ":%u:" UI64FMTD ":%u:%u:0", guid.ToString().c_str(), bid, buyout, deposit, consignment, moneyDelay, eta);
 }
 
 void AuctionHouseMgr::LoadAuctions()
@@ -883,7 +883,7 @@ uint32 AuctionHouseObject::GetAuctionHouseId() const
 
 AuctionPosting* AuctionHouseObject::GetAuction(uint32 auctionId)
 {
-    return Trinity::Containers::MapGetValuePtr(_itemsByAuctionId, auctionId);
+    return Azgath::Containers::MapGetValuePtr(_itemsByAuctionId, auctionId);
 }
 
 void AuctionHouseObject::AddAuction(CharacterDatabaseTransaction trans, AuctionPosting auction)
@@ -1103,9 +1103,9 @@ void AuctionHouseObject::RemoveAuction(CharacterDatabaseTransaction trans, Aucti
 
     sScriptMgr->OnAuctionRemove(this, auction);
 
-    Trinity::Containers::MultimapErasePair(_playerOwnedAuctions, auction->Owner, auction->Id);
+    Azgath::Containers::MultimapErasePair(_playerOwnedAuctions, auction->Owner, auction->Id);
     for (ObjectGuid bidder : auction->BidderHistory)
-        Trinity::Containers::MultimapErasePair(_playerBidderAuctions, bidder, auction->Id);
+        Azgath::Containers::MultimapErasePair(_playerBidderAuctions, bidder, auction->Id);
 
     if (auctionItr)
         *auctionItr = _itemsByAuctionId.erase(*auctionItr);
@@ -1350,8 +1350,8 @@ void AuctionHouseObject::BuildListBiddedItems(WorldPackets::AuctionHouse::Auctio
 {
     // always full list
     std::vector<AuctionPosting const*> auctions;
-    for (auto const& auctionId : Trinity::Containers::MapEqualRange(_playerBidderAuctions, player->GetGUID()))
-        if (AuctionPosting const* auction = Trinity::Containers::MapGetValuePtr(_itemsByAuctionId, auctionId.second))
+    for (auto const& auctionId : Azgath::Containers::MapEqualRange(_playerBidderAuctions, player->GetGUID()))
+        if (AuctionPosting const* auction = Azgath::Containers::MapGetValuePtr(_itemsByAuctionId, auctionId.second))
             auctions.push_back(auction);
 
     AuctionPosting::Sorter sorter(player->GetSession()->GetSessionDbcLocale(), sorts, sortCount);
@@ -1371,7 +1371,7 @@ void AuctionHouseObject::BuildListAuctionItems(WorldPackets::AuctionHouse::Aucti
     uint32 offset, WorldPackets::AuctionHouse::AuctionSortDef const* sorts, std::size_t sortCount) const
 {
     listItemsResult.TotalCount = 0;
-    if (AuctionsBucketData const* bucket = Trinity::Containers::MapGetValuePtr(_buckets, bucketKey))
+    if (AuctionsBucketData const* bucket = Azgath::Containers::MapGetValuePtr(_buckets, bucketKey))
     {
         AuctionsResultBuilder<AuctionPosting> builder(offset, player->GetSession()->GetSessionDbcLocale(), sorts, sortCount, AuctionHouseResultLimits::Items);
 
@@ -1429,8 +1429,8 @@ void AuctionHouseObject::BuildListOwnedItems(WorldPackets::AuctionHouse::Auction
 {
     // always full list
     std::vector<AuctionPosting const*> auctions;
-    for (auto const& auctionId : Trinity::Containers::MapEqualRange(_playerOwnedAuctions, player->GetGUID()))
-        if (AuctionPosting const* auction = Trinity::Containers::MapGetValuePtr(_itemsByAuctionId, auctionId.second))
+    for (auto const& auctionId : Azgath::Containers::MapEqualRange(_playerOwnedAuctions, player->GetGUID()))
+        if (AuctionPosting const* auction = Azgath::Containers::MapGetValuePtr(_itemsByAuctionId, auctionId.second))
             auctions.push_back(auction);
 
     AuctionPosting::Sorter sorter(player->GetSession()->GetSessionDbcLocale(), sorts, sortCount);

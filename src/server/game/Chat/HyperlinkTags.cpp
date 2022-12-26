@@ -44,7 +44,7 @@ class HyperlinkDataTokenizer
 
             if (size_t off = _str.find(HYPERLINK_DATA_DELIMITER); off != std::string_view::npos)
             {
-                if (!Trinity::Hyperlinks::LinkTags::base_tag::StoreTo(val, _str.substr(0, off)))
+                if (!Azgath::Hyperlinks::LinkTags::base_tag::StoreTo(val, _str.substr(0, off)))
                 {
                     if (off != 0 || !_allowEmptyTokens)
                         return false;
@@ -54,7 +54,7 @@ class HyperlinkDataTokenizer
             }
             else
             {
-                if (!Trinity::Hyperlinks::LinkTags::base_tag::StoreTo(val, _str))
+                if (!Azgath::Hyperlinks::LinkTags::base_tag::StoreTo(val, _str))
                     return false;
                 _str = std::string_view();
             }
@@ -68,7 +68,7 @@ class HyperlinkDataTokenizer
         bool _allowEmptyTokens;
 };
 
-bool Trinity::Hyperlinks::LinkTags::achievement::StoreTo(AchievementLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::achievement::StoreTo(AchievementLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
 
@@ -97,7 +97,7 @@ bool Trinity::Hyperlinks::LinkTags::achievement::StoreTo(AchievementLinkData& va
     return (t.TryConsumeTo(val.Criteria[0]) && t.TryConsumeTo(val.Criteria[1]) && t.TryConsumeTo(val.Criteria[2]) && t.TryConsumeTo(val.Criteria[3]) && t.IsEmpty());
 }
 
-bool Trinity::Hyperlinks::LinkTags::apower::StoreTo(ArtifactPowerLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::apower::StoreTo(ArtifactPowerLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 artifactPowerId;
@@ -111,7 +111,7 @@ bool Trinity::Hyperlinks::LinkTags::apower::StoreTo(ArtifactPowerLinkData& val, 
     return true;
 }
 
-bool Trinity::Hyperlinks::LinkTags::azessence::StoreTo(AzeriteEssenceLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::azessence::StoreTo(AzeriteEssenceLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 azeriteEssenceId;
@@ -121,7 +121,7 @@ bool Trinity::Hyperlinks::LinkTags::azessence::StoreTo(AzeriteEssenceLinkData& v
         && sDB2Manager.GetAzeriteEssencePower(azeriteEssenceId, val.Rank) && t.IsEmpty();
 }
 
-bool Trinity::Hyperlinks::LinkTags::battlepet::StoreTo(BattlePetLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::battlepet::StoreTo(BattlePetLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 battlePetSpeciesId;
@@ -134,7 +134,7 @@ bool Trinity::Hyperlinks::LinkTags::battlepet::StoreTo(BattlePetLinkData& val, s
         && t.IsEmpty();
 }
 
-bool Trinity::Hyperlinks::LinkTags::conduit::StoreTo(SoulbindConduitRankEntry const*& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::conduit::StoreTo(SoulbindConduitRankEntry const*& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 soulbindConduitId, rank;
@@ -143,7 +143,7 @@ bool Trinity::Hyperlinks::LinkTags::conduit::StoreTo(SoulbindConduitRankEntry co
     return !!(val = sDB2Manager.GetSoulbindConduitRank(soulbindConduitId, rank));
 }
 
-bool Trinity::Hyperlinks::LinkTags::currency::StoreTo(CurrencyLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::currency::StoreTo(CurrencyLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 currencyId;
@@ -156,7 +156,7 @@ bool Trinity::Hyperlinks::LinkTags::currency::StoreTo(CurrencyLinkData& val, std
     return true;
 }
 
-bool Trinity::Hyperlinks::LinkTags::enchant::StoreTo(SpellInfo const*& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::enchant::StoreTo(SpellInfo const*& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 spellId;
@@ -165,7 +165,7 @@ bool Trinity::Hyperlinks::LinkTags::enchant::StoreTo(SpellInfo const*& val, std:
     return !!(val = sSpellMgr->GetSpellInfo(spellId, DIFFICULTY_NONE)) && val->HasAttribute(SPELL_ATTR0_IS_TRADESKILL);
 }
 
-bool Trinity::Hyperlinks::LinkTags::garrfollower::StoreTo(GarrisonFollowerLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::garrfollower::StoreTo(GarrisonFollowerLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 garrFollowerId;
@@ -193,7 +193,7 @@ bool Trinity::Hyperlinks::LinkTags::garrfollower::StoreTo(GarrisonFollowerLinkDa
     return true;
 }
 
-bool Trinity::Hyperlinks::LinkTags::garrfollowerability::StoreTo(GarrAbilityEntry const*& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::garrfollowerability::StoreTo(GarrAbilityEntry const*& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 garrAbilityId;
@@ -202,7 +202,7 @@ bool Trinity::Hyperlinks::LinkTags::garrfollowerability::StoreTo(GarrAbilityEntr
     return !!(val = sGarrAbilityStore.LookupEntry(garrAbilityId)) && t.IsEmpty();
 }
 
-bool Trinity::Hyperlinks::LinkTags::garrmission::StoreTo(GarrisonMissionLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::garrmission::StoreTo(GarrisonMissionLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 garrMissionId;
@@ -211,7 +211,7 @@ bool Trinity::Hyperlinks::LinkTags::garrmission::StoreTo(GarrisonMissionLinkData
     return !!(val.Mission = sGarrMissionStore.LookupEntry(garrMissionId)) && t.TryConsumeTo(val.DbID) && t.IsEmpty();
 }
 
-bool Trinity::Hyperlinks::LinkTags::instancelock::StoreTo(InstanceLockLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::instancelock::StoreTo(InstanceLockLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     if (!t.TryConsumeTo(val.Owner))
@@ -224,7 +224,7 @@ bool Trinity::Hyperlinks::LinkTags::instancelock::StoreTo(InstanceLockLinkData& 
         && t.TryConsumeTo(val.CompletedEncountersMask) && t.IsEmpty();
 }
 
-bool Trinity::Hyperlinks::LinkTags::item::StoreTo(ItemLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::item::StoreTo(ItemLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text, true);
     uint32 itemId, dummy, numBonusListIDs;
@@ -284,7 +284,7 @@ bool Trinity::Hyperlinks::LinkTags::item::StoreTo(ItemLinkData& val, std::string
     return t.TryConsumeTo(val.Creator) && t.TryConsumeTo(val.UseEnchantId) && t.IsEmpty();
 }
 
-bool Trinity::Hyperlinks::LinkTags::journal::StoreTo(JournalLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::journal::StoreTo(JournalLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 id;
@@ -330,7 +330,7 @@ bool Trinity::Hyperlinks::LinkTags::journal::StoreTo(JournalLinkData& val, std::
     return true;
 }
 
-bool Trinity::Hyperlinks::LinkTags::keystone::StoreTo(KeystoneLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::keystone::StoreTo(KeystoneLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 mapChallengeModeId;
@@ -350,7 +350,7 @@ bool Trinity::Hyperlinks::LinkTags::keystone::StoreTo(KeystoneLinkData& val, std
     return true;
 }
 
-bool Trinity::Hyperlinks::LinkTags::mawpower::StoreTo(MawPowerEntry const*& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::mawpower::StoreTo(MawPowerEntry const*& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 mawPowerId;
@@ -359,7 +359,7 @@ bool Trinity::Hyperlinks::LinkTags::mawpower::StoreTo(MawPowerEntry const*& val,
     return !!(val = sMawPowerStore.LookupEntry(mawPowerId)) && t.IsEmpty();
 }
 
-bool Trinity::Hyperlinks::LinkTags::pvptal::StoreTo(PvpTalentEntry const*& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::pvptal::StoreTo(PvpTalentEntry const*& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 pvpTalentId;
@@ -370,7 +370,7 @@ bool Trinity::Hyperlinks::LinkTags::pvptal::StoreTo(PvpTalentEntry const*& val, 
     return true;
 }
 
-bool Trinity::Hyperlinks::LinkTags::quest::StoreTo(QuestLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::quest::StoreTo(QuestLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 questId;
@@ -379,7 +379,7 @@ bool Trinity::Hyperlinks::LinkTags::quest::StoreTo(QuestLinkData& val, std::stri
     return (val.Quest = sObjectMgr->GetQuestTemplate(questId)) && t.TryConsumeTo(val.ContentTuningId) && t.IsEmpty();
 }
 
-bool Trinity::Hyperlinks::LinkTags::spell::StoreTo(SpellLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::spell::StoreTo(SpellLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 spellId, glyphPropertiesId;
@@ -389,7 +389,7 @@ bool Trinity::Hyperlinks::LinkTags::spell::StoreTo(SpellLinkData& val, std::stri
         && (!glyphPropertiesId || !!(val.Glyph = sGlyphPropertiesStore.LookupEntry(glyphPropertiesId)));
 }
 
-bool Trinity::Hyperlinks::LinkTags::talent::StoreTo(TalentEntry const*& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::talent::StoreTo(TalentEntry const*& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 talentId;
@@ -400,7 +400,7 @@ bool Trinity::Hyperlinks::LinkTags::talent::StoreTo(TalentEntry const*& val, std
     return true;
 }
 
-bool Trinity::Hyperlinks::LinkTags::trade::StoreTo(TradeskillLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::trade::StoreTo(TradeskillLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 spellId, skillId;
@@ -413,7 +413,7 @@ bool Trinity::Hyperlinks::LinkTags::trade::StoreTo(TradeskillLinkData& val, std:
     return true;
 }
 
-bool Trinity::Hyperlinks::LinkTags::transmogappearance::StoreTo(ItemModifiedAppearanceEntry const*& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::transmogappearance::StoreTo(ItemModifiedAppearanceEntry const*& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 itemModifiedAppearanceId;
@@ -422,7 +422,7 @@ bool Trinity::Hyperlinks::LinkTags::transmogappearance::StoreTo(ItemModifiedAppe
     return !!(val = sItemModifiedAppearanceStore.LookupEntry(itemModifiedAppearanceId)) && t.IsEmpty();
 }
 
-bool Trinity::Hyperlinks::LinkTags::transmogillusion::StoreTo(SpellItemEnchantmentEntry const*& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::transmogillusion::StoreTo(SpellItemEnchantmentEntry const*& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 spellItemEnchantmentId;
@@ -432,7 +432,7 @@ bool Trinity::Hyperlinks::LinkTags::transmogillusion::StoreTo(SpellItemEnchantme
         && sDB2Manager.GetTransmogIllusionForEnchantment(spellItemEnchantmentId) && t.IsEmpty();
 }
 
-bool Trinity::Hyperlinks::LinkTags::transmogset::StoreTo(TransmogSetEntry const*& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::transmogset::StoreTo(TransmogSetEntry const*& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 transmogSetId;
@@ -441,7 +441,7 @@ bool Trinity::Hyperlinks::LinkTags::transmogset::StoreTo(TransmogSetEntry const*
     return !!(val = sTransmogSetStore.LookupEntry(transmogSetId)) && t.IsEmpty();
 }
 
-bool Trinity::Hyperlinks::LinkTags::worldmap::StoreTo(WorldMapLinkData& val, std::string_view text)
+bool Azgath::Hyperlinks::LinkTags::worldmap::StoreTo(WorldMapLinkData& val, std::string_view text)
 {
     HyperlinkDataTokenizer t(text);
     uint32 uiMapId;

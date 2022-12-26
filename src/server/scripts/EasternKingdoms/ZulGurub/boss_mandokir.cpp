@@ -187,9 +187,9 @@ struct boss_mandokir : public BossAI
             {
                 std::list<Creature*> creatures;
                 GetCreatureListWithEntryInGrid(creatures, me, NPC_CHAINED_SPIRIT, 200.0f);
-                creatures.remove_if(Trinity::AnyDeadUnitCheck());
-                creatures.remove_if(Trinity::UnitAuraCheck(true, SPELL_OHGAN_ORDERS_TRIGGER));
-                Trinity::Containers::RandomResize(creatures, 1);
+                creatures.remove_if(Azgath::AnyDeadUnitCheck());
+                creatures.remove_if(Azgath::UnitAuraCheck(true, SPELL_OHGAN_ORDERS_TRIGGER));
+                Azgath::Containers::RandomResize(creatures, 1);
                 if (creatures.empty())
                     return;
 
@@ -416,7 +416,7 @@ class spell_mandokir_decapitate : public SpellScript
         if (targets.empty())
             return;
 
-        WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+        WorldObject* target = Azgath::Containers::SelectRandomContainerElement(targets);
         targets.clear();
         targets.push_back(target);
     }
@@ -515,7 +515,7 @@ class spell_mandokir_devastating_slam : public SpellScript
         if (targets.empty())
             return;
 
-        WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+        WorldObject* target = Azgath::Containers::SelectRandomContainerElement(targets);
         targets.clear();
         targets.push_back(target);
     }
@@ -562,7 +562,7 @@ class spell_mandokir_ohgan_orders : public SpellScript
         if (targets.empty())
             return;
 
-        WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+        WorldObject* target = Azgath::Containers::SelectRandomContainerElement(targets);
         targets.clear();
         targets.push_back(target);
     }

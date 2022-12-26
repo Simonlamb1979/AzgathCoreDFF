@@ -402,7 +402,7 @@ LootStoreItem const* LootTemplate::LootGroup::Roll(uint16 lootMode, Player const
     possibleLoot = EqualChanced;
     possibleLoot.remove_if(LootGroupInvalidSelector(lootMode, personalLooter));
     if (!possibleLoot.empty())                              // If nothing selected yet - an item is taken from equal-chanced part
-        return Trinity::Containers::SelectRandomContainerElement(possibleLoot);
+        return Azgath::Containers::SelectRandomContainerElement(possibleLoot);
 
     return nullptr;                                            // Empty drop from the group
 }
@@ -689,7 +689,7 @@ void LootTemplate::ProcessPersonalLoot(std::unordered_map<Player*, std::unique_p
                 else
                     lootersForItem.erase(newEnd, lootersForItem.end());
 
-                Player* chosenLooter = Trinity::Containers::SelectRandomContainerElement(lootersForItem);
+                Player* chosenLooter = Azgath::Containers::SelectRandomContainerElement(lootersForItem);
                 referenced->Process(*personalLoot[chosenLooter], rate, lootMode, item->groupid, chosenLooter);
                 gotLoot.push_back(chosenLooter);
             }
@@ -707,7 +707,7 @@ void LootTemplate::ProcessPersonalLoot(std::unordered_map<Player*, std::unique_p
 
             if (!lootersForItem.empty())
             {
-                Player* chosenLooter = Trinity::Containers::SelectRandomContainerElement(lootersForItem);
+                Player* chosenLooter = Azgath::Containers::SelectRandomContainerElement(lootersForItem);
                 personalLoot[chosenLooter]->AddItem(*item);
             }
         }
@@ -725,7 +725,7 @@ void LootTemplate::ProcessPersonalLoot(std::unordered_map<Player*, std::unique_p
 
             if (!lootersForGroup.empty())
             {
-                Player* chosenLooter = Trinity::Containers::SelectRandomContainerElement(lootersForGroup);
+                Player* chosenLooter = Azgath::Containers::SelectRandomContainerElement(lootersForGroup);
                 group->Process(*personalLoot[chosenLooter], lootMode);
             }
         }

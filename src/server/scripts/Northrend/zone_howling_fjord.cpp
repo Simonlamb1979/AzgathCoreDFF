@@ -318,7 +318,7 @@ class spell_fjord_rivenwood_captives_not_on_quest : public SpellScript
 
     void HandleDummy(SpellEffIndex /*effIndex*/)
     {
-        GetHitUnit()->CastSpell(GetCaster(), Trinity::Containers::SelectRandomContainerElement(CocoonSummonSpells), true);
+        GetHitUnit()->CastSpell(GetCaster(), Azgath::Containers::SelectRandomContainerElement(CocoonSummonSpells), true);
     }
 
     void Register() override
@@ -343,7 +343,7 @@ class spell_fjord_rivenwood_captives_on_quest : public SpellScript
         Unit* target = GetHitUnit();
 
         if (roll_chance_i(80))
-            target->CastSpell(caster, Trinity::Containers::SelectRandomContainerElement(CocoonSummonSpells), true);
+            target->CastSpell(caster, Azgath::Containers::SelectRandomContainerElement(CocoonSummonSpells), true);
         else
             target->CastSpell(caster, SPELL_SUMMON_FREED_MIST_WHISPER_SCOUT, true);
     }

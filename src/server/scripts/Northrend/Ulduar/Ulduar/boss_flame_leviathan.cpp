@@ -1683,7 +1683,7 @@ class spell_pursue : public SpellScriptLoader
             // EFFECT #0 - select target
             void FilterTargets(std::list<WorldObject*>& targets)
             {
-                Trinity::Containers::RandomResize(targets, FlameLeviathanPursuedTargetSelector(), 1);
+                Azgath::Containers::RandomResize(targets, FlameLeviathanPursuedTargetSelector(), 1);
                 if (targets.empty())
                 {
                     if (Unit* caster = GetCaster())
@@ -1737,8 +1737,8 @@ class spell_vehicle_throw_passenger : public SpellScriptLoader
                         {
                             // use 99 because it is 3d search
                             std::list<WorldObject*> targetList;
-                            Trinity::WorldObjectSpellAreaTargetCheck check(99, GetExplTargetDest(), GetCaster(), GetCaster(), GetSpellInfo(), TARGET_CHECK_DEFAULT, nullptr, TARGET_OBJECT_TYPE_UNIT);
-                            Trinity::WorldObjectListSearcher<Trinity::WorldObjectSpellAreaTargetCheck> searcher(GetCaster(), targetList, check);
+                            Azgath::WorldObjectSpellAreaTargetCheck check(99, GetExplTargetDest(), GetCaster(), GetCaster(), GetSpellInfo(), TARGET_CHECK_DEFAULT, nullptr, TARGET_OBJECT_TYPE_UNIT);
+                            Azgath::WorldObjectListSearcher<Azgath::WorldObjectSpellAreaTargetCheck> searcher(GetCaster(), targetList, check);
                             Cell::VisitAllObjects(GetCaster(), searcher, 99.0f);
                             float minDist = 99 * 99;
                             Unit* target = nullptr;

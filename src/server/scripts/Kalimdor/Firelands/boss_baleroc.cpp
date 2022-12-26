@@ -472,7 +472,7 @@ class spell_baleroc_countdown_aoe_dummy : public SpellScript
             return;
         }
 
-        Trinity::Containers::RandomResize(targets, 2);
+        Azgath::Containers::RandomResize(targets, 2);
 
         _targets.push_back(targets.front()->GetGUID());
         _targets.push_back(targets.back()->GetGUID());
@@ -531,7 +531,7 @@ class spell_baleroc_countdown_proximity_check : public SpellScript
     void FilterTargets(std::list<WorldObject*>& targets)
     {
         targets.remove(GetCaster());
-        targets.remove_if(Trinity::UnitAuraCheck(false, SPELL_COUNTDOWN_AURA));
+        targets.remove_if(Azgath::UnitAuraCheck(false, SPELL_COUNTDOWN_AURA));
     }
 
     void Register() override
@@ -621,7 +621,7 @@ class spell_baleroc_shards_of_torment_target_search : public SpellScript
     static WorldObject* GetRandomContainerElement(std::list<WorldObject*> const* list)
     {
         if (!list->empty())
-            return Trinity::Containers::SelectRandomContainerElement(*list);
+            return Azgath::Containers::SelectRandomContainerElement(*list);
 
         return nullptr;
     }
@@ -662,7 +662,7 @@ class spell_baleroc_torment_target_search : public SpellScript
         if (targets.empty())
             return;
 
-        targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+        targets.sort(Azgath::ObjectDistanceOrderPred(GetCaster()));
         _target = targets.front()->GetGUID();
     }
 

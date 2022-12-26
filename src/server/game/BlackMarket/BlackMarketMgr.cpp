@@ -195,7 +195,7 @@ void BlackMarketMgr::RefreshAuctions()
         templates.push_back(pair.second);
     }
 
-    Trinity::Containers::RandomResize(templates, sWorld->getIntConfig(CONFIG_BLACKMARKET_MAXAUCTIONS));
+    Azgath::Containers::RandomResize(templates, sWorld->getIntConfig(CONFIG_BLACKMARKET_MAXAUCTIONS));
 
     for (BlackMarketTemplate const* templat : templates)
     {
@@ -370,8 +370,8 @@ bool BlackMarketTemplate::LoadFromDB(Field* fields)
     Chance = fields[6].GetFloat();
 
     std::vector<int32> bonusListIDs;
-    for (std::string_view token : Trinity::Tokenize(fields[7].GetStringView(), ' ', false))
-        if (Optional<int32> bonusListID = Trinity::StringTo<int32>(token))
+    for (std::string_view token : Azgath::Tokenize(fields[7].GetStringView(), ' ', false))
+        if (Optional<int32> bonusListID = Azgath::StringTo<int32>(token))
             bonusListIDs.push_back(*bonusListID);
 
     if (!bonusListIDs.empty())

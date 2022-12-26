@@ -76,7 +76,7 @@ namespace MMAP
         }
 
         // load and init dtNavMesh - read parameters from file
-        std::string fileName = Trinity::StringFormat(MAP_FILE_NAME_FORMAT, basePath.c_str(), mapId);
+        std::string fileName = Azgath::StringFormat(MAP_FILE_NAME_FORMAT, basePath.c_str(), mapId);
         FILE* file = fopen(fileName.c_str(), "rb");
         if (!file)
         {
@@ -132,14 +132,14 @@ namespace MMAP
             return false;
 
         // load this tile :: mmaps/MMMMXXYY.mmtile
-        std::string fileName = Trinity::StringFormat(TILE_FILE_NAME_FORMAT, basePath.c_str(), mapId, x, y);
+        std::string fileName = Azgath::StringFormat(TILE_FILE_NAME_FORMAT, basePath.c_str(), mapId, x, y);
         FILE* file = fopen(fileName.c_str(), "rb");
         if (!file)
         {
             auto parentMapItr = parentMapData.find(mapId);
             if (parentMapItr != parentMapData.end())
             {
-                fileName = Trinity::StringFormat(TILE_FILE_NAME_FORMAT, basePath.c_str(), parentMapItr->second, x, y);
+                fileName = Azgath::StringFormat(TILE_FILE_NAME_FORMAT, basePath.c_str(), parentMapItr->second, x, y);
                 file = fopen(fileName.c_str(), "rb");
             }
         }

@@ -21,8 +21,8 @@
 #include <algorithm>
 #include <functional>
 
-using SHA1 = Trinity::Crypto::SHA1;
-using SRP6 = Trinity::Crypto::SRP6;
+using SHA1 = Azgath::Crypto::SHA1;
+using SRP6 = Azgath::Crypto::SRP6;
 
 /*static*/ std::array<uint8, 1> const SRP6::g = []()
 {

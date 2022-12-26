@@ -891,7 +891,7 @@ class TC_GAME_API Spell
         Spell& operator=(Spell const& right) = delete;
 };
 
-namespace Trinity
+namespace Azgath
 {
     struct TC_GAME_API WorldObjectSpellTargetCheck
     {

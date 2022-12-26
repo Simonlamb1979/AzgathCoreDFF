@@ -347,7 +347,7 @@ struct boss_jedoga_shadowseeker : public BossAI
                     if (_volunteerGUIDS.empty())
                         break;
 
-                    _selectedVolunteerGUID = Trinity::Containers::SelectRandomContainerElement(_volunteerGUIDS);
+                    _selectedVolunteerGUID = Azgath::Containers::SelectRandomContainerElement(_volunteerGUIDS);
                     if (Creature* volunteer = ObjectAccessor::GetCreature(*me, _selectedVolunteerGUID))
                         volunteer->AI()->DoAction(ACTION_CHOSEN);
                     break;

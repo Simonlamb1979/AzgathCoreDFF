@@ -35,7 +35,7 @@
 using namespace boost::process;
 using namespace boost::iostreams;
 
-namespace Trinity
+namespace Azgath
 {
 
 template<typename T>
@@ -277,4 +277,4 @@ std::string SearchExecutableInPath(std::string const& filename)
     }
 }
 
-} // namespace Trinity
+} // namespace Azgath

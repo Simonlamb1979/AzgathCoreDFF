@@ -348,8 +348,8 @@ struct boss_onyxia : public BossAI
                         DoCastVictim(SPELL_BELLOWING_ROAR);
                         // Eruption
                         GameObject* Floor = nullptr;
-                        Trinity::GameObjectInRangeCheck check(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 15);
-                        Trinity::GameObjectLastSearcher<Trinity::GameObjectInRangeCheck> searcher(me, Floor, check);
+                        Azgath::GameObjectInRangeCheck check(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 15);
+                        Azgath::GameObjectLastSearcher<Azgath::GameObjectInRangeCheck> searcher(me, Floor, check);
                         Cell::VisitGridObjects(me, searcher, 30.0f);
                         if (Floor)
                             instance->SetGuidData(DATA_FLOOR_ERUPTION_GUID, Floor->GetGUID());

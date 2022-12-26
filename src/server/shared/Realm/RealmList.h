@@ -78,7 +78,7 @@ public:
 
     ~RealmList();
 
-    void Initialize(Trinity::Asio::IoContext& ioContext, uint32 updateInterval);
+    void Initialize(Azgath::Asio::IoContext& ioContext, uint32 updateInterval);
     void Close();
 
     Realm const* GetRealm(Battlenet::RealmHandle const& id) const;
@@ -105,8 +105,8 @@ private:
     RealmMap _realms;
     std::unordered_set<std::string> _subRegions;
     uint32 _updateInterval;
-    std::unique_ptr<Trinity::Asio::DeadlineTimer> _updateTimer;
-    std::unique_ptr<Trinity::Asio::Resolver> _resolver;
+    std::unique_ptr<Azgath::Asio::DeadlineTimer> _updateTimer;
+    std::unique_ptr<Azgath::Asio::Resolver> _resolver;
 };
 
 #define sRealmList RealmList::Instance()

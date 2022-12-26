@@ -574,7 +574,7 @@ public:
         if (strchr(args, 'g') || strchr(args, 's') || strchr(args, 'c'))
             moneyToAddO = MoneyStringToMoney(std::string(args));
         else
-            moneyToAddO = Trinity::StringTo<int64>(args);
+            moneyToAddO = Azgath::StringTo<int64>(args);
 
         if (!moneyToAddO)
             return false;
@@ -946,7 +946,7 @@ public:
             }
         }
 
-        target->SetCustomizations(Trinity::Containers::MakeIteratorPair(customizations.begin(), customizations.end()));
+        target->SetCustomizations(Azgath::Containers::MakeIteratorPair(customizations.begin(), customizations.end()));
 
         char const* gender_full = gender ? "female" : "male";
 

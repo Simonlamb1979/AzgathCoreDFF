@@ -429,9 +429,9 @@ public:
         if (!*args)
             return false;
 
-        for (std::string_view entryStr : Trinity::Tokenize(args, ' ', false))
+        for (std::string_view entryStr : Azgath::Tokenize(args, ' ', false))
         {
-            uint32 entry = Trinity::StringTo<uint32>(entryStr).value_or(0);
+            uint32 entry = Azgath::StringTo<uint32>(entryStr).value_or(0);
 
             WorldDatabasePreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_SEL_CREATURE_TEMPLATE);
             stmt->setUInt32(0, entry);

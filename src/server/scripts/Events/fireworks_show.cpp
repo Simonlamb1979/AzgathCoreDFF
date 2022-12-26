@@ -741,7 +741,7 @@ public:
                 SOUND_CHEER_3,
                 SOUND_CHEER_4
             };
-            return Trinity::Containers::SelectRandomContainerElement(ids);
+            return Azgath::Containers::SelectRandomContainerElement(ids);
         }
 
         static uint32 FireworksPicker()
@@ -772,7 +772,7 @@ public:
                 FIREWORK_SHOW_TYPE_1_PURPLE_BIG,
                 FIREWORK_SHOW_TYPE_2_PURPLE_BIG
             };
-            return Trinity::Containers::SelectRandomContainerElement(ids);
+            return Azgath::Containers::SelectRandomContainerElement(ids);
         }
 
         static uint32 FireworksBIGOnlyPicker()
@@ -792,7 +792,7 @@ public:
                 FIREWORK_SHOW_TYPE_1_PURPLE_BIG,
                 FIREWORK_SHOW_TYPE_2_PURPLE_BIG
             };
-            return Trinity::Containers::SelectRandomContainerElement(ids);
+            return Azgath::Containers::SelectRandomContainerElement(ids);
         }
 
         void UpdateAI(uint32 diff) override
@@ -854,9 +854,9 @@ public:
                     }
                     case EVENT_FIRE:
                     {
-                        if (std::vector<Position> const* positions = Trinity::Containers::MapGetValuePtr(PositionsByZoneMap, me->GetZoneId()))
+                        if (std::vector<Position> const* positions = Azgath::Containers::MapGetValuePtr(PositionsByZoneMap, me->GetZoneId()))
                         {
-                            Position const& rndpos = Trinity::Containers::SelectRandomContainerElement(*positions);
+                            Position const& rndpos = Azgath::Containers::SelectRandomContainerElement(*positions);
                             float rndrot = frand(-1.0000000f, 1.0000000f);
                             float rndrot2 = frand(-1.0000000f, 1.0000000f);
 

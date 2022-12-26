@@ -332,7 +332,7 @@ void QuestObjectiveCriteriaMgr::SendPacket(WorldPacket const* data) const
 
 std::string QuestObjectiveCriteriaMgr::GetOwnerInfo() const
 {
-    return Trinity::StringFormat("%s %s", _owner->GetGUID().ToString().c_str(), _owner->GetName().c_str());
+    return Azgath::StringFormat("%s %s", _owner->GetGUID().ToString().c_str(), _owner->GetName().c_str());
 }
 
 CriteriaList const& QuestObjectiveCriteriaMgr::GetCriteriaByType(CriteriaType type, uint32 /*asset*/) const

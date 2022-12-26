@@ -23,7 +23,7 @@
 #include <boost/asio/ip/network_v4.hpp>
 #include <boost/asio/ip/network_v6.hpp>
 
-namespace Trinity
+namespace Azgath
 {
     namespace Net
     {

@@ -23,7 +23,7 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <string>
 
-namespace Trinity
+namespace Azgath
 {
     namespace Asio
     {

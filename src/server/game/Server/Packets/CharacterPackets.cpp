@@ -133,7 +133,7 @@ EnumCharactersResult::CharacterInfo::CharacterInfo(Field* fields)
     ProfessionIds[0] = 0;
     ProfessionIds[1] = 0;
 
-    std::vector<std::string_view> equipment = Trinity::Tokenize(fields[17].GetStringView(), ' ', false);
+    std::vector<std::string_view> equipment = Azgath::Tokenize(fields[17].GetStringView(), ' ', false);
     ListPosition = fields[19].GetUInt8();
     LastPlayedTime = fields[20].GetInt64();
     if (ChrSpecializationEntry const* spec = sDB2Manager.GetChrSpecializationByIndex(ClassID, fields[21].GetUInt8()))
@@ -144,11 +144,11 @@ EnumCharactersResult::CharacterInfo::CharacterInfo(Field* fields)
     for (uint8 slot = 0; slot < REAGENT_BAG_SLOT_END; ++slot)
     {
         uint32 visualBase = slot * 5;
-        VisualItems[slot].InvType = Trinity::StringTo<uint8>(equipment[visualBase + 0]).value_or(0);
-        VisualItems[slot].DisplayID = Trinity::StringTo<uint32>(equipment[visualBase + 1]).value_or(0);
-        VisualItems[slot].DisplayEnchantID = Trinity::StringTo<uint32>(equipment[visualBase + 2]).value_or(0);
-        VisualItems[slot].Subclass = Trinity::StringTo<uint8>(equipment[visualBase + 3]).value_or(0);
-        VisualItems[slot].SecondaryItemModifiedAppearanceID = Trinity::StringTo<int32>(equipment[visualBase + 4]).value_or(0);
+        VisualItems[slot].InvType = Azgath::StringTo<uint8>(equipment[visualBase + 0]).value_or(0);
+        VisualItems[slot].DisplayID = Azgath::StringTo<uint32>(equipment[visualBase + 1]).value_or(0);
+        VisualItems[slot].DisplayEnchantID = Azgath::StringTo<uint32>(equipment[visualBase + 2]).value_or(0);
+        VisualItems[slot].Subclass = Azgath::StringTo<uint8>(equipment[visualBase + 3]).value_or(0);
+        VisualItems[slot].SecondaryItemModifiedAppearanceID = Azgath::StringTo<int32>(equipment[visualBase + 4]).value_or(0);
     }
 }
 

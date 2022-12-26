@@ -273,7 +273,7 @@ void TempSummon::UpdateObjectVisibilityOnCreate()
                 objectsToUpdate.push_back(original);
     }
 
-    Trinity::VisibleChangesNotifier notifier({ objectsToUpdate.data(), objectsToUpdate.data() + objectsToUpdate.size() });
+    Azgath::VisibleChangesNotifier notifier({ objectsToUpdate.data(), objectsToUpdate.data() + objectsToUpdate.size() });
     Cell::VisitWorldObjects(this, notifier, GetVisibilityRange());
 }
 
@@ -299,7 +299,7 @@ void TempSummon::UpdateObjectVisibilityOnDestroy()
         }
     }
 
-    Trinity::VisibleChangesNotifier notifier({ objectsToUpdate.data(), objectsToUpdate.data() + objectsToUpdate.size() });
+    Azgath::VisibleChangesNotifier notifier({ objectsToUpdate.data(), objectsToUpdate.data() + objectsToUpdate.size() });
     Cell::VisitWorldObjects(this, notifier, GetVisibilityRange());
 
     if (original) // original is only != nullptr when it was replaced

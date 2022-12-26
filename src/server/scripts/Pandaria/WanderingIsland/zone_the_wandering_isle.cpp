@@ -77,7 +77,7 @@ struct npc_tushui_huojin_trainee : public ScriptedAI
 
     Emote PlayRandomEmote() const
     {
-        Emote emote = Trinity::Containers::SelectRandomContainerElement(TraineeEmotes);
+        Emote emote = Azgath::Containers::SelectRandomContainerElement(TraineeEmotes);
         me->HandleEmoteCommand(emote);
         return emote;
     }
@@ -258,7 +258,7 @@ struct npc_huojin_trainee : public npc_tushui_huojin_trainee
     {
         Creature* partner = nullptr;
         HuojinTraineePartnerSearch check(me);
-        Trinity::CreatureLastSearcher<HuojinTraineePartnerSearch> searcher(me, partner, check);
+        Azgath::CreatureLastSearcher<HuojinTraineePartnerSearch> searcher(me, partner, check);
         Cell::VisitGridObjects(me, searcher, 10.0f);
         return partner;
     }
@@ -332,7 +332,7 @@ void HandleEmoteNearbyTushuiTrainees(Creature* leader, Emote emote)
 {
     std::list<Creature*> traineeList;
     TushuiTraineeSearch check(leader, 10.0f);
-    Trinity::CreatureListSearcher<TushuiTraineeSearch> searcher(leader, traineeList, check);
+    Azgath::CreatureListSearcher<TushuiTraineeSearch> searcher(leader, traineeList, check);
     Cell::VisitGridObjects(leader, searcher, 10.0f);
 
     for (Creature* trainee : traineeList)
@@ -381,7 +381,7 @@ struct npc_instructor_zhi : public ScriptedAI
     {
         _scheduler.Schedule(Seconds(6), [this](TaskContext task)
         {
-            Emote emote = Trinity::Containers::SelectRandomContainerElement(TraineeEmotes);
+            Emote emote = Azgath::Containers::SelectRandomContainerElement(TraineeEmotes);
             me->HandleEmoteCommand(emote);
 
             task.Schedule(Seconds(1), [this, emote](TaskContext /*task*/)

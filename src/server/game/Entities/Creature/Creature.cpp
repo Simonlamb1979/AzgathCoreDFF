@@ -118,7 +118,7 @@ CreatureModel const* CreatureTemplate::GetRandomValidModel() const
     if (Models.size() == 1)
         return &Models[0];
 
-    auto selectedItr = Trinity::Containers::SelectRandomWeightedContainerElement(Models, [](CreatureModel const& model)
+    auto selectedItr = Azgath::Containers::SelectRandomWeightedContainerElement(Models, [](CreatureModel const& model)
     {
         return model.Probability;
     });
@@ -354,7 +354,7 @@ void Creature::RemoveFromWorld()
         Unit::RemoveFromWorld();
 
         if (m_spawnId)
-            Trinity::Containers::MultimapErasePair(GetMap()->GetCreatureBySpawnIdStore(), m_spawnId, this);
+            Azgath::Containers::MultimapErasePair(GetMap()->GetCreatureBySpawnIdStore(), m_spawnId, this);
         GetMap()->GetObjectsStore().Remove<Creature>(GetGUID());
     }
 }
@@ -993,8 +993,8 @@ void Creature::DoFleeToGetAssistance()
     if (radius >0)
     {
         Creature* creature = nullptr;
-        Trinity::NearestAssistCreatureInCreatureRangeCheck u_check(this, GetVictim(), radius);
-        Trinity::CreatureLastSearcher<Trinity::NearestAssistCreatureInCreatureRangeCheck> searcher(this, creature, u_check);
+        Azgath::NearestAssistCreatureInCreatureRangeCheck u_check(this, GetVictim(), radius);
+        Azgath::CreatureLastSearcher<Azgath::NearestAssistCreatureInCreatureRangeCheck> searcher(this, creature, u_check);
         Cell::VisitGridObjects(this, searcher, radius);
 
         SetNoSearchAssistance(true);
@@ -1341,7 +1341,7 @@ Loot* Creature::GetLootForPlayer(Player const* player) const
     if (m_personalLoot.empty())
         return m_loot.get();
 
-    if (std::unique_ptr<Loot> const* loot = Trinity::Containers::MapGetValuePtr(m_personalLoot, player->GetGUID()))
+    if (std::unique_ptr<Loot> const* loot = Azgath::Containers::MapGetValuePtr(m_personalLoot, player->GetGUID()))
         return loot->get();
 
     return nullptr;
@@ -1799,7 +1799,7 @@ bool Creature::LoadFromDB(ObjectGuid::LowType spawnId, Map* map, bool addToMap, 
         if (CanFly())
         {
             float tz = map->GetHeight(GetPhaseShift(), data->spawnPoint, true, MAX_FALL_DISTANCE);
-            if (data->spawnPoint.GetPositionZ() - tz > 0.1f && Trinity::IsValidMapCoord(tz))
+            if (data->spawnPoint.GetPositionZ() - tz > 0.1f && Azgath::IsValidMapCoord(tz))
                 Relocate(data->spawnPoint.GetPositionX(), data->spawnPoint.GetPositionY(), tz);
         }
     }
@@ -1900,7 +1900,7 @@ bool Creature::hasInvolvedQuest(uint32 quest_id) const
         {
             // despawn all active creatures, and remove their respawns
             std::vector<Creature*> toUnload;
-            for (auto const& pair : Trinity::Containers::MapEqualRange(map->GetCreatureBySpawnIdStore(), spawnId))
+            for (auto const& pair : Azgath::Containers::MapEqualRange(map->GetCreatureBySpawnIdStore(), spawnId))
                 toUnload.push_back(pair.second);
             for (Creature* creature : toUnload)
                 map->AddObjectToRemoveList(creature);
@@ -2022,7 +2022,7 @@ bool Creature::CanStartAttack(Unit const* who, bool force) const
 
 bool Creature::CheckNoGrayAggroConfig(uint32 playerLevel, uint32 creatureLevel) const
 {
-    if (Trinity::XP::GetColorCode(playerLevel, creatureLevel) != XP_GRAY)
+    if (Azgath::XP::GetColorCode(playerLevel, creatureLevel) != XP_GRAY)
         return false;
 
     uint32 notAbove = sWorld->getIntConfig(CONFIG_NO_GRAY_AGGRO_ABOVE);
@@ -2373,8 +2373,8 @@ Unit* Creature::SelectNearestTarget(float dist, bool playerOnly /* = false */) c
         dist = MAX_VISIBILITY_DISTANCE;
 
     Unit* target = nullptr;
-    Trinity::NearestHostileUnitCheck u_check(this, dist, playerOnly);
-    Trinity::UnitLastSearcher<Trinity::NearestHostileUnitCheck> searcher(this, target, u_check);
+    Azgath::NearestHostileUnitCheck u_check(this, dist, playerOnly);
+    Azgath::UnitLastSearcher<Azgath::NearestHostileUnitCheck> searcher(this, target, u_check);
     Cell::VisitAllObjects(this, searcher, dist);
     return target;
 }
@@ -2389,8 +2389,8 @@ Unit* Creature::SelectNearestTargetInAttackDistance(float dist) const
     }
 
     Unit* target = nullptr;
-    Trinity::NearestHostileUnitInAttackDistanceCheck u_check(this, dist);
-    Trinity::UnitLastSearcher<Trinity::NearestHostileUnitInAttackDistanceCheck> searcher(this, target, u_check);
+    Azgath::NearestHostileUnitInAttackDistanceCheck u_check(this, dist);
+    Azgath::UnitLastSearcher<Azgath::NearestHostileUnitInAttackDistanceCheck> searcher(this, target, u_check);
     Cell::VisitAllObjects(this, searcher, std::max(dist, ATTACK_DISTANCE));
     return target;
 }
@@ -2418,8 +2418,8 @@ void Creature::CallAssistance()
         if (radius > 0)
         {
             std::list<Creature*> assistList;
-            Trinity::AnyAssistCreatureInRangeCheck u_check(this, GetVictim(), radius);
-            Trinity::CreatureListSearcher<Trinity::AnyAssistCreatureInRangeCheck> searcher(this, assistList, u_check);
+            Azgath::AnyAssistCreatureInRangeCheck u_check(this, GetVictim(), radius);
+            Azgath::CreatureListSearcher<Azgath::AnyAssistCreatureInRangeCheck> searcher(this, assistList, u_check);
             Cell::VisitGridObjects(this, searcher, radius);
 
             if (!assistList.empty())
@@ -2454,8 +2454,8 @@ void Creature::CallForHelp(float radius)
         return;
     }
 
-    Trinity::CallOfHelpCreatureInRangeDo u_do(this, target, radius);
-    Trinity::CreatureWorker<Trinity::CallOfHelpCreatureInRangeDo> worker(this, u_do);
+    Azgath::CallOfHelpCreatureInRangeDo u_do(this, target, radius);
+    Azgath::CreatureWorker<Azgath::CallOfHelpCreatureInRangeDo> worker(this, u_do);
     Cell::VisitGridObjects(this, worker, radius);
 }
 
@@ -2556,7 +2556,7 @@ void Creature::SaveRespawnTime(uint32 forceDelay)
     }
 
     time_t thisRespawnTime = forceDelay ? GameTime::GetGameTime() + forceDelay : m_respawnTime;
-    GetMap()->SaveRespawnTime(SPAWN_TYPE_CREATURE, m_spawnId, GetEntry(), thisRespawnTime, Trinity::ComputeGridCoord(GetHomePosition().GetPositionX(), GetHomePosition().GetPositionY()).GetId());
+    GetMap()->SaveRespawnTime(SPAWN_TYPE_CREATURE, m_spawnId, GetEntry(), thisRespawnTime, Azgath::ComputeGridCoord(GetHomePosition().GetPositionX(), GetHomePosition().GetPositionY()).GetId());
 }
 
 // this should not be called by petAI or
@@ -3191,8 +3191,8 @@ Unit* Creature::SelectNearestHostileUnitInAggroRange(bool useLOS, bool ignoreCiv
 
     Unit* target = nullptr;
 
-    Trinity::NearestHostileUnitInAggroRangeCheck u_check(this, useLOS, ignoreCivilians);
-    Trinity::UnitSearcher<Trinity::NearestHostileUnitInAggroRangeCheck> searcher(this, target, u_check);
+    Azgath::NearestHostileUnitInAggroRangeCheck u_check(this, useLOS, ignoreCivilians);
+    Azgath::UnitSearcher<Azgath::NearestHostileUnitInAggroRangeCheck> searcher(this, target, u_check);
 
     Cell::VisitGridObjects(this, searcher, MAX_AGGRO_RADIUS);
 

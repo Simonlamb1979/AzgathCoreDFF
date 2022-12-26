@@ -83,13 +83,13 @@ template<class OBJECT_TYPES>
 class TypeMapContainer
 {
     public:
-        template<class SPECIFIC_TYPE> size_t Count() const { return Trinity::Count(i_elements, (SPECIFIC_TYPE*)nullptr); }
+        template<class SPECIFIC_TYPE> size_t Count() const { return Azgath::Count(i_elements, (SPECIFIC_TYPE*)nullptr); }
 
         /// inserts a specific object into the container
         template<class SPECIFIC_TYPE>
         bool insert(SPECIFIC_TYPE *obj)
         {
-            SPECIFIC_TYPE* t = Trinity::Insert(i_elements, obj);
+            SPECIFIC_TYPE* t = Azgath::Insert(i_elements, obj);
             return (t != nullptr);
         }
 
@@ -97,7 +97,7 @@ class TypeMapContainer
         //template<class SPECIFIC_TYPE>
         //bool remove(SPECIFIC_TYPE* obj)
         //{
-        //    SPECIFIC_TYPE* t = Trinity::Remove(i_elements, obj);
+        //    SPECIFIC_TYPE* t = Azgath::Remove(i_elements, obj);
         //    return (t != nullptr);
         //}
 
@@ -115,26 +115,26 @@ public:
     template<class SPECIFIC_TYPE>
     bool Insert(KEY_TYPE const& handle, SPECIFIC_TYPE* obj)
     {
-        return Trinity::Insert(_elements, handle, obj);
+        return Azgath::Insert(_elements, handle, obj);
     }
 
     template<class SPECIFIC_TYPE>
     bool Remove(KEY_TYPE const& handle)
     {
-        return Trinity::Remove(_elements, handle, (SPECIFIC_TYPE*)nullptr);
+        return Azgath::Remove(_elements, handle, (SPECIFIC_TYPE*)nullptr);
     }
 
     template<class SPECIFIC_TYPE>
     SPECIFIC_TYPE* Find(KEY_TYPE const& handle)
     {
-        return Trinity::Find(_elements, handle, (SPECIFIC_TYPE*)nullptr);
+        return Azgath::Find(_elements, handle, (SPECIFIC_TYPE*)nullptr);
     }
 
     template<class SPECIFIC_TYPE>
     std::size_t Size() const
     {
         std::size_t size = 0;
-        Trinity::Size(_elements, &size, (SPECIFIC_TYPE*)nullptr);
+        Azgath::Size(_elements, &size, (SPECIFIC_TYPE*)nullptr);
         return size;
     }
 

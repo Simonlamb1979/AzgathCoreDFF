@@ -562,7 +562,7 @@ struct CharTitlesEntry
 struct CharacterLoadoutEntry
 {
     uint32 ID;
-    Trinity::RaceMask<int64> RaceMask;
+    Azgath::RaceMask<int64> RaceMask;
     int8 ChrClassID;
     int32 Purpose;
     int8 ItemContext;
@@ -1377,7 +1377,7 @@ struct DurabilityQualityEntry
 struct EmotesEntry
 {
     uint32 ID;
-    Trinity::RaceMask<int64> RaceMask;
+    Azgath::RaceMask<int64> RaceMask;
     char const* EmoteSlashCommand;
     int32 AnimID;
     uint32 EmoteFlags;
@@ -1438,7 +1438,7 @@ struct ExpectedStatModEntry
 struct FactionEntry
 {
     uint32 ID;
-    std::array<Trinity::RaceMask<int64>, 4> ReputationRaceMask;
+    std::array<Azgath::RaceMask<int64>, 4> ReputationRaceMask;
     LocalizedString Name;
     LocalizedString Description;
     int16 ReputationIndex;
@@ -2216,7 +2216,7 @@ struct ItemPriceBaseEntry
 struct ItemSearchNameEntry
 {
     uint32 ID;
-    Trinity::RaceMask<int64> AllowableRace;
+    Azgath::RaceMask<int64> AllowableRace;
     LocalizedString Display;
     uint8 OverallQualityID;
     int32 ExpansionID;
@@ -2255,7 +2255,7 @@ struct ItemSetSpellEntry
 struct ItemSparseEntry
 {
     uint32 ID;
-    Trinity::RaceMask<int64> AllowableRace;
+    Azgath::RaceMask<int64> AllowableRace;
     LocalizedString Description;
     LocalizedString Display3;
     LocalizedString Display2;
@@ -2815,7 +2815,7 @@ struct PhaseXPhaseGroupEntry
 struct PlayerConditionEntry
 {
     uint32 ID;
-    Trinity::RaceMask<int64> RaceMask;
+    Azgath::RaceMask<int64> RaceMask;
     LocalizedString FailureDescription;
     int32 ClassMask;
     uint32 SkillLogic;
@@ -3186,7 +3186,7 @@ struct SkillLineEntry
 
 struct SkillLineAbilityEntry
 {
-    Trinity::RaceMask<int64> RaceMask;
+    Azgath::RaceMask<int64> RaceMask;
     LocalizedString AbilityVerb;
     LocalizedString AbilityAllVerb;
     uint32 ID;
@@ -3218,7 +3218,7 @@ struct SkillLineXTraitTreeEntry
 struct SkillRaceClassInfoEntry
 {
     uint32 ID;
-    Trinity::RaceMask<int64> RaceMask;
+    Azgath::RaceMask<int64> RaceMask;
     int16 SkillID;
     int32 ClassMask;
     uint16 Flags;

@@ -143,7 +143,7 @@ public:
                 GetCreatureListWithEntryInGrid(stalkers, me, NPC_BEETLE_STALKER, 100.0f);
                 std::list<Creature*> beetlers = stalkers;
 
-                Trinity::Containers::RandomResize(beetlers, 9); // Holds the summoners of Jeweled Scarab
+                Azgath::Containers::RandomResize(beetlers, 9); // Holds the summoners of Jeweled Scarab
 
                 for (std::list<Creature*>::iterator itr = beetlers.begin(); itr != beetlers.end(); ++itr)
                 {
@@ -153,7 +153,7 @@ public:
                     (*itr)->m_Events.AddEventAtOffset(new SummonScarab((*itr), instance), 5s);
                 }
 
-                Trinity::Containers::RandomResize(stalkers, 2); // Holds the summoners of Dustbone Horror
+                Azgath::Containers::RandomResize(stalkers, 2); // Holds the summoners of Dustbone Horror
 
                 for (std::list<Creature*>::iterator itr = stalkers.begin(); itr != stalkers.end(); ++itr)
                     (*itr)->CastSpell((*itr), SPELL_SUMMON_DUSTBONE_HORROR);
@@ -265,7 +265,7 @@ class spell_earthrager_ptah_flame_bolt : public SpellScriptLoader
 
             void FilterTargets(std::list<WorldObject*>& targets)
             {
-                Trinity::Containers::RandomResize(targets, GetCaster()->GetMap()->IsHeroic() ? 3 : 2);
+                Azgath::Containers::RandomResize(targets, GetCaster()->GetMap()->IsHeroic() ? 3 : 2);
             }
 
             void Register() override

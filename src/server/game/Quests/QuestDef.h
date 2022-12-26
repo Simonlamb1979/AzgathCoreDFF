@@ -536,7 +536,7 @@ class TC_GAME_API Quest
         uint32 GetMaxLevel() const { return _maxLevel; }
         uint32 GetQuestInfoID() const { return _questInfoID; }
         uint32 GetAllowableClasses() const { return _allowableClasses; }
-        Trinity::RaceMask<uint64> GetAllowableRaces() const { return _allowableRaces; }
+        Azgath::RaceMask<uint64> GetAllowableRaces() const { return _allowableRaces; }
         uint32 GetRequiredSkill() const { return _requiredSkillId; }
         uint32 GetRequiredSkillValue() const { return _requiredSkillPoints; }
         uint32 GetRequiredMinRepFaction() const { return _requiredMinRepFaction; }
@@ -714,7 +714,7 @@ class TC_GAME_API Quest
         uint32 _soundTurnIn = 0;
         uint32 _areaGroupID = 0;
         uint32 _limitTime = 0;
-        Trinity::RaceMask<uint64> _allowableRaces;
+        Azgath::RaceMask<uint64> _allowableRaces;
         int32 _treasurePickerID = 0;
         int32 _expansion = 0;
         int32 _managedWorldStateID = 0;

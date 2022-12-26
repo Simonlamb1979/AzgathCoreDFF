@@ -24,7 +24,7 @@
 #include <vector>
 #include <string>
 
-namespace Trinity
+namespace Azgath
 {
 
 /// Starts a process with the given arguments and parameters and will block
@@ -65,6 +65,6 @@ TC_COMMON_API std::shared_ptr<AsyncProcessResult>
 /// and returns a non-empty string when it was found.
 TC_COMMON_API std::string SearchExecutableInPath(std::string const& filename);
 
-} // namespace Trinity
+} // namespace Azgath
 
 #endif // Process_h__

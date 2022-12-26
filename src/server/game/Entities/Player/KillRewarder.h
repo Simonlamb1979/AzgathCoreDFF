@@ -28,7 +28,7 @@ class Group;
 class TC_GAME_API KillRewarder
 {
 public:
-    KillRewarder(Trinity::IteratorPair<Player**> killers, Unit* victim, bool isBattleGround);
+    KillRewarder(Azgath::IteratorPair<Player**> killers, Unit* victim, bool isBattleGround);
 
     void Reward();
 
@@ -43,7 +43,7 @@ private:
     void _RewardPlayer(Player* player, bool isDungeon);
     void _RewardGroup(Group const* group, Player const* killer);
 
-    Trinity::IteratorPair<Player**> _killers;
+    Azgath::IteratorPair<Player**> _killers;
     Unit* _victim;
     float _groupRate;
     Player* _maxNotGrayMember;

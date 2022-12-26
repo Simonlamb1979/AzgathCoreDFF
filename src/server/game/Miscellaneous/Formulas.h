@@ -26,7 +26,7 @@
 #include "SharedDefines.h"
 #include "World.h"
 
-namespace Trinity
+namespace Azgath
 {
     inline uint32 GetExpansionForLevel(uint32 level)
     {
@@ -59,7 +59,7 @@ namespace Trinity
         {
             return uint32(ceil(hk_honor_at_level_f(level, multiplier)));
         }
-    } // namespace Trinity::Honor
+    } // namespace Azgath::Honor
 
     namespace XP
     {
@@ -248,7 +248,7 @@ namespace Trinity
             sScriptMgr->OnGroupRateCalculation(rate, count, isRaid);
             return rate;
         }
-    } // namespace Trinity::XP
+    } // namespace Azgath::XP
 
     namespace Currency
     {
@@ -268,7 +268,7 @@ namespace Trinity
             // WowWiki: Battleground ratings receive a bonus of 22.2% to the cap they generate
             return uint32((ConquestRatingCalculator(rate) * 1.222f) + 0.5f);
         }
-    } // namespace Trinity::Currency
-} // namespace Trinity
+    } // namespace Azgath::Currency
+} // namespace Azgath
 
 #endif

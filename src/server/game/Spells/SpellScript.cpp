@@ -128,7 +128,7 @@ std::string _SpellScript::EffectHook::EffIndexToString() const
     if (effIndex == EFFECT_FIRST_FOUND)
         return "EFFECT_FIRST_FOUND";
     if (effIndex < MAX_SPELL_EFFECTS)
-        return Trinity::StringFormat("EFFECT_%u", uint32(effIndex));
+        return Azgath::StringFormat("EFFECT_%u", uint32(effIndex));
     return "Invalid Value";
 }
 

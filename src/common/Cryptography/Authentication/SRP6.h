@@ -25,7 +25,7 @@
 #include "Optional.h"
 #include <array>
 
-namespace Trinity
+namespace Azgath
 {
 namespace Crypto
 {

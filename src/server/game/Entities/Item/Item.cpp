@@ -524,7 +524,7 @@ std::string Item::GetNameForLocaleIdx(LocaleConstant locale) const
 {
     ItemTemplate const* itemTemplate = GetTemplate();
     if (ItemNameDescriptionEntry const* suffix = sItemNameDescriptionStore.LookupEntry(_bonusData.Suffix))
-        return Trinity::StringFormat("%s %s", itemTemplate->GetName(locale), suffix->Description[locale]);
+        return Azgath::StringFormat("%s %s", itemTemplate->GetName(locale), suffix->Description[locale]);
 
     return itemTemplate->GetName(locale);
 }
@@ -910,18 +910,18 @@ bool Item::LoadFromDB(ObjectGuid::LowType guid, ObjectGuid ownerGuid, Field* fie
 
     SetContext(ItemContext(fields[17].GetUInt8()));
 
-    std::vector<std::string_view> bonusListString = Trinity::Tokenize(fields[18].GetStringView(), ' ', false);
+    std::vector<std::string_view> bonusListString = Azgath::Tokenize(fields[18].GetStringView(), ' ', false);
     std::vector<int32> bonusListIDs;
     bonusListIDs.reserve(bonusListString.size());
     for (std::string_view token : bonusListString)
-        if (Optional<int32> bonusListID = Trinity::StringTo<int32>(token))
+        if (Optional<int32> bonusListID = Azgath::StringTo<int32>(token))
             bonusListIDs.push_back(*bonusListID);
     SetBonuses(std::move(bonusListIDs));
 
     // load charges after bonuses, they can add more item effects
-    std::vector<std::string_view> tokens = Trinity::Tokenize(fields[6].GetStringView(), ' ', false);
+    std::vector<std::string_view> tokens = Azgath::Tokenize(fields[6].GetStringView(), ' ', false);
     for (uint8 i = 0; i < m_itemData->SpellCharges.size() && i < _bonusData.EffectCount && i < tokens.size(); ++i)
-        SetSpellCharges(i, Trinity::StringTo<int32>(tokens[i]).value_or(0));
+        SetSpellCharges(i, Azgath::StringTo<int32>(tokens[i]).value_or(0));
 
     SetModifier(ITEM_MODIFIER_TRANSMOG_APPEARANCE_ALL_SPECS, fields[19].GetUInt32());
     SetModifier(ITEM_MODIFIER_TRANSMOG_APPEARANCE_SPEC_1, fields[20].GetUInt32());
@@ -950,10 +950,10 @@ bool Item::LoadFromDB(ObjectGuid::LowType guid, ObjectGuid ownerGuid, Field* fie
     for (uint32 i = 0; i < MAX_GEM_SOCKETS; ++i)
     {
         gemData[i].ItemId = fields[37 + i * gemFields].GetUInt32();
-        std::vector<std::string_view> gemBonusListIDs = Trinity::Tokenize(fields[38 + i * gemFields].GetStringView(), ' ', false);
+        std::vector<std::string_view> gemBonusListIDs = Azgath::Tokenize(fields[38 + i * gemFields].GetStringView(), ' ', false);
         uint32 b = 0;
         for (std::string_view token : gemBonusListIDs)
-            if (Optional<uint16> bonusListID = Trinity::StringTo<uint16>(token))
+            if (Optional<uint16> bonusListID = Azgath::StringTo<uint16>(token))
                 gemData[i].BonusListIDs[b++] = *bonusListID;
 
         gemData[i].Context = fields[39 + i * gemFields].GetUInt8();
@@ -965,15 +965,15 @@ bool Item::LoadFromDB(ObjectGuid::LowType guid, ObjectGuid ownerGuid, Field* fie
     SetModifier(ITEM_MODIFIER_ARTIFACT_KNOWLEDGE_LEVEL, fields[50].GetUInt32());
 
     // Enchants must be loaded after all other bonus/scaling data
-    std::vector<std::string_view> enchantmentTokens = Trinity::Tokenize(fields[8].GetStringView(), ' ', false);
+    std::vector<std::string_view> enchantmentTokens = Azgath::Tokenize(fields[8].GetStringView(), ' ', false);
     if (enchantmentTokens.size() == MAX_ENCHANTMENT_SLOT * MAX_ENCHANTMENT_OFFSET)
     {
         for (uint32 i = 0; i < MAX_ENCHANTMENT_SLOT; ++i)
         {
             auto enchantmentField = m_values.ModifyValue(&Item::m_itemData).ModifyValue(&UF::ItemData::Enchantment, i);
-            SetUpdateFieldValue(enchantmentField.ModifyValue(&UF::ItemEnchantment::ID), Trinity::StringTo<int32>(enchantmentTokens[i * MAX_ENCHANTMENT_OFFSET + 0]).value_or(0));
-            SetUpdateFieldValue(enchantmentField.ModifyValue(&UF::ItemEnchantment::Duration), Trinity::StringTo<uint32>(enchantmentTokens[i * MAX_ENCHANTMENT_OFFSET + 1]).value_or(0));
-            SetUpdateFieldValue(enchantmentField.ModifyValue(&UF::ItemEnchantment::Charges), Trinity::StringTo<int16>(enchantmentTokens[i * MAX_ENCHANTMENT_OFFSET + 2]).value_or(0));
+            SetUpdateFieldValue(enchantmentField.ModifyValue(&UF::ItemEnchantment::ID), Azgath::StringTo<int32>(enchantmentTokens[i * MAX_ENCHANTMENT_OFFSET + 0]).value_or(0));
+            SetUpdateFieldValue(enchantmentField.ModifyValue(&UF::ItemEnchantment::Duration), Azgath::StringTo<uint32>(enchantmentTokens[i * MAX_ENCHANTMENT_OFFSET + 1]).value_or(0));
+            SetUpdateFieldValue(enchantmentField.ModifyValue(&UF::ItemEnchantment::Charges), Azgath::StringTo<int16>(enchantmentTokens[i * MAX_ENCHANTMENT_OFFSET + 2]).value_or(0));
         }
     }
     m_randomBonusListId = fields[9].GetUInt32();
@@ -2673,7 +2673,7 @@ void Item::ApplyArtifactPowerEnchantmentBonuses(EnchantmentSlot slot, uint32 enc
                     break;
                 case ITEM_ENCHANTMENT_TYPE_ARTIFACT_POWER_BONUS_RANK_BY_ID:
                 {
-                    if (uint16 const* artifactPowerIndex = Trinity::Containers::MapGetValuePtr(m_artifactPowerIdToIndex, enchant->EffectArg[i]))
+                    if (uint16 const* artifactPowerIndex = Azgath::Containers::MapGetValuePtr(m_artifactPowerIdToIndex, enchant->EffectArg[i]))
                     {
                         uint8 newRank = m_itemData->ArtifactPowers[*artifactPowerIndex].CurrentRankWithBonus;
                         if (apply)

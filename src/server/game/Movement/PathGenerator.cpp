@@ -59,7 +59,7 @@ bool PathGenerator::CalculatePath(float destX, float destY, float destZ, bool fo
     float x, y, z;
     _source->GetPosition(x, y, z);
 
-    if (!Trinity::IsValidMapCoord(destX, destY, destZ) || !Trinity::IsValidMapCoord(x, y, z))
+    if (!Azgath::IsValidMapCoord(destX, destY, destZ) || !Azgath::IsValidMapCoord(x, y, z))
         return false;
 
     TC_METRIC_DETAILED_EVENT("mmap_events", "CalculatePath", "");

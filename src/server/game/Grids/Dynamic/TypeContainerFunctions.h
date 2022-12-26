@@ -27,7 +27,7 @@
 #include "Define.h"
 #include "Dynamic/TypeList.h"
 
-namespace Trinity
+namespace Azgath
 {
     // Helpers
     // Insert helpers

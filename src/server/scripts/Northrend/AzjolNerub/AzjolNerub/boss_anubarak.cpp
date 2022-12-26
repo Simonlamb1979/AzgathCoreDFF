@@ -214,7 +214,7 @@ struct boss_anub_arak : public BossAI
                     me->GetCreatureListWithEntryInGrid(triggers, NPC_WORLD_TRIGGER);
                     if (!triggers.empty())
                     {
-                        Creature* trigger = Trinity::Containers::SelectRandomContainerElement(triggers);
+                        Creature* trigger = Azgath::Containers::SelectRandomContainerElement(triggers);
                         trigger->CastSpell(trigger, SPELL_SUMMON_DARTER, true);
 
                         events.Repeat(11s);

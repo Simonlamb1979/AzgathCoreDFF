@@ -24,7 +24,7 @@
 class Unit;
 class WorldObject;
 
-namespace Trinity
+namespace Azgath
 {
     namespace Predicates
     {

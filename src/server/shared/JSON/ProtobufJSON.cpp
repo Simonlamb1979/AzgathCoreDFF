@@ -231,7 +231,7 @@ bool Deserializer::Key(const Ch* str, rapidjson::SizeType /*length*/, bool /*cop
     google::protobuf::FieldDescriptor const* field = _objectState.top()->GetDescriptor()->FindFieldByName(str);
     if (!field)
     {
-        _errors.push_back(Trinity::StringFormat("Message %s has no field %s.", _objectState.top()->GetTypeName().c_str(), str));
+        _errors.push_back(Azgath::StringFormat("Message %s has no field %s.", _objectState.top()->GetTypeName().c_str(), str));
         return false;
     }
 
@@ -293,7 +293,7 @@ bool Deserializer::Uint(uint32 i)
             break;
         }
         default:
-            _errors.push_back(Trinity::StringFormat("Expected field type to be uint32 or string but got %s instead.", _state.top()->cpp_type_name()));
+            _errors.push_back(Azgath::StringFormat("Expected field type to be uint32 or string but got %s instead.", _state.top()->cpp_type_name()));
             return false;
     }
 
@@ -331,7 +331,7 @@ bool Deserializer::Double(double d)
             SET_FIELD(message, field, Double, d);
             break;
         default:
-            _errors.push_back(Trinity::StringFormat("Expected field type to be float or double but got %s instead.", _state.top()->cpp_type_name()));
+            _errors.push_back(Azgath::StringFormat("Expected field type to be float or double but got %s instead.", _state.top()->cpp_type_name()));
             return false;
     }
 
@@ -349,7 +349,7 @@ bool Deserializer::String(const Ch* str, rapidjson::SizeType /*length*/, bool /*
             google::protobuf::EnumValueDescriptor const* enumValue = field->enum_type()->FindValueByName(str);
             if (!enumValue)
             {
-                _errors.push_back(Trinity::StringFormat("Field %s enum %s does not have a value named %s.", field->full_name().c_str(), field->enum_type()->full_name().c_str(), str));
+                _errors.push_back(Azgath::StringFormat("Field %s enum %s does not have a value named %s.", field->full_name().c_str(), field->enum_type()->full_name().c_str(), str));
                 return false;
             }
 
@@ -360,7 +360,7 @@ bool Deserializer::String(const Ch* str, rapidjson::SizeType /*length*/, bool /*
             SET_FIELD(message, field, String, str);
             break;
         default:
-            _errors.push_back(Trinity::StringFormat("Expected field type to be string or enum but got %s instead.", _state.top()->cpp_type_name()));
+            _errors.push_back(Azgath::StringFormat("Expected field type to be string or enum but got %s instead.", _state.top()->cpp_type_name()));
             return false;
     }
 
@@ -374,7 +374,7 @@ bool Deserializer::StartObject()
     {
         if (_state.top()->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE)
         {
-            _errors.push_back(Trinity::StringFormat("Expected field %s to be a message but got %s instead.", _state.top()->cpp_type_name()));
+            _errors.push_back(Azgath::StringFormat("Expected field %s to be a message but got %s instead.", _state.top()->cpp_type_name()));
             return false;
         }
 
@@ -409,7 +409,7 @@ bool Deserializer::StartArray()
 
     if (_state.top()->is_repeated() ^ (_state.top()->type() != google::protobuf::FieldDescriptor::TYPE_BYTES))
     {
-        _errors.push_back(Trinity::StringFormat("Expected field %s type to be exactly an array OR bytes but it was both or none.", _state.top()->full_name().c_str()));
+        _errors.push_back(Azgath::StringFormat("Expected field %s type to be exactly an array OR bytes but it was both or none.", _state.top()->full_name().c_str()));
         return false;
     }
 
@@ -420,7 +420,7 @@ bool Deserializer::CheckType(google::protobuf::FieldDescriptor::CppType expected
 {
     if (_state.top()->cpp_type() != expectedType)
     {
-        _errors.push_back(Trinity::StringFormat("Expected field %s type to be %s but got %s instead.",
+        _errors.push_back(Azgath::StringFormat("Expected field %s type to be %s but got %s instead.",
             _state.top()->full_name().c_str(), google::protobuf::FieldDescriptor::CppTypeName(expectedType), _state.top()->cpp_type_name()));
         return false;
     }

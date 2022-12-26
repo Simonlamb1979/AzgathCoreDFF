@@ -37,7 +37,7 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class group_commandscript : public CommandScript
 {

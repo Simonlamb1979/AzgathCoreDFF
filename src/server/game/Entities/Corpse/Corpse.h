@@ -109,7 +109,7 @@ class TC_GAME_API Corpse : public WorldObject, public GridObject<Corpse>
         void SetItem(uint32 slot, uint32 item) { SetUpdateFieldValue(m_values.ModifyValue(&Corpse::m_corpseData).ModifyValue(&UF::CorpseData::Items, slot), item); }
 
         template<typename Iter>
-        void SetCustomizations(Trinity::IteratorPair<Iter> customizations)
+        void SetCustomizations(Azgath::IteratorPair<Iter> customizations)
         {
             ClearDynamicUpdateFieldValues(m_values.ModifyValue(&Corpse::m_corpseData).ModifyValue(&UF::CorpseData::Customizations));
             for (auto&& customization : customizations)

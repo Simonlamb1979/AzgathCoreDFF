@@ -326,7 +326,7 @@ void PoolGroup<T>::SpawnObject(SpawnedPoolData& spawns, uint32 limit, uint64 tri
                 return object.guid == triggerFrom || !spawns.IsSpawnedObject<T>(object.guid);
             });
 
-            Trinity::Containers::RandomResize(rolledObjects, count);
+            Azgath::Containers::RandomResize(rolledObjects, count);
         }
 
         // try to spawn rolled objects
@@ -933,7 +933,7 @@ void PoolMgr::UpdatePool(SpawnedPoolData& spawnedPoolData, uint32 pool_id, Spawn
 std::unique_ptr<SpawnedPoolData> PoolMgr::InitPoolsForMap(Map* map)
 {
     std::unique_ptr<SpawnedPoolData> spawnedPoolData = std::make_unique<SpawnedPoolData>(map);
-    if (std::vector<uint32> const* poolIds = Trinity::Containers::MapGetValuePtr(mAutoSpawnPoolsPerMap, spawnedPoolData->GetMap()->GetId()))
+    if (std::vector<uint32> const* poolIds = Azgath::Containers::MapGetValuePtr(mAutoSpawnPoolsPerMap, spawnedPoolData->GetMap()->GetId()))
         for (uint32 poolId : *poolIds)
             SpawnPool(*spawnedPoolData, poolId);
 
@@ -942,5 +942,5 @@ std::unique_ptr<SpawnedPoolData> PoolMgr::InitPoolsForMap(Map* map)
 
 PoolTemplateData const* PoolMgr::GetPoolTemplate(uint16 pool_id) const
 {
-    return Trinity::Containers::MapGetValuePtr(mPoolTemplate, pool_id);
+    return Azgath::Containers::MapGetValuePtr(mPoolTemplate, pool_id);
 }

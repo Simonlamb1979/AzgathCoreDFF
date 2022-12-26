@@ -836,7 +836,7 @@ class spell_icecrown_chum_the_water : public SpellScript
     void HandleScript(SpellEffIndex /*effIndex*/)
     {
         Unit* caster = GetCaster();
-        caster->CastSpell(caster, Trinity::Containers::SelectRandomContainerElement(ChumTheWaterSummonSpells));
+        caster->CastSpell(caster, Azgath::Containers::SelectRandomContainerElement(ChumTheWaterSummonSpells));
     }
 
     void Register() override

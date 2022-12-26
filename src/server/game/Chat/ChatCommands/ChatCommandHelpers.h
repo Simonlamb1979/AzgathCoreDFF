@@ -29,7 +29,7 @@
 
 class ChatHandler;
 
-namespace Trinity::Impl::ChatCommands
+namespace Azgath::Impl::ChatCommands
 {
     /***************** HELPERS *************************\
     |* These really aren't for outside use...          *|
@@ -125,7 +125,7 @@ namespace Trinity::Impl::ChatCommands
     template <typename... Ts>
     std::string FormatTrinityString(ChatHandler const* handler, TrinityStrings which, Ts&&... args)
     {
-        return Trinity::StringFormat(GetAzgathString(handler, which), std::forward<Ts>(args)...);
+        return Azgath::StringFormat(GetAzgathString(handler, which), std::forward<Ts>(args)...);
     }
 }
 

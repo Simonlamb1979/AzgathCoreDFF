@@ -41,7 +41,7 @@ EndScriptData */
 #include "WorldSession.h"
 #include <sstream>
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class list_commandscript : public CommandScript
 {
@@ -127,7 +127,7 @@ public:
                 // If map found, try to find active version of this creature
                 if (thisMap)
                 {
-                    auto const creBounds = Trinity::Containers::MapEqualRange(thisMap->GetCreatureBySpawnIdStore(), guid);
+                    auto const creBounds = Azgath::Containers::MapEqualRange(thisMap->GetCreatureBySpawnIdStore(), guid);
                     for (auto& [spawnId, creature] : creBounds)
                         handler->PSendSysMessage(LANG_CREATURE_LIST_CHAT, std::to_string(guid).c_str(), std::to_string(guid).c_str(), cInfo->Name.c_str(),
                             x, y, z, mapId, creature->GetGUID().ToString().c_str(), creature->IsAlive() ? "*" : " ");
@@ -398,7 +398,7 @@ public:
                 // If map found, try to find active version of this object
                 if (thisMap)
                 {
-                    auto const goBounds = Trinity::Containers::MapEqualRange(thisMap->GetGameObjectBySpawnIdStore(), guid);
+                    auto const goBounds = Azgath::Containers::MapEqualRange(thisMap->GetGameObjectBySpawnIdStore(), guid);
                     for (auto& [spawnId, go] : goBounds)
                         handler->PSendSysMessage(LANG_GO_LIST_CHAT, std::to_string(guid).c_str(), entry, std::to_string(guid).c_str(), gInfo->name.c_str(), x, y, z, mapId,
                             go->GetGUID().ToString().c_str(), go->isSpawned() ? "*" : " ");

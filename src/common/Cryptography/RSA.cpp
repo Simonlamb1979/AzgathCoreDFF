@@ -44,7 +44,7 @@ struct HMAC_SHA256_MD
 {
     struct CTX_DATA
     {
-        Trinity::Crypto::HMAC_SHA256* hmac;
+        Azgath::Crypto::HMAC_SHA256* hmac;
     };
 
 #if OPENSSL_VERSION_NUMBER < 0x30000000L
@@ -52,7 +52,7 @@ struct HMAC_SHA256_MD
     HMAC_SHA256_MD()
     {
         _md = EVP_MD_meth_new(NID_sha256, NID_sha256WithRSAEncryption);
-        EVP_MD_meth_set_result_size(_md, Trinity::Crypto::Constants::SHA256_DIGEST_LENGTH_BYTES);
+        EVP_MD_meth_set_result_size(_md, Azgath::Crypto::Constants::SHA256_DIGEST_LENGTH_BYTES);
         EVP_MD_meth_set_flags(_md, EVP_MD_FLAG_DIGALGID_ABSENT);
         EVP_MD_meth_set_init(_md, &Init);
         EVP_MD_meth_set_update(_md, &UpdateData);
@@ -114,7 +114,7 @@ struct HMAC_SHA256_MD
         CTX_DATA* ctxDataTo = reinterpret_cast<CTX_DATA*>(EVP_MD_CTX_md_data(to));
 
         if (ctxDataFrom->hmac)
-            ctxDataTo->hmac = new Trinity::Crypto::HMAC_SHA256(*ctxDataFrom->hmac);
+            ctxDataTo->hmac = new Azgath::Crypto::HMAC_SHA256(*ctxDataFrom->hmac);
 
         return 1;
     }
@@ -190,7 +190,7 @@ private:
             size_t keyLength = 0;
             if (OSSL_PARAM_get_octet_ptr(keyParam, reinterpret_cast<void const**>(&key), &keyLength))
             {
-                ctxData->hmac = new Trinity::Crypto::HMAC_SHA256(key, keyLength);
+                ctxData->hmac = new Azgath::Crypto::HMAC_SHA256(key, keyLength);
                 return 1;
             }
         }
@@ -229,7 +229,7 @@ private:
         CTX_DATA const* ctxDataFrom = reinterpret_cast<CTX_DATA const*>(dctx);
         CTX_DATA* ctxDataTo = DigestNew();
         if (ctxDataFrom->hmac)
-            ctxDataTo->hmac = new Trinity::Crypto::HMAC_SHA256(*ctxDataFrom->hmac);
+            ctxDataTo->hmac = new Azgath::Crypto::HMAC_SHA256(*ctxDataFrom->hmac);
 
         return ctxDataTo;
     }
@@ -243,7 +243,7 @@ private:
             return 0;
 
         p = OSSL_PARAM_locate(params, OSSL_DIGEST_PARAM_SIZE);
-        if (p != nullptr && !OSSL_PARAM_set_size_t(p, Trinity::Crypto::Constants::SHA256_DIGEST_LENGTH_BYTES))
+        if (p != nullptr && !OSSL_PARAM_set_size_t(p, Azgath::Crypto::Constants::SHA256_DIGEST_LENGTH_BYTES))
             return 0;
 
         p = OSSL_PARAM_locate(params, OSSL_DIGEST_PARAM_XOF);
@@ -308,7 +308,7 @@ OSSL_DISPATCH const HMAC_SHA256_method[] =
 
 }
 
-namespace Trinity::Crypto
+namespace Azgath::Crypto
 {
 #if OPENSSL_VERSION_NUMBER >= 0x30000000L
 

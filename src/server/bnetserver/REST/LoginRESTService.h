@@ -43,7 +43,7 @@ public:
 
     static LoginRESTService& Instance();
 
-    bool Start(Trinity::Asio::IoContext* ioContext);
+    bool Start(Azgath::Asio::IoContext* ioContext);
     void Stop();
 
     boost::asio::ip::tcp::endpoint const& GetAddressForClient(boost::asio::ip::address const& address) const;
@@ -95,7 +95,7 @@ private:
         char const* ContentType;
     };
 
-    Trinity::Asio::IoContext* _ioContext;
+    Azgath::Asio::IoContext* _ioContext;
     std::thread _thread;
     std::atomic<bool> _stopped;
     Battlenet::JSON::Login::FormInputs _formInputs;

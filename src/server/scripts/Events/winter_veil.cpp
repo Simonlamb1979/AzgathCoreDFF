@@ -95,7 +95,7 @@ class spell_winter_veil_px_238_winter_wondervolt : public SpellScript
                 if (target->HasAura(spell))
                     return;
 
-            target->CastSpell(target, Trinity::Containers::SelectRandomContainerElement(WonderboltTransformSpells), true);
+            target->CastSpell(target, Azgath::Containers::SelectRandomContainerElement(WonderboltTransformSpells), true);
         }
     }
 

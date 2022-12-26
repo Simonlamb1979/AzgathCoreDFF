@@ -34,8 +34,8 @@ class AsyncAcceptor
 public:
     typedef void(*AcceptCallback)(tcp::socket&& newSocket, uint32 threadIndex);
 
-    AsyncAcceptor(Trinity::Asio::IoContext& ioContext, std::string const& bindIp, uint16 port) :
-        _acceptor(ioContext), _endpoint(Trinity::Net::make_address(bindIp), port),
+    AsyncAcceptor(Azgath::Asio::IoContext& ioContext, std::string const& bindIp, uint16 port) :
+        _acceptor(ioContext), _endpoint(Azgath::Net::make_address(bindIp), port),
         _socket(ioContext), _closed(false), _socketFactory(std::bind(&AsyncAcceptor::DefeaultSocketFactory, this))
     {
     }

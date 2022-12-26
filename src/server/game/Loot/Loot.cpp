@@ -147,7 +147,7 @@ Optional<LootSlotType> LootItem::GetUiTypeForPlayer(Player const* player, Loot c
 
     if (freeforall)
     {
-        if (std::unique_ptr<NotNormalLootItemList> const* ffaItems = Trinity::Containers::MapGetValuePtr(loot.GetPlayerFFAItems(), player->GetGUID()))
+        if (std::unique_ptr<NotNormalLootItemList> const* ffaItems = Azgath::Containers::MapGetValuePtr(loot.GetPlayerFFAItems(), player->GetGUID()))
         {
             auto ffaItemItr = std::find_if(ffaItems->get()->begin(), ffaItems->get()->end(), [&](NotNormalLootItem const& ffaItem)
             {
@@ -951,7 +951,7 @@ bool Loot::hasItemFor(Player const* player) const
         if (!lootItem.is_looted && !lootItem.follow_loot_rules && lootItem.GetAllowedLooters().find(player->GetGUID()) != lootItem.GetAllowedLooters().end())
             return true;
 
-    if (std::unique_ptr<NotNormalLootItemList> const* ffaItems = Trinity::Containers::MapGetValuePtr(GetPlayerFFAItems(), player->GetGUID()))
+    if (std::unique_ptr<NotNormalLootItemList> const* ffaItems = Azgath::Containers::MapGetValuePtr(GetPlayerFFAItems(), player->GetGUID()))
     {
         bool hasFfaItem = std::any_of(ffaItems->get()->begin(), ffaItems->get()->end(), [&](NotNormalLootItem const& ffaItem)
         {

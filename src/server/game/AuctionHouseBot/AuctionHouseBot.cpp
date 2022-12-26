@@ -319,7 +319,7 @@ ObjectGuid AuctionBotConfig::GetRandChar() const
     if (_AHBotCharacters.empty())
         return ObjectGuid::Empty;
 
-    return Trinity::Containers::SelectRandomContainerElement(_AHBotCharacters);
+    return Azgath::Containers::SelectRandomContainerElement(_AHBotCharacters);
 }
 
 // Picks a random AHBot character, but excludes a specific one. This is used
@@ -339,7 +339,7 @@ ObjectGuid AuctionBotConfig::GetRandCharExclude(ObjectGuid exclude) const
     if (filteredCharacters.empty())
         return ObjectGuid::Empty;
 
-    return Trinity::Containers::SelectRandomContainerElement(filteredCharacters);
+    return Azgath::Containers::SelectRandomContainerElement(filteredCharacters);
 }
 
 bool AuctionBotConfig::IsBotChar(ObjectGuid characterID) const

@@ -420,7 +420,7 @@ void WorldSession::HandleCharEnum(CharacterDatabaseQueryHolder const& holder)
 
             WorldPackets::Character::EnumCharactersResult::CharacterInfo& charInfo = charEnum.Characters.back();
 
-            if (std::vector<UF::ChrCustomizationChoice>* customizationsForChar = Trinity::Containers::MapGetValuePtr(customizations, charInfo.Guid.GetCounter()))
+            if (std::vector<UF::ChrCustomizationChoice>* customizationsForChar = Azgath::Containers::MapGetValuePtr(customizations, charInfo.Guid.GetCounter()))
                 charInfo.Customizations = std::move(*customizationsForChar);
 
             TC_LOG_INFO("network", "Loading char guid %s from account %u.", charInfo.Guid.ToString().c_str(), GetAccountId());
@@ -510,7 +510,7 @@ void WorldSession::HandleCharUndeleteEnumOpcode(WorldPackets::Character::EnumCha
 }
 
 bool WorldSession::MeetsChrCustomizationReq(ChrCustomizationReqEntry const* req, Classes playerClass,
-    bool checkRequiredDependentChoices, Trinity::IteratorPair<UF::ChrCustomizationChoice const*> selectedChoices) const
+    bool checkRequiredDependentChoices, Azgath::IteratorPair<UF::ChrCustomizationChoice const*> selectedChoices) const
 {
     if (!req->GetFlags().HasFlag(ChrCustomizationReqFlag::HasRequirements))
         return true;
@@ -563,7 +563,7 @@ bool WorldSession::MeetsChrCustomizationReq(ChrCustomizationReqEntry const* req,
     return true;
 }
 
-bool WorldSession::ValidateAppearance(Races race, Classes playerClass, Gender gender, Trinity::IteratorPair<UF::ChrCustomizationChoice const*> customizations)
+bool WorldSession::ValidateAppearance(Races race, Classes playerClass, Gender gender, Azgath::IteratorPair<UF::ChrCustomizationChoice const*> customizations)
 {
     std::vector<ChrCustomizationOptionEntry const*> const* options = sDB2Manager.GetCustomiztionOptions(race, gender);
     if (!options)
@@ -724,7 +724,7 @@ void WorldSession::HandleCharCreateOpcode(WorldPackets::Character::CreateCharact
             return;
         }
 
-        Trinity::RaceMask<uint64> raceMaskDisabled{ sWorld->GetUInt64Config(CONFIG_CHARACTER_CREATING_DISABLED_RACEMASK) };
+        Azgath::RaceMask<uint64> raceMaskDisabled{ sWorld->GetUInt64Config(CONFIG_CHARACTER_CREATING_DISABLED_RACEMASK) };
         if (raceMaskDisabled.HasRace(charCreate.CreateInfo->Race))
         {
             SendCharCreate(CHAR_CREATE_DISABLED);
@@ -1787,7 +1787,7 @@ void WorldSession::HandleAlterAppearance(WorldPackets::Character::AlterApperance
         _player->RestoreDisplayId(false);
     }
 
-    _player->SetCustomizations(Trinity::Containers::MakeIteratorPair(packet.Customizations.begin(), packet.Customizations.end()));
+    _player->SetCustomizations(Azgath::Containers::MakeIteratorPair(packet.Customizations.begin(), packet.Customizations.end()));
 
     _player->UpdateCriteria(CriteriaType::GotHaircut, 1);
 
@@ -2141,7 +2141,7 @@ void WorldSession::HandleCharRaceOrFactionChangeCallback(std::shared_ptr<WorldPa
 
     if (!HasPermission(rbac::RBAC_PERM_SKIP_CHECK_CHARACTER_CREATION_RACEMASK))
     {
-        Trinity::RaceMask<uint64> raceMaskDisabled{ sWorld->GetUInt64Config(CONFIG_CHARACTER_CREATING_DISABLED_RACEMASK) };
+        Azgath::RaceMask<uint64> raceMaskDisabled{ sWorld->GetUInt64Config(CONFIG_CHARACTER_CREATING_DISABLED_RACEMASK) };
         if (raceMaskDisabled.HasRace(factionChangeInfo->RaceID))
         {
             SendCharFactionChange(CHAR_CREATE_ERROR, factionChangeInfo.get());
@@ -2455,7 +2455,7 @@ void WorldSession::HandleCharRaceOrFactionChangeCallback(std::shared_ptr<WorldPa
                 ObjectMgr::QuestContainer const& questTemplates = sObjectMgr->GetQuestTemplates();
                 for (auto const& questTemplatePair : questTemplates)
                 {
-                    Trinity::RaceMask<uint64> newRaceMask = (newTeamId == TEAM_ALLIANCE) ? RACEMASK_ALLIANCE : RACEMASK_HORDE;
+                    Azgath::RaceMask<uint64> newRaceMask = (newTeamId == TEAM_ALLIANCE) ? RACEMASK_ALLIANCE : RACEMASK_HORDE;
                     if (questTemplatePair.second.GetAllowableRaces().RawValue != uint64(-1) && (questTemplatePair.second.GetAllowableRaces() & newRaceMask).IsEmpty())
                     {
                         stmt = CharacterDatabase.GetPreparedStatement(CHAR_UPD_CHAR_QUESTSTATUS_REWARDED_ACTIVE_BY_QUEST);
@@ -2530,12 +2530,12 @@ void WorldSession::HandleCharRaceOrFactionChangeCallback(std::shared_ptr<WorldPa
             // Title conversion
             if (!knownTitlesStr.empty())
             {
-                std::vector<std::string_view> tokens = Trinity::Tokenize(knownTitlesStr, ' ', false);
+                std::vector<std::string_view> tokens = Azgath::Tokenize(knownTitlesStr, ' ', false);
                 std::vector<uint32> knownTitles;
 
                 for (std::string_view token : tokens)
                 {
-                    if (Optional<uint32> thisMask = Trinity::StringTo<uint32>(token))
+                    if (Optional<uint32> thisMask = Azgath::StringTo<uint32>(token))
                         knownTitles.push_back(*thisMask);
                     else
                     {

@@ -1869,7 +1869,7 @@ class spell_halion_spawn_living_embers : public SpellScriptLoader
             void SelectMeteorFlames(std::list<WorldObject*>& unitList)
             {
                 if (!unitList.empty())
-                    Trinity::Containers::RandomResize(unitList, 10);
+                    Azgath::Containers::RandomResize(unitList, 10);
             }
 
             void HandleScript(SpellEffIndex /* effIndex */)

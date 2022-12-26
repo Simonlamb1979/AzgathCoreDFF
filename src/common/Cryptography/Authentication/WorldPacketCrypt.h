@@ -25,16 +25,16 @@ class TC_COMMON_API WorldPacketCrypt
 public:
     WorldPacketCrypt();
 
-    void Init(Trinity::Crypto::AES::Key const& key);
+    void Init(Azgath::Crypto::AES::Key const& key);
     bool PeekDecryptRecv(uint8* data, size_t length);
-    bool DecryptRecv(uint8* data, size_t length, Trinity::Crypto::AES::Tag& tag);
-    bool EncryptSend(uint8* data, size_t length, Trinity::Crypto::AES::Tag& tag);
+    bool DecryptRecv(uint8* data, size_t length, Azgath::Crypto::AES::Tag& tag);
+    bool EncryptSend(uint8* data, size_t length, Azgath::Crypto::AES::Tag& tag);
 
     bool IsInitialized() const { return _initialized; }
 
 protected:
-    Trinity::Crypto::AES _clientDecrypt;
-    Trinity::Crypto::AES _serverEncrypt;
+    Azgath::Crypto::AES _clientDecrypt;
+    Azgath::Crypto::AES _serverEncrypt;
     uint64 _clientCounter;
     uint64 _serverCounter;
     bool _initialized;

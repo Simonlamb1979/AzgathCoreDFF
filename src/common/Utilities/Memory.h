@@ -20,7 +20,7 @@
 
 #include <memory>
 
-namespace Trinity
+namespace Azgath
 {
 namespace Impl
 {

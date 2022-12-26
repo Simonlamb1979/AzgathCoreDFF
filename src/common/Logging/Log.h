@@ -30,7 +30,7 @@ class Appender;
 class Logger;
 struct LogMessage;
 
-namespace Trinity
+namespace Azgath
 {
     namespace Asio
     {
@@ -61,7 +61,7 @@ class TC_COMMON_API Log
     public:
         static Log* instance();
 
-        void Initialize(Trinity::Asio::IoContext* ioContext);
+        void Initialize(Azgath::Asio::IoContext* ioContext);
         void SetSynchronous();  // Not threadsafe - should only be called from main() after all threads are joined
         void LoadFromConfig();
         void Close();
@@ -71,7 +71,7 @@ class TC_COMMON_API Log
         template<typename... Args>
         void OutMessage(std::string_view filter, LogLevel const level, std::string_view fmt, Args&&... args)
         {
-            OutMessageImpl(filter, level, Trinity::StringFormat(fmt, std::forward<Args>(args)...));
+            OutMessageImpl(filter, level, Azgath::StringFormat(fmt, std::forward<Args>(args)...));
         }
 
         template<typename... Args>
@@ -80,7 +80,7 @@ class TC_COMMON_API Log
             if (!ShouldLog("commands.gm", LOG_LEVEL_INFO))
                 return;
 
-            OutCommandImpl(Trinity::StringFormat(fmt, std::forward<Args>(args)...), std::to_string(account));
+            OutCommandImpl(Azgath::StringFormat(fmt, std::forward<Args>(args)...), std::to_string(account));
         }
 
         void OutCharDump(char const* str, uint32 account_id, uint64 guid, char const* name);
@@ -123,8 +123,8 @@ class TC_COMMON_API Log
         std::string m_logsDir;
         std::string m_logsTimestamp;
 
-        Trinity::Asio::IoContext* _ioContext;
-        Trinity::Asio::Strand* _strand;
+        Azgath::Asio::IoContext* _ioContext;
+        Azgath::Asio::Strand* _strand;
 };
 
 #define sLog Log::instance()

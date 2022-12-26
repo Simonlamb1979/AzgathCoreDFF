@@ -724,7 +724,7 @@ class spell_pal_glyph_of_holy_light : public SpellScript
 
         if (targets.size() > maxTargets)
         {
-            targets.sort(Trinity::HealthPctOrderPred());
+            targets.sort(Azgath::HealthPctOrderPred());
             targets.resize(maxTargets);
         }
     }
@@ -943,11 +943,11 @@ class spell_pal_holy_prism_selector : public SpellScript
         {
             if (GetSpellInfo()->Id == SPELL_PALADIN_HOLY_PRISM_TARGET_ALLY)
             {
-                targets.sort(Trinity::HealthPctOrderPred());
+                targets.sort(Azgath::HealthPctOrderPred());
                 targets.resize(maxTargets);
             }
             else
-                Trinity::Containers::RandomResize(targets, maxTargets);
+                Azgath::Containers::RandomResize(targets, maxTargets);
         }
 
         _sharedTargets = targets;

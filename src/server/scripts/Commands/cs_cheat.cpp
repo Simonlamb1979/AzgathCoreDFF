@@ -30,7 +30,7 @@ EndScriptData */
 #include "RBAC.h"
 #include "WorldSession.h"
 
-using namespace Trinity::ChatCommands;
+using namespace Azgath::ChatCommands;
 
 class cheat_commandscript : public CommandScript
 {

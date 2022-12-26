@@ -426,7 +426,7 @@ public:
                         UnitsWithMana.push_back(ref->GetVictim());
                 if (!UnitsWithMana.empty())
                 {
-                    DoCast(Trinity::Containers::SelectRandomContainerElement(UnitsWithMana), SPELL_MANA_BURN);
+                    DoCast(Azgath::Containers::SelectRandomContainerElement(UnitsWithMana), SPELL_MANA_BURN);
                     ManaBurnTimer = urand(8000, 18000); // 8-18 sec cd
                 }
                 else

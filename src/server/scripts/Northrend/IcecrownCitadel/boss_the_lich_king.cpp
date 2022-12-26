@@ -513,7 +513,7 @@ struct boss_the_lich_king : public BossAI
 
         // Reset The Frozen Throne gameobjects
         FrozenThroneResetWorker reset;
-        Trinity::GameObjectWorker<FrozenThroneResetWorker> worker(me, reset);
+        Azgath::GameObjectWorker<FrozenThroneResetWorker> worker(me, reset);
         Cell::VisitGridObjects(me, worker, 333.0f);
 
         // Reset any light override
@@ -1052,7 +1052,7 @@ struct boss_the_lich_king : public BossAI
                         GetCreatureListWithEntryInGrid(triggers, terenas, NPC_WORLD_TRIGGER_INFINITE_AOI, 100.0f);
                         if (!triggers.empty())
                         {
-                            triggers.sort(Trinity::ObjectDistanceOrderPred(terenas, true));
+                            triggers.sort(Azgath::ObjectDistanceOrderPred(terenas, true));
                             Creature* spawner = triggers.front();
                             spawner->setActive(true);
                             spawner->SetFarVisible(true);
@@ -1482,11 +1482,11 @@ struct npc_valkyr_shadowguard : public ScriptedAI
                     {
                         std::list<Creature*> triggers;
                         GetCreatureListWithEntryInGrid(triggers, me, NPC_WORLD_TRIGGER, 150.0f);
-                        triggers.remove_if(Trinity::HeightDifferenceCheck(platform, 5.0f, true));
+                        triggers.remove_if(Azgath::HeightDifferenceCheck(platform, 5.0f, true));
                         if (triggers.empty())
                             return;
 
-                        triggers.sort(Trinity::ObjectDistanceOrderPred(me));
+                        triggers.sort(Azgath::ObjectDistanceOrderPred(me));
                         DoCast(target, SPELL_VALKYR_CARRY);
                         _dropPoint.Relocate(triggers.front());
                         _events.ScheduleEvent(EVENT_MOVE_TO_DROP_POS, 1s + 500ms);
@@ -2021,7 +2021,7 @@ public:
 private:
     void SelectTarget(std::list<WorldObject*>& targets)
     {
-        targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+        targets.sort(Azgath::ObjectDistanceOrderPred(GetCaster()));
         if (targets.size() < 2)
             return;
 
@@ -2166,7 +2166,7 @@ class spell_the_lich_king_quake : public SpellScript
     void FilterTargets(std::list<WorldObject*>& targets)
     {
         if (GameObject* platform = ObjectAccessor::GetGameObject(*GetCaster(), GetCaster()->GetInstanceScript()->GetGuidData(DATA_ARTHAS_PLATFORM)))
-            targets.remove_if(Trinity::HeightDifferenceCheck(platform, 5.0f, false));
+            targets.remove_if(Azgath::HeightDifferenceCheck(platform, 5.0f, false));
     }
 
     void HandleSendEvent(SpellEffIndex /*effIndex*/)
@@ -2253,7 +2253,7 @@ class spell_the_lich_king_defile : public SpellScript
     void CorrectRange(std::list<WorldObject*>& targets)
     {
         targets.remove_if(ExactDistanceCheck(GetCaster(), 10.0f * GetCaster()->GetObjectScale()));
-        targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_HARVEST_SOUL_VALKYR));
+        targets.remove_if(Azgath::UnitAuraCheck(true, SPELL_HARVEST_SOUL_VALKYR));
     }
 
     void ChangeDamageAndGrow()
@@ -2339,11 +2339,11 @@ class spell_the_lich_king_valkyr_target_search : public SpellScript
         if (targets.empty())
             return;
 
-        targets.remove_if(Trinity::UnitAuraCheck(true, GetSpellInfo()->Id));
+        targets.remove_if(Azgath::UnitAuraCheck(true, GetSpellInfo()->Id));
         if (targets.empty())
             return;
 
-        _target = Trinity::Containers::SelectRandomContainerElement(targets);
+        _target = Azgath::Containers::SelectRandomContainerElement(targets);
         targets.clear();
         targets.push_back(_target);
         GetCaster()->GetAI()->SetGUID(_target->GetGUID());
@@ -2484,7 +2484,7 @@ private:
         if (targets.empty())
             return;
 
-        _target = Trinity::Containers::SelectRandomContainerElement(targets);
+        _target = Azgath::Containers::SelectRandomContainerElement(targets);
     }
 
     void HandleScript(SpellEffIndex effIndex)

@@ -210,7 +210,7 @@ class spell_dk_army_transform : public SpellScript
 
     void HandleDummy(SpellEffIndex /*effIndex*/)
     {
-        GetCaster()->CastSpell(GetCaster(), Trinity::Containers::SelectRandomContainerElement(ArmyTransforms), true);
+        GetCaster()->CastSpell(GetCaster(), Azgath::Containers::SelectRandomContainerElement(ArmyTransforms), true);
     }
 
     void Register() override

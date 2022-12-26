@@ -122,7 +122,7 @@ bool PhaseShift::CanSee(PhaseShift const& other) const
     {
         ObjectGuid ownerGuid = PersonalGuid;
         ObjectGuid otherPersonalGuid = other.PersonalGuid;
-        return Trinity::Containers::Intersects(Phases.begin(), Phases.end(), other.Phases.begin(), other.Phases.end(),
+        return Azgath::Containers::Intersects(Phases.begin(), Phases.end(), other.Phases.begin(), other.Phases.end(),
             [&ownerGuid, &otherPersonalGuid, excludePhasesWithFlag](PhaseRef const& myPhase, PhaseRef const& /*otherPhase*/)
         {
             return !myPhase.Flags.HasFlag(excludePhasesWithFlag) && (!myPhase.Flags.HasFlag(PhaseFlags::Personal) || ownerGuid == otherPersonalGuid);
